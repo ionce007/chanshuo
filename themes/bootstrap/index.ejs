@@ -1,0 +1,59 @@
+<%- include('./partials/header') %>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7 offset-md-1 main-content">
+            <% if (pages.length){ %>
+                <% pages.forEach((page)=>{ %>
+                    <div class="box">
+                        <div class="card article-list shadow-box bg-transparent">
+                            <div class="card-body">
+                                <h4 class="card-title font-weight-bold"
+                                    style="cursor: pointer"><a href="/page/<%= page.link %>" style="color: black">
+                                        <%= page.pageStatus === 2 ? '「置顶」' : '' %><%= page.title ? page.title : '无标题' %></a>
+                                </h4>
+                                <div class="card-tag">
+                                    <% page.tag.trim().split(";").forEach(function (tag) { if(tag !== ""){ %>
+                                        <span class="badge badge-primary badge-hover"><a href='/tag/<%= tag %>'
+                                                                                         style="color: white"><%= tag %></a></span>
+                                    <% }}); %>
+                                    <span class="badge badge-success badge-hover"><%= page.author %></span>
+                                    <span class="badge badge-secondary badge-hover">
+                                <a style="color: white"
+                                   href="/archive/<%= page.createdAt.split('-')[0] + '/' + page.createdAt.split('-')[1] %>"><%= page.createdAt.substring(0, 10) %></a>
+                            </span>
+                                    <span class="badge badge-info badge-hover">Views: <%= page.view %></span>
+                                </div>
+                                <p class="card-text">
+                                    <%= page.description ? page.description : "无描述信息" %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            <% })} %>
+
+            <%- include('./partials/paginator') %>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-box" style="margin-bottom: 16px">
+                <div class="card-body">
+                    <h5 class="card-title"><%= config.site_name %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= config.description %></h6>
+                    <% if(config.brand_image) { %>
+                        <img src="<%= config.brand_image %>" class="card-img-top" alt="brand_image">
+                    <% }%>
+                    <p class="card-text">
+                        内存占用：<%= (process.memoryUsage().rss / (1024 *1024)).toFixed(2) %> MB
+                    </p>
+                    <a href="https://github.com/ionce007/blog" class="card-link">系统：<%= systemName %></a>
+                    <a href="https://github.com/ionce007/blog-theme-bootstrap" class="card-link">主题：Bootstrap</a>
+                </div>
+            </div>
+            <article class="shadow-box" style="padding: 20px">
+                <%- notice %>
+            </article>
+        </div>
+    </div>
+</div>
+
+
+<%- include('./partials/footer') %>

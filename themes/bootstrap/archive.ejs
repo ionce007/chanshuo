@@ -1,0 +1,37 @@
+<%- include('./partials/header') %>
+
+<div class="container">
+    <h4 class="card-title font-weight-bold">存档</h4>
+    <table class="table is-fullwidth is-hoverable is-bordered is-striped table-bordered">
+        <thead>
+        <tr>
+            <th>标题</th>
+            <th>发布时间</th>
+            <th>编辑时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% pages.forEach(page => { %>
+            <tr>
+                <td>
+                    <a href="/page/<%= page.link %>">
+                        <%= page.title %>
+                    </a>
+                </td>
+                <td>
+                    <time>
+                        <%= page.createdAt.substring(0, 10) %>
+                    </time>
+                </td>
+                <td>
+                    <time>
+                        <%= page.updatedAt.substring(0, 10) %>
+                    </time>
+                </td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('./partials/footer') %>

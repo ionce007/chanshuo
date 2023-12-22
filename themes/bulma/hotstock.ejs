@@ -1,0 +1,218 @@
+<%- include('./partials/header') %>
+    <script type="text/javascript">tag = 'hotstock'</script>
+    <link rel="stylesheet" href="/static/animate.css">
+    <link rel="stylesheet" href="/static/loading.css">
+    <!--<div class="article-container" style="max-width: 1200px">-->
+        <div class="columns is-desktop">
+            <div class="column is-12">
+                <p><strong style="color:#ff0000;font-size:500;">声明：</strong><br />本站发布此信息的目的在于传播更多信息，与本站立场无关，本专题任何信息不构成对任何人的投资建议，投资者应当自主决策，风险自担！本页“人气股排行”数据均从相关平台采集，本站不对相关排行负责！
+                </p>
+            </div>
+        </div>
+        <div class="columns is-desktop">
+            <div class="column is-12">
+                <div class="tabs">
+                    <ul>
+                        <li class="is-active"><a class="origin-tab" key="tgb">淘股吧</a></li>
+                        <li><a class="origin-tab" key="dfcf">东方财富</a></li>
+                        <li><a class="origin-tab" key="iwc">问财(同花顺)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="columns is-desktop min-heigh-300" id="dataShow">
+            <table class="table is-fullwidth is-hoverable is-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    <!--</div>-->
+
+    <%- include('./partials/footer') %>
+        <script src="/static/loading.js?v=1.0"></script>
+        <script src="/static/Hexin-V.js"></script>
+        <script type="text/javascript">
+            /*
+            AES加密 / 解密算法
+                //const key = '23LWAgzjgy54hNriJQa3vSgjyfDmiArJJE7';// 32位
+                //const iv = '4387438hfdhfdjhg';// 16位
+                const key = "wijrKSCUiQuGbrwsgyEMyIx7Uogmfe85";
+                const iv  = "ho6KJIIz9WV7nozZl5fVnG7MtDUcSUB1";
+                //加密
+                function encryptCBC(text) {
+                    return CryptoJS.AES.encrypt(text, CryptoJS.enc.Utf8.parse(key), {
+                        iv: CryptoJS.enc.Utf8.parse(iv),
+                        mode: CryptoJS.mode.CBC,
+                        padding: CryptoJS.pad.Pkcs7
+                    }).toString()
+                }
+            
+                // 解密
+                function decryptCBC(text) {
+                    let decrypted = CryptoJS.AES.decrypt(text, CryptoJS.enc.Utf8.parse(key), {
+                        iv: CryptoJS.enc.Utf8.parse(iv),
+                        mode: CryptoJS.mode.CBC,
+                        padding: CryptoJS.pad.Pkcs7
+                    });
+                    return decrypted.toString(CryptoJS.enc.Utf8)
+                }
+            
+                function encryptECB(text) {
+                    return CryptoJS.AES.encrypt(text, CryptoJS.enc.Utf8.parse(key), {
+                        mode: CryptoJS.mode.ECB,
+                        padding: CryptoJS.pad.Pkcs7
+                    }).toString()
+                }
+             
+                // 解密
+                function decryptECB(text) {
+                    let decrypted = CryptoJS.AES.decrypt(text, CryptoJS.enc.Utf8.parse(key), {
+                        mode: CryptoJS.mode.ECB,
+                        padding: CryptoJS.pad.Pkcs7
+                    });
+                    return decrypted.toString(CryptoJS.enc.Utf8)
+                }
+            */
+            var hotStockData = [];
+            (function () {
+                getTaogubaHotStock();
+            })();
+
+            function loading() {
+                $('body').loading({
+                    loadingWidth: 300, title: '数据加载中...', name: 'dataLoading', discription: '', direction: 'row', type: 'origin',
+                    originBg: '#71EA71', originDivWidth: 80, originDivHeight: 50, originWidth: 4, originHeight: 4, smallLoading: false,
+                    titleColor: '#388E7A', loadingBg: '#312923', loadingMaskBg: 'rgba(22,22,22,0.2)'
+                });
+            }
+            var isLoadedScript = false;
+            $('.origin-tab').click(function () {
+                $('.tabs li').removeClass('is-active');
+                $(this).parent().addClass('is-active');
+                var origin = $(this).attr('key');
+                if (origin === 'tgb') getTaogubaHotStock();
+                else if (origin === 'dfcf') {
+                    dfcf_page = 1;
+                    if (!isLoadedScript) {
+                        var scriptUrl = '//gbfek.dfcfw.com/deploy/rank_web/work/rank_home.js?v=22'
+                        $.getScript(scriptUrl, function () { isLoadedScript = true; getDongFangCaiFuHotStock(); });
+                    }
+                    else getDongFangCaiFuHotStock();
+                }
+                else if (origin === 'iwc') getWencaiHotStock();
+            })
+            function getTaogubaHotStock() {
+                loading();
+                var apiUrl = '/api/tgb_hotstock'
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code != 1) { removeLoading('dataLoading'); alert(res.msg); return false; }
+                        var stocks = res.data.stocks;
+                        var quotes = res.data.quote;
+                        var theader = "<tr> <th style='text-align:center;width:10%'>排序</th><th width='16%'>股票代码</th><th width='16%'>股票名称</th>";
+                        theader += "<th width='14%'>最新价</th><th width='14%'>涨跌幅</th><th width='14%'>热力值</th><th>连板情况</th> </tr>"
+                        var tbody = ""
+                        for (var index = 0; index < stocks.length; index++) {
+                            tbody += `<tr><td style='text-align:center'>${stocks[index].ranking}</td><td>${stocks[index].fullCode.substr(2)}</td><td>${stocks[index].stockName}</td>`;
+                            if (quotes[index]) tbody += `<td>${quotes[index].closePrice}</td><td>${quotes[index].pxChangeRate}%</td><td>${stocks[index].popularValue}</td><td>${stocks[index].linkingBoard}</td></tr>`;
+                            else tbody += `<td> -- </td><td> -- </td><td>${stocks[index].popularValue}</td><td>${stocks[index].linkingBoard}</td></tr>`;
+                        }
+                        $('thead').html(theader);
+                        $('tbody').html(tbody);
+                        removeLoading('dataLoading');
+                        //alert('获取“淘股吧”人气股排行成功！');
+                        Toast('获取“淘股吧”人气股排行成功！', 3000);
+                    },
+                    error: function (err) {
+                        removeLoading('dataLoading');
+                        //alert('获取淘股吧人气股排行失败！');
+                        Toast('获取淘股吧人气股排行失败！', 3000);
+                    }
+                })
+            }
+
+            function getWencaiHotStock() {
+                loading();
+                var apiUrl = '/api/iwc_hotstock'
+                var Hexin_V = getHexinV()
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: { hexinV: Hexin_V },
+                    dataType: 'json',
+                    success: function (res) {
+                        var columns = res.data.answer.components[0].data.columns;
+                        var datus = res.data.answer.components[0].data.datas;
+                        var keys = Object.keys(datus[0]);
+                        var thead = "<tr><th style='text-align:center;width:10%'>排序</th><th width='14.2%'>股票代码</th><th width='14.2%'>股票名称</th>";
+                        thead += "<th width='16%'>最新价</th><th width='14.2%'>涨跌幅</th><th style='text-align:center;width:14.2%'>热度排名</th><th style='text-align:center;'>热度值</th></tr>";
+                        tbody = '';
+                        for (var i = 0; i < datus.length; i++) {
+                            tbody += `<tr><td style='text-align:center'>${i + 1}</td><td>${datus[i].code}</td><td>${datus[i][keys[1]]}</td><td>${datus[i][keys[2]]}</td><td>${Number(datus[i][keys[3]]).toFixed(2)}%</td>`;
+                            tbody += `<td style='text-align:center;'>${datus[i][keys[4]]}</td><td style='text-align:center;'>${(datus[i][keys[5]] / 10000).toFixed(2)}万</td></tr>`;
+                        }
+                        $('thead').html(thead);
+                        $('tbody').html(tbody);
+                        removeLoading('dataLoading');
+                        //alert('获取“问财网”人气股排行成功！');
+                        Toast('获取“问财网”人气股排行成功！', 3000);
+                    },
+                    error: function (err) {
+                        removeLoading('dataLoading');
+                        //alert('获取爱问财人气股排行失败！')
+                        Toast('获取爱问财人气股排行失败！', 3000);
+                    }
+                })
+            }
+
+            var date = (new Date()).format('yyyy_MM_dd_hh_mm');
+            var dfcf_page = 1;
+            function getDongFangCaiFuHotStock() {
+                if (dfcf_page === 1) loading();
+                if (dfcf_page > 3) { removeLoading('dataLoading'); Toast('获取“东方财富”人气股排行成功！', 3000); return; }
+
+
+                var url = `https://gbcdn.dfcfw.com/rank/popularityList.js?type=0&sort=0&page=${dfcf_page}&v=${date}`
+                $.ajax({
+                    url: url, type: "GET", dataType: "script",
+                    success: function (script, status, res) {
+                        var stockCode = eval(window.d(popularityList));
+                        var secids = $.map(stockCode, function (item, index) { return item.code.substr(0, 1) === '6' ? `1.${item.code}` : `0.${item.code}` });
+                        url = `https://push2.eastmoney.com/api/qt/ulist.np/get?secids=${secids}&fields=f1,f2,f3,f4,f12,f13,f14,f152,f15,f16`;
+                        $.ajax({
+                            url: url, type: "GET", async: false, dataType: 'json',
+                            success: function (data, status1, res1) {
+                                var tbody = "";
+                                var quotes = data.data.diff;
+                                for (var i = 0; i < stockCode.length; i++) {
+                                    tbody += `<tr><td style='text-align:center'>${stockCode[i].rankNumber}</td><td style='text-align:center'>${stockCode[i].changeNumber}</td>`;
+                                    tbody += `<td>${stockCode[i].code}</td><td>${quotes[i].f14}</td><td>${quotes[i].f2 / 100}</td><td>${quotes[i].f3 / 100}%</td>`;
+                                    tbody += `<td>${stockCode[i].newFans}%</td><td>${stockCode[i].ironsFans}%</td></tr>`;
+                                }
+                                if (dfcf_page === 1) {
+                                    var thead = "<tr><th style='text-align:center;'>排名</th><th style='text-align:center;width:16%;'>较昨日变动</th>";
+                                    thead += "<th width='14%'>股票代码</th><th width='14%'>股票名称</th><th width='12%'>最新价</th><th width='12%'>涨跌幅</th>";
+                                    thead += "<th width='12%'>新晋粉丝</th><th width='12%'>铁杆粉丝</th></tr>"
+                                    $('thead').html(thead);
+                                    $('tbody').html(tbody);
+                                }
+                                else $('tbody').append(tbody);
+                                //removeLoading('dataLoading');
+                            }
+                        })
+                    },
+                    error: function (error) {
+                        removeLoading('dataLoading');
+                        //alert('获取东方财富人气股排行失败！')
+                        Toast('获取东方财富人气股排行失败！', 3000);
+                    },
+                    complete: function (text) {
+                        dfcf_page++;
+                        getDongFangCaiFuHotStock();
+                    }
+                })
+            }
+        </script>

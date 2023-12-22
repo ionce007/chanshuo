@@ -1,0 +1,20 @@
+<% if(config.allow_comments === 'true' && page.commentStatus === 1){ %>
+    <% if(config.disqus !== undefined && config.disqus !== "") { %>
+    <div id="disqus_thread"></div>
+    <script>
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.setAttribute('issue-term','pathname');
+        s.setAttribute('theme','github-light');
+        s.setAttribute('repo','<%= config.disqus %>');
+        s.crossorigin = 'anonymous';
+        s.src = 'https://utteranc.es/client.js';
+        s.setAttribute('data-timestamp', +new Date());
+        document.getElementById('disqus_thread').appendChild(s);
+        //(d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <% } %>
+<% } %>

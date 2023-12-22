@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/" style="margin-left: 16px"><%= config.site_name; %></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <% if (config.nav_links !== undefined && config.nav_links !== '') {
+                var dropdowns;
+                try {
+                    dropdowns = JSON.parse(config.nav_links);
+                } catch (e) {
+                    dropdowns = [
+                        {
+                            "key": "Meta",
+                            "value": [
+                                { "link": "/archive", "text": "存档" },
+                                { "link": "/page/links", "text": "链接" },
+                                { "link": "/page/about", "text": "关于" }
+                            ]
+                        }
+                    ];
+                    console.error(e.message);
+                }
+            }
+            var firstOne = dropdowns.shift();
+            %>
+            <% if (firstOne.value) firstOne.value.forEach((item)=>{ %>
+                <a class="nav-link" href="<%- item.link; %>"><span class="nav-text"><%- item.text; %></span></a>
+            <% }); %>
+            <% dropdowns.forEach((dropdown)=>{ %>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%- dropdown.key; %>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <% if (dropdown.value) dropdown.value.forEach((item)=>{ %>
+                            <a class="dropdown-item" href="<%- item.link; %>"><%- item.text; %></a>
+                        <% }); %>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    if ($navbarBurgers.length > 0) {
+      $navbarBurgers.forEach(el => {
+        el.addEventListener('click', () => {
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+</script>

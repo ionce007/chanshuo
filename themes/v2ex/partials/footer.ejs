@@ -1,0 +1,40 @@
+<div class="footer">
+    <div class="wrapper">
+        <div class="footer-links">
+            <% if(config.nav_links !== undefined && config.nav_links !== ''){
+                try {
+                  let dropdowns = JSON.parse(config.nav_links);
+                  dropdowns.forEach((dropdown)=>{ 
+                    let sep = '' %>
+                <div class="links" style="margin-top: 4px; max-height: 22px;">
+                    <strong>
+                        <% if (dropdown.value) dropdown.value.forEach((link)=>{ %>
+                            <%- sep %><a href="<%- link.link %>" class="dark" target="_self" rel="noreferrer"><%- link.text %></a>
+                        <% sep = ' &nbsp; <span class="snow">·</span> &nbsp;';}) %>
+                    </strong>
+                </div>
+              <%})
+              } catch (e) {console.error(e.message)}} %>
+        </div>
+        <div class="info">
+            <% let date = new Date(); const year = date.getFullYear();%>
+            © <%= year%> <a href="//<%= config.domain %>"><%=config.author%></a>.<%- config.extra_footer_text %>
+            Powered by <a href="https://github.com/songquanpeng/blog">Node.js Blog</a> with theme <a href="https://github.com/songquanpeng/blog-theme-v2ex">v2ex</a>.
+
+        </div>
+        <div class="info">
+            Memory occupied: <%= (process.memoryUsage().rss / (1024 *1024)).toFixed(2) %> MB
+        </div>
+        <div class="info">
+            <%= config.description %>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+<%- config.extra_footer_code %>
+</body>
+</html>

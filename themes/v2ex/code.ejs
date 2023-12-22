@@ -1,0 +1,39 @@
+<%- include('./partials/header') %>
+<div class="main">
+    <div class="wrapper">
+        <div class="middle-col">
+            <div class="main-content box" style="border-bottom: 0">
+                <%- include('./partials/page-info') %>
+                <div class="cell">
+                    <pre><code id="code-display"><%=page.content%></code></pre>
+                    <%- config.copyright %>
+                    <%- config.ad %>
+                    <label>
+                        <textarea id="hiddenTextArea" style="position: absolute;left: -100%;"></textarea>
+                    </label>
+                </div>
+                <div class="bottom">
+                    <a href="javascript:" onclick="copyCode()">Copy Code</a>
+                    <a class="pagination-previous shadow-box" href="/page/<%= links.prev.link%>"><%= links.prev.title%></a>
+                    <a class="pagination-next shadow-box" href="/page/<%= links.next.link%>"><%= links.next.title%></a>
+                </div>
+            </div>
+            <%- include('./partials/comment')%>
+        </div>
+        <div class="right-bar">
+            <%- include('./partials/panel') %>
+        </div>
+    </div>
+</div>
+
+<script>
+  function copyCode() {
+    const copyText = document.getElementById("code-display").textContent;
+    const textArea = document.getElementById('hiddenTextArea');
+    textArea.textContent = copyText;
+    document.body.append(textArea);
+    textArea.select();
+    document.execCommand("copy");
+  }
+</script>
+<%- include('./partials/footer') %>

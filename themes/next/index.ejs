@@ -1,0 +1,57 @@
+<%- include('./partials/header') %>
+
+<div class="index posts-expand">
+    <% if (pages.length){ %>
+        <% pages.forEach((page)=>{ %>
+            <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="en" style="opacity: 1; display: block;">
+                    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
+                        <h2 class="post-title" itemprop="name headline">
+                            <a href="/page/<%= page.link %>" class="post-title-link" itemprop="url" data-pjax-state=""><%= page.title ? page.title : 'No title' %></a>
+                        </h2>
+                        <div class="post-meta">
+                            <span class="post-meta-item">
+                              <span class="post-meta-item-icon">
+                                <i class="fa fa-calendar-o"></i>
+                              </span>
+                              <span class="post-meta-item-text">Posted on</span>
+                              <time><%= page.createdAt.substring(0, 10) %></time>
+                            </span>
+                            <span class="post-meta-item">
+                            <span class="post-meta-item-icon">
+                              <i class="fa fa-calendar-check-o"></i>
+                            </span>
+                            <span class="post-meta-item-text">Edited on</span>
+                              <time><%= page.updatedAt.substring(0, 10) %></time>
+                          </span>
+                            <span class="post-meta-item">
+                          <span class="post-meta-item-icon">
+                            <i class="fa fa-folder-o"></i>
+                          </span>
+                          <span class="post-meta-item-text">In</span>
+                            <% page.tag.trim().split(";").forEach(function (tag) { if(tag !== ""){ %>
+                                    <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                                        <a href='/tag/<%= tag %>' itemprop="url" rel="index" data-pjax-state=""><span itemprop="name"><%= tag %></span></a>
+                                    </span>
+                            <% }}); %>
+                        </span>
+                        </div>
+                    </header>
+
+                    <div class="post-body" itemprop="articleBody" style="opacity: 1; display: block; transform: translateY(0px);">
+                        <div style="text-align: center">
+                            <p><%= page.description ? page.description : "No description" %></p>
+                        </div>
+                        <div class="post-button">
+                            <a class="btn" href="/page/<%= page.link %>" rel="contents" data-pjax-state="">
+                                Read More »
+                            </a>
+                        </div>
+                    </div>
+
+                </article>
+    <% })} %>
+</div>
+
+
+<%- include('./partials/paginator') %>
+<%- include('./partials/footer') %>

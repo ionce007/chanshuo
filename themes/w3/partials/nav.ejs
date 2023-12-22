@@ -1,0 +1,36 @@
+<div class="w3-bar w3-black w3-border w3-card-4" style="border-width: 0 !important;">
+    <% if (config.nav_links !== undefined && config.nav_links !== '') {
+        var dropdowns;
+        try {
+            dropdowns = JSON.parse(config.nav_links);
+        } catch (e) {
+            dropdowns = [
+                {
+                    "key": "Meta",
+                    "value": [
+                        { "link": "/archive", "text": "Archive" },
+                        { "link": "/page/links", "text": "Links" },
+                        { "link": "/page/about", "text": "About" }
+                    ]
+                }
+            ];
+            console.error(e.message);
+        }
+    }
+    var firstOne = dropdowns.shift();
+    %>
+    <a href="/" class="w3-bar-item w3-button w3-red"><%=config.site_name %></a>
+    <% if (firstOne.value) firstOne.value.forEach((item)=>{ %>
+        <a href="<%- item.link; %>" class="w3-bar-item w3-button"><%- item.text %></a>
+    <% }); %>
+    <% dropdowns.forEach((dropdown)=>{ %>
+        <div class="w3-dropdown-hover w3-hide-small">
+            <div class="w3-button"><%= dropdown.key %></div>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                <% if (dropdown.value) dropdown.value.forEach((item)=>{ %>
+                    <a href="<%- item.link %>" class="w3-bar-item w3-button w3-mobile" href="<%- item.link %>"><%- item.text %></a>
+                <% }) %>
+            </div>
+        </div>
+    <% }) %>
+</div>

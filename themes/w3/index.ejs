@@ -1,0 +1,66 @@
+<%- include('./partials/header') %>
+<div class="w3-content" style="max-width:1400px">
+    <div class="w3-row">
+        <!--Articles here-->
+        <div class="w3-col l8 s12">
+            <% if (pages.length){ %>
+                <% pages.forEach((page)=>{ %>
+                    <!--Article here-->
+                    <div class="w3-card-4 w3-margin w3-white">
+                        <div class="w3-container">
+                            <h3>
+                                <b>
+                                    <a href='/page/<%= page.link %>'>
+                                        <%= page.pageStatus === 2 ? '「置顶」' : '' %><%= page.title ? page.title : '无标题' %>
+                                    </a>
+                                </b>
+                            </h3>
+                            <% page.tag.trim().split(";").forEach(function (tag) { if(tag !== ""){ %>
+                                <span class="w3-tag w3-red tag"><a href='/tag/<%= tag %>'
+                                                                   style="color: white"><%= tag %></a></span>
+                            <% }}); %>
+                            <span class="w3-tag w3-black tag">
+                                <a href="/archive/<%= page.createdAt.split('-')[0] + '/' + page.createdAt.split('-')[1] %>"><%= page.createdAt.substring(0, 10) %></a>
+                            </span>
+                            <span class="w3-tag w3-black tag">Views: <%= page.view %></span>
+                            <% if(page.page_status === 2){ %>
+                                <span class="w3-tag w3-amber tag">Stay on Top</span>
+                            <% } %>
+                        </div>
+                        <div class="w3-container w3-large">
+                            <p>
+                                <%= page.description ? page.description : "无描述信息" %>
+                            </p>
+                        </div>
+                        <hr>
+                    </div>
+            <% })} %>
+            <%- include('./partials/paginator') %>
+        </div>
+        <!--Sidebar here-->
+        <div class="w3-col l4">
+            <div class="w3-card w3-margin w3-margin-top">
+                <header class="w3-container w3-white">
+                    <h3><%= config.site_name %></h3>
+                    <h6><%= config.description %></h6>
+                </header>
+                <div class="w3-container w3-white">
+                    <% if(config.brand_image) { %>
+                        <img src="<%= config.brand_image %>" class="card-img-top" alt="brand_image">
+                    <% } %>
+                    <p class="card-text">
+                    </p>
+                </div>
+            </div>
+            <div class="w3-card w3-margin w3-margin-top">
+                <div class="w3-container w3-white">
+                    <article>
+                        <%- notice %>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
+</div>
+

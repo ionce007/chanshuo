@@ -1,0 +1,40 @@
+<header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
+    <h1 class="post-title" itemprop="name headline">
+        <%- page.title %>
+    </h1>
+    <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              <time><%- page.createdAt %></time>
+            </span>
+        <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time><%- page.updatedAt %></time>
+              </span>
+        <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+            <% page.tag.trim().split(";").forEach(function (tag) { if(tag !== ""){ %>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                    <a href='/tag/<%= tag %>' itemprop="url" rel="index" data-pjax-state=""><span
+                                itemprop="name"><%= tag %></span></a>
+                </span>
+            <% }}); %>
+        </span>
+        <span class="post-meta-item" title="Views" style="display: inline;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"><%- page.view %></span>
+            </span>
+    </div>
+</header>

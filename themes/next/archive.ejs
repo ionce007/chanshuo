@@ -1,0 +1,40 @@
+<%- include('./partials/header') %>
+<div class="index posts-expand">
+    <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="en" style="opacity: 1; display: block;">
+        <div class="post-body" itemprop="articleBody" style="opacity: 1; display: block; transform: translateY(0px);">
+            <table class="table is-fullwidth is-hoverable is-bordered is-striped">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Post Time</th>
+                    <th>Edit Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% pages.forEach(page => { %>
+                    <tr>
+                        <td>
+                            <a href="/page/<%= page.link %>">
+                                <%= page.title %>
+                            </a>
+                        </td>
+                        <td>
+                            <time>
+                                <%= page.createdAt.substring(0, 10) %>
+                            </time>
+                        </td>
+                        <td>
+                            <time>
+                                <%= page.createdAt.substring(0, 10) %>
+                            </time>
+                        </td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</div>
+
+
+<%- include('./partials/footer') %>

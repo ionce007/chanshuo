@@ -1,0 +1,44 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/static/article.css" />
+<script type="text/javascript">tag = 'chanshuo'</script>
+
+<div class="columns is-desktop">
+    <div class="column is-2">
+        <aside class="menu">
+            <form method="POST" action="/chanshuo/list" id="catSelector" ><input type="hidden" id="cID" name="cID" value="" /></form>
+            <% if(data.length) { %>
+                <% data.forEach((parentCat) => { %>
+                    <p class="menu-label"><%= parentCat.label %></p>
+                    <ul class="menu-list">
+                        <% parentCat.categories.forEach((cat) => {%>
+                            <li><a onclick=showArticleList(`<%= cat.cid %>`)><%= cat.title %></a></li>
+                        <% }) %>
+                    </ul>
+                <% }) %> 
+            <% } %>
+        </aside>
+    </div>
+    <div class="column is-10">
+        <section class="block hidden">
+            <input type="checkbox" id="chk">
+            <div class="case-block case-block-mask" style="display:block;">
+                <div class="showbtn"><label for="chk"> 展开全部</label></div><div class="showbtn">收起</div>
+            </div>
+            <div class="detail"></div>
+        </section>
+    </div>
+</div>
+
+<%- include('./partials/footer') %>
+
+<script type="text/javascript">
+    var html = '<%= author.content %>'
+    var text = $('.detail').html(html).text();
+    $('.detail').html(text);
+    $('.block').removeClass('hidden');
+
+    function showArticleList(cid){
+        $('#cID').val(cid);
+        $('#catSelector').submit();
+    }
+</script>

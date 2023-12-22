@@ -1,0 +1,48 @@
+<%- include('./partials/header') %>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7 offset-md-1 main-content">
+            <article id="article" class="shadow-box" style="padding: 16px 24px">
+                <%- include('./partials/page-info') %>
+                <%- page.converted_content %>
+                <p class="copyright"><strong>Links: <a href="<%- page.link %>"><%- page.link %></a></strong></p>
+                <%- config.copyright %>
+                <%- config.ad %>
+            </article>
+            <%- include('./partials/prev-next') %>
+            <%- include('./partials/comment?v=1.0') %>
+        </div>
+        <div class="col-md-3">
+            <% if(page.categoryList.length > 1) { %>
+            <div class="card shadow-box" style="margin-bottom: 16px">
+                <div class="card-body" style="padding: 20px 32px 8px 32px">
+                    <h5><%- page.category %></h5>
+                    <ul class="toc-list">
+                        <% page.categoryList.forEach((p)=>{ %>
+                        <li><a href="/page/<%= p.link %>"><%= p.title %></a></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+            <% } %>
+            <div class="shadow-box toc sticky-top" id='toc-container'>
+                <div class="card-body" style="padding: 20px 32px 8px 32px">
+                    <h5>目录</h5>
+                    <ul id="toc" class="toc-list">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  (function() {
+    generateTOC();
+  })();
+</script>
+
+<%- include('./partials/footer') %>

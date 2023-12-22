@@ -1,0 +1,65 @@
+<%- include('./partials/header') %>
+<div class="main">
+    <div class="wrapper">
+        <div class="middle-col">
+            <div class="main-content box">
+                <div class="main-tabs">
+                    <a href="" class="tab focus">技术</a>
+                    <a href="" class="tab">创意</a>
+                    <a href="" class="tab">好玩</a>
+                    <a href="" class="tab">交易</a>
+                    <a href="" class="tab">问与答</a>
+                    <a href="" class="tab">最热</a>
+                    <a href="" class="tab">全部</a>
+                    <a href="" class="tab">关注</a>
+                </div>
+                <div class="secondary-tabs">
+                    <a href="">C++</a>
+                    <a href="">Java</a>
+                    <a href="">Python</a>
+                    <a href="">JavaScript</a>
+                    <a href="">Go</a>
+                </div>
+                <% if (pages.length){ %>
+                    <% pages.forEach((page)=>{ %>
+                        <div class="item">
+                            <img src="<%- config.brand_image ? config.brand_image : '/static/default_avatar.png' %>" class="avatar" alt="">
+                            <div class="item-content">
+                                <a href="/page/<%= page.link %>" class="title"><%= page.title ? page.title : '无标题' %></a>
+                                <div class="info">
+                                    <%= page.pageStatus === 2 ? '置顶 • ' : '' %>
+                                    <% page.tag.trim().split(";").forEach(function (tag) { if(tag !== ""){ %>
+                                        <a class="node" href="/tag/<%= tag %>"><%= tag %></a>
+                                    <% }}); %>
+                                    &nbsp;•&nbsp;
+                                    <a href="/archive/<%= page.createdAt.split('-')[0] + '/' + page.createdAt.split('-')[1] %>"><%= page.createdAt.substring(0, 10) %></a>
+                                </div>
+                            </div>
+                            <div class="counter">
+                                <a href="#"><%= page.view %></a>
+                            </div>
+                        </div>
+                <% })} %>
+                <%- include('./partials/paginator') %>
+            </div>
+        </div>
+        <div class="right-bar">
+            <div class="panel" style='margin-bottom: 16px'>
+                <div class="cell"><%= config.site_name %></div>
+                <div class="cell">
+                    <%= config.description %>
+                    <% if(config.brand_image) { %>
+                        <img src="<%= config.brand_image %>" style="margin-top: 8px" alt="brand_image">
+                    <% }%>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="cell">
+                    <%- notice %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/footer') %>

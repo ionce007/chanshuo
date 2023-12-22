@@ -1,0 +1,46 @@
+<%- include('./partials/header') %>
+<div class="main">
+    <div class="wrapper">
+        <div class="middle-col">
+            <div class="main-content box" style="border-bottom: 0">
+                <div class="header"><a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> <%= title %></div>
+                <div class="cell">
+                    <table class="table is-fullwidth is-hoverable is-bordered is-striped">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Post Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% pages.sort((a,b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0)).forEach(page => { %>
+                            <tr>
+                                <td>
+                                    <a href="/page/<%= page.link %>">
+                                        <%= page.title %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <time>
+                                        <%= page.createdAt.substring(0, 10) %>
+                                    </time>
+                                </td>
+                            </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bottom">
+                    <a href="">Share</a>
+                    <a href="">Ignore</a>
+                    <a href="">Thank</a>
+                </div>
+            </div>
+        </div>
+        <div class="right-bar">
+            <%- include('./partials/panel') %>
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/footer') %>

@@ -1,0 +1,11 @@
+<div class="w3-container">
+    <h1 style="font-weight: bold"><%= page.title %></h1>
+    <span>标签：
+        <% page.tag.trim().split(";").forEach(function (tag) {if (tag !== "") {%>
+            <span class="w3-opacity w3-tag w3-light-grey tag"><a class="tag is-light" href='/tag/<%= tag %>' style="color: black"><%= tag %></a></span>
+        <% }}); %>
+    </span>
+    <span>发布于： <span class="w3-opacity w3-tag w3-light-grey tag"><%-page.createdAt%></span></span>
+    <span>编辑于： <span class="w3-opacity w3-tag w3-light-grey tag"><%-page.updatedAt%></span></span>
+    <span>阅读量： <span class="w3-opacity w3-tag w3-light-grey tag"><%-page.view%></span></span>
+</div>

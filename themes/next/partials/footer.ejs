@@ -1,0 +1,80 @@
+</div>
+<div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+</div>
+<aside class="sidebar" style="margin-top: 407px;">
+    <div class="sidebar-inner affix" style="opacity: 1; transform: initial;">
+
+        <ul class="sidebar-nav" style="display: none;">
+            <li class="sidebar-nav-toc">
+                Table of Contents
+            </li>
+            <li class="sidebar-nav-overview sidebar-nav-active">
+                Overview
+            </li>
+        </ul>
+
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel" style="opacity: 0; max-height: 1042px;">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel sidebar-panel-active" style="max-height: 1042px; opacity: 1;">
+            <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+                <img class="site-author-image" itemprop="image" src="<%= config.brand_image %>" alt="<%= config.author %>">
+                <p class="site-author-name" itemprop="name"><%= config.author %></p>
+                <div class="site-description" itemprop="description"></div>
+            </div>
+            <div class="site-state-wrap motion-element">
+                <nav class="site-state">
+                    <div class="site-state-item site-state-posts">
+                        <span style='overflow-wrap: normal'><%= config.motto %></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</aside>
+<div id="sidebar-dimmer"></div>
+</div>
+</main>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="beian">
+            <%- config.extra_footer_text %>
+        </div>
+        <div class="powered-by">
+            Powered by <a href="https://github.com/songquanpeng/blog" class="theme-link" rel="noopener" target="_blank">Node.js Blog</a> & <a href="https://github.com/songquanpeng/blog-theme-next" class="theme-link" rel="noopener" target="_blank">NexT</a>
+        </div>
+        <% let date = new Date(); const year = date.getFullYear();%>
+        <div class="copyright">
+            &copy;
+            <span itemprop="copyrightYear"><%= year %></span>
+            <span class="with-love">
+                <i class="fa fa-heart"></i>
+            </span>
+            <span class="author" itemprop="copyrightHolder"><%= config.author %></span>
+        </div>
+    </div>
+</footer>
+</div>
+
+<script src="/static/lib/anime.min.js"></script>
+<script src="/static/lib/velocity/velocity.min.js"></script>
+<script src="/static/lib/velocity/velocity.ui.min.js"></script>
+<script src="/static/js/utils.js"></script>
+<script src="/static/js/motion.js"></script>
+<script src="/static/js/schemes/pisces.js"></script>
+<script src="/static/js/next-boot.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+<%- config.extra_footer_code %>
+</body>
+</html>
+

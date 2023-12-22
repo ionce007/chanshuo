@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>s828y46514.goho.co</id>
+    <title>缠说 ● 股经</title>
+    <updated>2023-12-21T16:28:37.782Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <author>
+        <name>铜豌豆</name>
+        <uri>https://s828y46514.goho.co/</uri>
+    </author>
+    <link rel="alternate" href="https://s828y46514.goho.co/"/>
+    <link rel="self" href="https://example.com/atom.xml"/>
+    <subtitle>股票交易技术交流，指标公式、选股公式编写，股票投资经验汇集，量化交易策略编写及技术分享，“缠中说禅”博文。</subtitle>
+    <icon>/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[ant design confirm的使用说明]]></title>
+        <id>ant-design-confirm的使用说明</id>
+        <link href="https://s828y46514.goho.co/page/ant-design-confirm的使用说明"/>
+        <updated>2023-12-02T15:26:42.672Z</updated>
+        <summary type="html"><![CDATA[ant design confirm的使用说明]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React组件之easy-antd-modal简介]]></title>
+        <id>react组件之easy-antd-modal简介</id>
+        <link href="https://s828y46514.goho.co/page/react组件之easy-antd-modal简介"/>
+        <updated>2023-11-10T15:29:26.157Z</updated>
+        <summary type="html"><![CDATA[ease-antd-modal 是一个简化 Ant Design Modal 的使用方式的库, 通过对 Modal 的封装]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React使用Portals手写模态框Dialog]]></title>
+        <id>天舟七号将发射-中国空间站将升级为“十”字型</id>
+        <link href="https://s828y46514.goho.co/page/天舟七号将发射-中国空间站将升级为“十”字型"/>
+        <updated>2023-11-10T15:18:45.049Z</updated>
+        <summary type="html"><![CDATA[本文详细介绍React使用Portals开发模态框Dialog的步骤及详细源代码]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React实现Modal弹窗效果]]></title>
+        <id>links</id>
+        <link href="https://s828y46514.goho.co/page/links"/>
+        <updated>2023-11-10T15:00:14.226Z</updated>
+        <summary type="html"><![CDATA[这篇文章主要为大家详细介绍了react实现Modal弹窗效果，文中示例代码介绍的非常详细，具有一定的参考价值，感兴趣的小伙伴们可以参考一下]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React组件方法注入js脚本并执行]]></title>
+        <id>react组件方法注入js脚本并执行</id>
+        <link href="https://s828y46514.goho.co/page/react组件方法注入js脚本并执行"/>
+        <updated>2023-11-10T14:53:04.991Z</updated>
+        <summary type="html"><![CDATA[本文介绍React 组件方法注入 JavaScript 脚本并执行的步骤]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[React Hook 手写 Modal 模态框组件]]></title>
+        <id>react-hook-手写-modal-模态框组件</id>
+        <link href="https://s828y46514.goho.co/page/react-hook-手写-modal-模态框组件"/>
+        <updated>2023-11-10T14:47:30.712Z</updated>
+        <summary type="html"><![CDATA[Modal (模态框) 是 web 开发中十分常见的组件，即从页面中弹出的对话框。今天我们一起来用 React Hook 手写 Modal 模态框组件.]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+</feed>

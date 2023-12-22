@@ -1,0 +1,18 @@
+
+<footer class="navbar navbar-light d-flex justify-content-center">
+    <div class="text-center" style="margin-top: 16px">
+        <% let date = new Date(); const year = date.getFullYear();%>
+        <p>
+            © <%= year%> <a href="//<%= config.domain %>"><%=config.author%></a>.<%- config.extra_footer_text %>
+            由 <a href="https://github.com/ionce007/blog"><%= systemName + " " + systemVersion%></a> 驱动，主题 <a href="https://github.com/ionce007/blog-theme-bootstrap">Bootstrap</a>
+        </p>
+    </div>
+</footer>
+
+<script src="/static/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+<%- config.extra_footer_code %>
+</body>
+</html>

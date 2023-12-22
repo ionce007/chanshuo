@@ -1,0 +1,83 @@
+<%- include('./partials/header') %>
+<link rel="stylesheet" href="/static/article.css" />
+<script type="text/javascript">tag = 'chanshuo'</script>
+
+<div class="columns is-desktop">
+    <div class="column is-2">
+        <aside class="menu">
+            <form method="POST" action="/chanshuo/list" id="catSelector" >
+                <input type="hidden" id="cID" name="cID" value="" />
+                <input type="hidden" id="pageIndex" name="pageIndex" value="<%= curPage %>" />
+                <input type="hidden" id="pageSize" name="pageSize" value="<%= pageSize %>" />
+            </form>
+            <% if(catData.length) { %>
+                <% catData.forEach((parentCat) => { %>
+                    <p class="menu-label"><%= parentCat.label %></p>
+                    <ul class="menu-list">
+                        <% parentCat.categories.forEach((cat) => {%>
+                            <li><a onclick=showArticleList("<%= cat.cid %>") class="<%= (cat.cid === cid?'is-actived':'') %>"><%= cat.title %></a></li>
+                        <% }) %>
+                    </ul>
+                <% }) %> 
+            <% } %>
+        </aside>
+    </div>
+    <div class="column is-10">
+        <form method="POST" action="/chanshuo/article" id="artSelector" >
+            <input type="hidden" id="artID" name="artID" value="" />
+            <input type="hidden" id="cID" name="cID" value="<%= cid %>" />
+        </form>
+        <table class="table is-striped is-hoverable is-fullwidth">
+            <thead>
+                <tr><th style="width:75%;text-align:center">博文标题</th><th style="width:25%;text-align:center">发表时间</th></tr>
+            </thead>
+            <tbody>
+                <% artData.forEach((item)=>{ %>
+                <tr>
+                    <td><a onclick="showArticle('<%= item.id %>')"><%= item.title%></a></td>
+                    <td><%= !item.issuedate || item.issuedate.trim() === '' ? '--' : item.issuedate %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <div id='paginator'></div>
+    </div>
+</div>
+<%- include('./partials/footer') %>
+
+<script type="text/javascript">
+    var total = <%= total %>, // 总数
+        curPage = <%= curPage %>,
+        pageSize =  <%= pageSize %>; // 每页个数
+    $('#cID').val('<%= cid %>');
+    var paginator = new Page({
+        el: '#paginator',
+        nums: total,
+        counts: pageSize || 15,
+        defaultPage: curPage,
+        showHeadFoot: !false, // 显示首页尾页
+        head: '首页', // 更改首页文字
+        foot: '尾页', // 更改尾页文字
+        jumpToOrder: true, // 跳转到指定页
+        showNowAndAll: true, // 当前页/共几页
+        clickEvent: function (curPage, _this) {
+            //var key = $('div.tabs li.is-active').children()[0].attributes['key'].value;
+            //location.href = `/formula?p=${curPage}&k=${key}`;
+            $('#pageIndex').val(curPage);
+            $('#catSelector').submit();
+        }
+    });
+
+    function showArticleList(cid){
+        $('#cID').val(cid);
+        $('#pageIndex').val(1);
+        $('#pageSize').val((pageSize || 15));
+        $('#catSelector').submit();
+    }
+    function showArticle(id){
+        var cid = '<%= cid %>';
+        $('#cID').val(cid);
+        $('#artID').val(id);
+        $('#artSelector').submit();
+    }
+</script>

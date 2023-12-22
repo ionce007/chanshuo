@@ -1,0 +1,11 @@
+<h1 class="card-title font-weight-bold"><%-page.title%></h1>
+<div class="info" style="font-size: smaller;margin-bottom: 24px">
+    <span>标签：
+        <% page.tag.trim().split(";").forEach(function (tag) {if (tag !== "") {%>
+            <span class="badge badge-light badge-hover"><a class="tag is-light" href='/tag/<%= tag %>' style="color: black"><%= tag %></a></span>
+        <% }}); %>
+    </span>
+    <span>发布于：<span class="badge badge-light badge-hover"><%-page.createdAt%></span></span>
+    <span>编辑于：<span class="badge badge-light badge-hover"><%-page.updatedAt%></span></span>
+    <span>浏览量：<span class="badge badge-light badge-hover"><%-page.view%></span></span>
+</div>

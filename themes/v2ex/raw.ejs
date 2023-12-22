@@ -1,0 +1,27 @@
+<%- include('./partials/header') %>
+<div class="main">
+    <div class="wrapper">
+        <div class="middle-col">
+            <div class="main-content box" style="border-bottom: 0">
+                <%- include('./partials/page-info') %>
+                <div class="cell">
+                    <div class="raw-content">
+                        <%-page.content%>
+                        <%- config.copyright %>
+                        <%- config.ad %>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <a class="pagination-previous shadow-box" href="/page/<%= links.prev.link%>"><%= links.prev.title%></a>
+                    <a class="pagination-next shadow-box" href="/page/<%= links.next.link%>"><%= links.next.title%></a>
+                </div>
+            </div>
+            <%- include('./partials/comment')%>
+        </div>
+        <div class="right-bar">
+            <%- include('./partials/panel') %>
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/footer') %>

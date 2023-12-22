@@ -1,0 +1,22 @@
+</div>
+</div>
+<footer id="footer">
+    <div class="content has-text-centered">
+        <% let date = new Date(); const year = date.getFullYear();%>
+        <p>
+            © <%= year%> <a href="//<%= config.domain %>"><%=config.author%></a> <%- config.extra_footer_text %>
+            由 <a href=""><%= systemName + " " + systemVersion%></a> 驱动，主题 <a href="">Bulma</a>
+        </p>
+    </div>
+</footer>
+
+</div>
+<script src="/static/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  $('a.navbar-item').removeClass('is-active');
+  $("a.navbar-item[tag='"+tag+"']").addClass('is-active');
+</script>
+<%- config.extra_footer_code %>
+</body>
+</html>

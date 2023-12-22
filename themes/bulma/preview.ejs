@@ -1,0 +1,80 @@
+<%- include('./partials/header') %>
+<script type="text/javascript">tag='formula'</script>
+<link rel="stylesheet" href="/static/animate.css">
+<link rel="stylesheet" href="/static/loading.css">
+<script src="/static/loading.js"></script>
+<script src="/static/polyfill.min.js"></script>
+<script src="/static/jszip.min.js"></script>
+<script src="/static/docx-preview.js"></script>
+<script src="/static/layer/layer.js"></script>
+
+<div class="container">
+    <div id="docTitle" class="doc-preview"></div>
+    <div id="previewContainer" style="min-height:200px;"></div>
+</div>
+
+<%- include('./partials/footer') %>
+<script type="text/javascript">
+    getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+    const fs_id = getUrlParam('id');
+    const id = <%= fs_id%>
+    $(function(){
+        previewDoc(fs_id);
+    })
+    function previewDoc(fs_id){
+        //var index = layer.load(1, {title: '数据加载中，请稍候......', shade: [0.1, '#fde5e5'] });//0.1透明度的白色背景
+        $('#previewContainer').loading({
+			loadingWidth:300,title:'数据加载中，请稍候...',name:'previewDoc',discription:'加载中，请稍候...',direction:'row',type:'origin',
+			originBg:'#71EA71',originDivWidth:30,originDivHeight:30,originWidth:4,originHeight:4,smallLoading:false,
+			titleColor:'#388E7A',loadingBg:'#312923',loadingMaskBg:'rgba(22,22,22,0.2)'
+		});
+        var apiUrl = '/api/preview?id=' + fs_id;
+
+        $.ajax({
+            url: apiUrl,
+            type: 'get',
+            dataType: 'json',
+            success: function (ret) {
+                debugger;
+                var opts = {
+                    className: string = "docx", // 默认和文档样式类的类名/前缀
+                    inWrapper: boolean = true, // 启用围绕文档内容渲染包装器
+                    ignoreWidth: boolean = false, // 禁止页面渲染宽度
+                    ignoreHeight: boolean = false, // 禁止页面渲染高度
+                    ignoreFonts: boolean = false, // 禁止字体渲染
+                    breakPages: boolean = true, // 在分页符上启用分页
+                    ignoreLastRenderedPageBreak: boolean = true,//禁用lastRenderedPageBreak元素的分页
+                    experimental: boolean = false, //启用实验性功能（制表符停止计算）
+                    trimXmlDeclaration: boolean = true, //如果为真，xml声明将在解析之前从xml文档中删除
+                    debug: boolean = false, // 启用额外的日志记录
+                }
+                var docData = ret.data.body.data;
+                docx.renderAsync(docData, document.getElementById("previewContainer"), null, opts).then(x =>{
+                    var filename = getFileName(ret.data.url);
+                    $('#docTitle').text(filename);
+                    //layer.close(index); 
+                    removeLoading('previewDoc');
+                });
+    
+            },
+            error: function (XMLHttpRequest) {
+                //后台返回的是字符串，与请求设定的数据类型json不一致，会执行error回调函数，而不是success
+                //layer.close(index); 
+                removeLoading('previewDoc');
+                alert('预览文件出错！')
+            }
+        });
+    }
+    function getFileName(url){
+        let urlStr = url.split('?')[1]
+        const urlSearchParams = new URLSearchParams(urlStr)
+        const result = Object.fromEntries(urlSearchParams.entries())
+        var filename = result.fin.replace('.docx','');
+        return filename;
+    }
+</script>

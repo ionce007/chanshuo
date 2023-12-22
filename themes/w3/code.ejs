@@ -1,0 +1,52 @@
+<%- include('./partials/header') %>
+
+<div class="w3-content" style="max-width:960px">
+    <div class="w3-card-4 w3-white" style="margin: 16px 3px;overflow: auto; padding: 8px 16px 16px">
+        <%- include('./partials/page-info') %>
+        <div class="w3-container w3-large article-font">
+            <div class="control-panel" style="margin-top: 16px">
+                <button class="w3-button w3-green" id="darkBtn" onclick="changeBackground()">Focus</button>
+                <button class="w3-button w3-green" onclick="copyCode()">Copy</button>
+            </div>
+            <pre>
+            <code id="code-display"><%=page.content%></code>
+        </pre>            <%- config.copyright %>
+            <%- config.ad %>
+        </div>
+    </div>
+    <%- include('./partials/prev-next') %>
+    <%- include('./partials/comment') %>
+</div>
+
+<script>
+    const body = document.getElementsByTagName("body")[0];
+    const darkBtn = document.getElementById('darkBtn');
+    let dark = false;
+    function copyCode() {
+      const copyText = document.getElementById("code-display").textContent;
+      const textArea = document.getElementById('hiddenTextArea');
+      textArea.textContent = copyText;
+      document.body.append(textArea);
+      textArea.select();
+      document.execCommand("copy");
+    }
+
+    let e = document.querySelector('#code-display');
+
+    function changeBackground() {
+      const comment = document.getElementsByClassName("comment")[0];
+      let backgroundColor = getComputedStyle(e).backgroundColor;
+      if(dark){
+        body.setAttribute('style', '');
+        if(comment) comment.style.cssText = "";
+      }else{
+        body.setAttribute('style', 'background:'+backgroundColor);
+        if(comment) comment.style.cssText = "visibility:hidden";
+      }
+      dark = !dark;
+    }
+
+</script>
+
+
+<%- include('./partials/footer') %>

@@ -1,0 +1,164 @@
+<%- include('./partials/header') %>
+    <script type="text/javascript">tag = 'formula'</script>
+    <link rel="stylesheet" href="/static/animate.css">
+    <link rel="stylesheet" href="/static/loading.css">
+    <script src="/static/loading.js"></script>
+
+    <div class="columns is-desktop">
+        <div class="column is-12">
+            <div class="columns">
+                <div class="column is-9">
+                    <p class="wenxin">温馨提示</p>
+                    <p>欢迎访问通达信指标公式网，你可以在小红书查看这些指标公式的说明（<a class='btn'
+                            href="https://www.xiaohongshu.com/user/profile/5b1bcb694eacab77ef53042a"
+                            target="_blank"><strong class="strong">点这里</strong></a>查看指标公式说明）。更多炒股技巧请上<a class="btn"
+                            href='https://www.zhihu.com/people/ionce91' target='_blank'><strong
+                                class="strong">知乎个人主页</strong></a>。</a></p>
+                    <p>如有任何问题，请扫描右侧微信二维码（<strong class="strong">微号：-ionce</strong>）联系作者本人。</p>
+                </div>
+                <div class="column is-3">
+                    <div class="right"><img src="/static/img/wxQRCode.jpg" style="width:120px;height:120px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columns is-desktop">
+        <div class="column is-12">
+            <div class="tabs">
+                <ul>
+                    <% tabs.forEach(item=> { %>
+                        <% if(item.key===key) {%>
+                            <li class="is-active">
+                                <a class="origin-tab" key="<%= item.key %>" onclick="switchTab('<%= item.key %>')">
+                                    <%= item.kind %>(<%= item.total%>)
+                                </a>
+                            </li>
+                            <%} else {%>
+                                <li>
+                                    <a class="origin-tab" key="<%= item.key %>" onclick="switchTab('<%= item.key %>')">
+                                        <%= item.kind %>(<%= item.total%>)
+                                    </a>
+                                </li>
+                        <% }%>
+                     <% })%>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="columns is-desktop">
+        <div class="column is-12">
+            <table class="table is-fullwidth is-hoverable is-striped">
+                <thead>
+                    <tr>
+                        <th>文件标题</th>
+                        <th width="15%">类型</th>
+                        <th width="20%">文件大小</th>
+                        <th width="8%">售价</th>
+                        <th width="15%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% formulas.forEach(item=> { %>
+                        <tr>
+                            <% if(item.kind=="指标公式" || item.kind=="选股公式" ) { %>
+                                <td><a href="#" onclick="showWxQR();">
+                                        <%= item.server_filename.substr(0,item.server_filename.lastIndexOf('.')) %>
+                                    </a></td>
+                                <% } else {%>
+                                    <td><a href="/preview?id=<%= item.fs_id %>" target="_blank">
+                                            <%= item.server_filename.substr(0,item.server_filename.lastIndexOf('.')) %>
+                                        </a></td>
+                                    <% } %>
+                                        <td>
+                                            <%= item.kind %>
+                                        </td>
+                                        <td>
+                                            <%= localUtil.formatBytes(item.size,2) %>
+                                        </td>
+                                        <td>
+                                            <%= item.price===0 ? "--" : "￥" + item.price %>
+                                        </td>
+                                        <% if(item.kind=="指标公式" || item.kind=="选股公式" ) { %>
+                                            <td><a onclick="showPayQR()">赞赏</a></td>
+                                            <% } else {%>
+                                                <td><a onclick="downloadDoc('<%= item.fs_id %>')">下载</a></td>
+                                                <% } %>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <div id='paginator'></div>
+            <div id="open-modal" class="modal-window modal-hidden">
+                <div>
+                    <a title="Close" class="modal-close" onclick="closePop()">Close</a>
+                    <h5 class="img-center hidden" id="imgTitle">扫码添加作者微信<br />以便更好为你服务</h5>
+                    <div class="img-center"><img src="/static/img/wxQRCode.jpg" title="微信二维码" id="weixinQR" /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var total = <%= total %>, // 总数
+            curPage = <%= curPage %>,
+                pageSize = <%= pageSize %>; // 每页个数
+        var paginator = new Page({
+            el: '#paginator',
+            nums: total,
+            counts: pageSize,
+            defaultPage: curPage,
+            showHeadFoot: !false, // 显示首页尾页
+            head: '首页', // 更改首页文字
+            foot: '尾页', // 更改尾页文字
+            jumpToOrder: true, // 跳转到指定页
+            showNowAndAll: true, // 当前页/共几页
+            clickEvent: function (curPage, _this) {
+                var key = $('div.tabs li.is-active').children()[0].attributes['key'].value;
+                location.href = `/formula?p=${curPage}&k=${key}`;
+            }
+        });
+        function switchTab(key) {
+            curPage = 1;
+            location.href = `/formula?p=${curPage}&k=${key}`;
+        }
+        function closePop() { $('#open-modal').removeClass('modal-hidden').addClass('modal-hidden'); }
+        function showWxQR() {
+            $("#imgTitle").removeClass("hidden");
+            $('#weixinQR').attr('src', '/static/img/wxQRCode.jpg');
+            $('#open-modal').removeClass('modal-hidden');
+        }
+        function showPayQR() {
+            $("#imgTitle").removeClass("hidden").addClass('hidden');
+            $('#weixinQR').attr('src', '/static/img/wxPayQR.jpg?v=1.1');
+            $('#open-modal').removeClass('modal-hidden');
+        }
+        function downloadDoc(fs_id) {
+            //var index = layer.load(1, { content: '加载中...',shade: [0.5, '#fde5e5'] });//0.1透明度的白色背景
+            $('body').loading({
+                loadingWidth: 240, title: '下载中，请稍候...', name: 'downloadDoc', discription: '这是一个描述...', direction: 'row', type: 'origin',
+                originBg: '#71EA71', originDivWidth: 30, originDivHeight: 30, originWidth: 4, originHeight: 4, smallLoading: false,
+                titleColor: '#388E7A', loadingBg: '#312923', loadingMaskBg: 'rgba(22,22,22,0.2)'
+            });
+            var apiUrl = '/api/download?id=' + fs_id;
+
+            $.ajax({
+                url: apiUrl,
+                type: 'get',
+                dataType: 'json',
+                success: function (ret) {
+                    //console.log(ret);
+                    //layer.close(index); 
+                    location.href = ret.url;
+                    removeLoading('downloadDoc');
+                },
+                error: function (XMLHttpRequest) {
+                    //layer.close(index); 
+                    //layer.msg('下载文件出错！')
+                    removeLoading('downloadDoc');
+                    alert('下载文件出错！')
+                }
+            });
+        }
+    </script>
+
+    <%- include('./partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('./partials/header') %>
+<div class="index posts-expand">
+    <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="en" style="opacity: 1; display: block;">
+        <%- include('./partials/page-info') %>
+        <div class="post-body" itemprop="articleBody" style="opacity: 1; display: block; transform: translateY(0px);">
+            <%-page.converted_content%>
+            <p class="copyright"><strong>Links: <a href="<%-page.link%>"><%-page.link%></a></strong></p>
+            <%- config.copyright %>
+            <%- config.ad %>
+        </div>
+
+        <footer class="post-footer">
+            <%- include('./partials/prev-next') %>
+        </footer>
+    </article>
+</div>
+<%- include('./partials/comment') %>
+
+<%- include('./partials/footer') %>
