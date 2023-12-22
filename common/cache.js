@@ -178,17 +178,9 @@ function convertContent(page, refresh) {
       let line = lines[i].split(':');
       let key = line[0].trim();
       if (!['title', 'link', 'image', 'description'].includes(key)) continue;
-      let value = line
-        .splice(1)
-        .join(':')
-        .trim();
+      let value = line.splice(1).join(':').trim();
       if (key === 'title') {
-        linkList.push({
-          title: 'No title',
-          image: '',
-          link: '/',
-          description: 'No description'
-        });
+        linkList.push({title: 'No title', image: '', link: '/', description: 'No description' });
         linkCount++;
       } else {
         if (linkCount < 0) continue;

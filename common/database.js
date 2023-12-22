@@ -7,5 +7,14 @@ const sequelize = new Sequelize({
   //timezone: '+08:00',
   logging: false
 });
-
+/*const sequelize = new Sequelize(config.mysql_bdname, config.mysql_user, config.mysql_pwd, {
+  host: config.mysql_host,
+  port: config.mysql_port,
+  dialect: 'mysql',
+  pool: {                         //连接池设置
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
+});*/
 module.exports = sequelize;

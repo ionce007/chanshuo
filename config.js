@@ -13,7 +13,13 @@ let config = {
   maxCachePosts: 32,
   PAN_APPID: process.env.PAN_APPID,
   PAN_APIKEY: process.env.PAN_APIKEY,
-  PAN_SECRETKEY: process.env.PAN_SECRETKEY
+  PAN_SECRETKEY: process.env.PAN_SECRETKEY,
+
+  mysql_bdname: 'chanyue',
+  mysql_user: 'huangm',
+  mysql_pwd: '34756fb129acd30c',
+  mysql_host: 'mysql.sqlpub.com',
+  mysql_port: 3306
 };
 
 function init() {
