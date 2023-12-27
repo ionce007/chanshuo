@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { message as Message, Button, Tabs, Form, Input, Divider,Upload } from 'antd';
+import { message as Message, Button, Tabs, Form, Input, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;

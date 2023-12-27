@@ -45,6 +45,7 @@ async function updateBlogCache() {
         }
         let blogs = await loadAllBlogs();
         return blogs;
+        
     }
     catch (error) {
         console.log('Failed to load all blog articles！error:' + error.message);
