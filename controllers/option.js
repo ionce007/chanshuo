@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { updateConfig } = require('../common/config');
-const { getAllPages } = require('../common/cache');
+const { loadAllPages } = require('../common/cache');
 const { updateBlogCache } = require('../common/blogcache');
 const { Option } = require('../models');
 const config = require('../config');
@@ -109,7 +109,7 @@ async function uploadDatabase(req, res, next) {
   let message = 'ok';
   try {
     //let file = await File.create(newFile);
-    await getAllPages();
+    await loadAllPages();
     await updateBlogCache();
     status = true;
   } catch (e) {

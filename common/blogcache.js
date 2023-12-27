@@ -39,7 +39,10 @@ async function updateBlogs() {
 }
 async function updateBlogCache() {
     try {
-        if (cache.has(BLOG_CACHE_KEY)) cache.delete(BLOG_CACHE_KEY);
+        if (cache.has(BLOG_CACHE_KEY)) {
+            cache.delete(BLOG_CACHE_KEY);
+            console.log('Blog cache is deleted : ', !cache.has(BLOG_CACHE_KEY))
+        }
         let blogs = await loadAllBlogs();
         return blogs;
     }

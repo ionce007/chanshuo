@@ -177,7 +177,6 @@ class Settings extends Component {
       fetch(dbFile, { method: 'get' })
         .then(res => res.blob())
         .then(data => {
-          debugger;
           this.fileDown(data)
           //this.setState({backupText: '备份数据库'})
         })
@@ -200,9 +199,7 @@ class Settings extends Component {
     this.setState({ backupText: '备份数据库' });
   }
   handleFileChange = async (file) => {
-    debugger;
     try {
-      debugger;
       const source = file.files[0];
       upload(source);
     }
