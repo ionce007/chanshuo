@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { updateConfig } = require('../common/config');
-//const { getAllPages } = require('../common/cache');
-//const { updateBlogCache } = require('../common/blogcache');
+const { getAllPages } = require('../common/cache');
+const { updateBlogCache } = require('../common/blogcache');
 const { Option } = require('../models');
 const config = require('../config');
 
