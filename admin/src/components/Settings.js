@@ -294,7 +294,7 @@ class Settings extends Component {
                       {this.state.backupText}
                     </Button>
                     
-                    <Upload {...uploadProps} ShowUploadList={false}><Button icon={<UploadOutlined />}>上传数据库</Button></Upload>
+                    <Upload {...uploadProps} ShowUploadList={false}><Button style={{ 'margin-left': '20px' }} icon={<UploadOutlined />}>上传数据库</Button></Upload>
 
                   </Form>
                 </TabPane>
