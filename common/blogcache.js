@@ -34,7 +34,7 @@ async function updateBlogs() {
         return data;
     }
     catch (error) {
-
+        console.log('Failed to updateBlogs！error:' + error.message);
     }
 }
 async function updateBlogCache() {

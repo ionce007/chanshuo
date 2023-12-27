@@ -5,6 +5,7 @@ import { message as Message, Button, Tabs, Form, Input, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
+
 const tabs = [
   {
     label: '通用设置',

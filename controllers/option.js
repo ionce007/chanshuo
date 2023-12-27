@@ -113,7 +113,7 @@ async function uploadDatabase(req, res, next) {
     status = true;
   } catch (e) {
     message = e.message;
-    console.error(message);
+    console.log(message);
   }
   res.json({ status, message, file: newFile });
 }
