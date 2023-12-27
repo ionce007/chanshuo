@@ -108,7 +108,6 @@ async function uploadDatabase(req, res, next) {
   let status = false;
   let message = 'ok';
   try {
-    
     await loadAllPages();
     await updateBlogCache();
     status = true;
