@@ -1,5 +1,9 @@
+const fs = require('fs');
 const { updateConfig } = require('../common/config');
+//const { getAllPages } = require('../common/cache');
+//const { updateBlogCache } = require('../common/blogcache');
 const { Option } = require('../models');
+const config = require('../config');
 
 async function getAll(req, res) {
   let options = [];
@@ -65,10 +69,60 @@ async function update(req, res, next) {
 async function shutdown(req, res, next) {
   process.exit();
 }
-
+async function backupDatabase(req, res, next) {
+  let status = true;
+  let message = 'ok';
+  try {
+    let dbFile = config.database;
+    const rs = fs.createReadStream(dbFile, { highWaterMark: 1024 * 8 });
+    const data = []
+    let size = 0
+    rs.on('data', chunk => {
+      size += chunk.length
+      data.push(chunk)
+    })
+    rs.on('end', () => {
+      const buf = Buffer.concat(data, size)
+      res.setHeader('Content-Type', 'application/octet-stream')
+      res.setStatus = 200
+      res.setHeader('content-length', size)
+      res.end(buf)
+    })
+  }
+  catch (error) {
+    status = false;
+    message = error.message;
+    console.error(error.message);
+    res.json({ status, message });
+  }
+}
+async function uploadDatabase(req, res, next) {
+  const { file } = req;
+  const newFile = {
+    description: req.body.description,
+    filename: file.originalname,
+    path: config.database,// '/' + file.filename,
+    id: file.id
+  };
+  console.log('option.uploadDatabase.newFile', newFile);
+  let status = false;
+  let message = 'ok';
+  try {
+    //let file = await File.create(newFile);
+    //await getAllPages();
+    //await updateBlogCache();
+    status = true;
+  } catch (e) {
+    message = e.message;
+    console.error(message);
+  }
+  res.json({ status, message, file: newFile });
+}
 module.exports = {
   shutdown,
   update,
   get,
-  getAll
+  getAll,
+  backupDatabase,
+  uploadDatabase,
 };

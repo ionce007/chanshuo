@@ -1,5 +1,5 @@
 const request = require('sync-request');
-const { getFormulasByRange } = require('../common/cache');
+//const { getFormulasByRange } = require('../common/cache');
 const sequelize = require('sequelize');
 const { Op } = require('sequelize');
 const { Formula, AccessToken } = require('../models');

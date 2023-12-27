@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
-
 import axios from 'axios';
-import { message as Message, Button, Tabs, Form, Input } from 'antd';
+import { message as Message, Button, Tabs, Form, Input, Divider,Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
@@ -125,6 +124,8 @@ class Settings extends Component {
       language: 'javascript',
       options: {},
       optionIndex: 0,
+      backupText: '备份数据库',
+      uploadText: '上传数据库',
     };
   }
 
@@ -168,31 +169,52 @@ class Settings extends Component {
     options[key] = value;
     this.setState({ options });
   };
-  genSitemap = async () => {
+  backupDatabase = async () => {
     try {
-      debugger;
-      let options = this.state.options;
-      let domain = options['domain'];
-      let urls = [];
-      for await (var arr of options){
-        for await(var item of arr){
-          let urlOption = {url:`${domain}${item.link}`, changefreq:'daily', priority:0.85}
-          urls.push(urlOption);
-        }
-      }
-      /*const Sitemap = require('sitemap');
-      const fs = require('fs');
-
-      const sitemap = Sitemap.createSitemap({
-        hostname: domain,
-        urls: urls
-      });*/
-
-      //fs.writeFileSync('/sitemap.xml', sitemap.toString());
+      //let that = this;
+      this.setState({ backupText: '正在下载...' })
+      let dbFile = `/api/option/backupdb`;
+      fetch(dbFile, { method: 'get' })
+        .then(res => res.blob())
+        .then(data => {
+          debugger;
+          this.fileDown(data)
+          //this.setState({backupText: '备份数据库'})
+        })
     }
     catch (err) {
       Message.error(err.message);
+      this.setState({ backupText: '备份数据库' });
     }
+  }
+  fileDown = (data) => {
+    const link = document.createElement('a')
+    link.download = 'data.db';
+    link.href = URL.createObjectURL(data)
+    link.style.display = 'none'
+    link.text = '文件下载'
+    document.body.appendChild(link)
+    link.click()
+    URL.revokeObjectURL(link.href)
+    document.body.removeChild(link);
+    this.setState({ backupText: '备份数据库' });
+  }
+  handleFileChange = async (file) => {
+    debugger;
+    try {
+      debugger;
+      const source = file.files[0];
+      upload(source);
+    }
+    catch (error) {
+      Message.error(err.message);
+      this.setState({ uploadText: '备份数据库' });
+    }
+  }
+  upload = async (source) => {
+    const blob = new Blob([source], { type: source.type })
+    debugger;
+    fetch('/api/option/uploaddb', { method: 'post', body: blob })
   }
   submit = async () => {
     let options = this.state.options;
@@ -213,6 +235,21 @@ class Settings extends Component {
   };
 
   render() {
+    const uploadProps = {
+      name: 'file',
+      multiple: true,
+      action: '/api/option/uploaddb',
+      onChange(info) {
+        const { status } = info.file;
+        if (status === 'done') {
+          Message.success(`文件上传成功：${info.file.name}`);
+          that.fetchData().then((r) => {});
+        } else if (status === 'error') {
+          Message.error(`文件上传失败：${info.file.name}`);
+        }
+      },
+    };
+
     return (
       <div className={'content-area'}>
         <h1>系统设置</h1>
@@ -253,9 +290,12 @@ class Settings extends Component {
                     <Button type="primary" onClick={() => this.submit()}>
                       保存设置
                     </Button>
-                    <Button type="primary" style={{ 'margin-left': '20px' }} onClick={() => this.genSitemap()}>
-                      生成站点地图
+                    <Button type="primary" style={{ 'margin-left': '20px' }} onClick={() => this.backupDatabase()}>
+                      {this.state.backupText}
                     </Button>
+                    
+                    <Upload {...uploadProps} ShowUploadList={false}><Button icon={<UploadOutlined />}>上传</Button></Upload>
+
                   </Form>
                 </TabPane>
               );

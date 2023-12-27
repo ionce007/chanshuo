@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { userRequired, adminRequired, tokenAuth } = require('../middlewares/api-auth');
 const { upload } = require('../middlewares/upload');
+const { uploadDB } = require('../middlewares/uploaddb');
 
 const page = require('../controllers/page');
 const accessToken = require('../controllers/accesstoken');
@@ -66,6 +67,9 @@ router.post('/user', adminRequired, user.create);
 router.delete('/user/:id', adminRequired, user.delete_);
 
 router.get('/option', adminRequired, option.getAll);
+router.get('/option/backupdb', adminRequired, option.backupDatabase);
+//router.post('/option/uploaddb', adminRequired, option.uploadDatabase);
+router.post('/option/uploaddb', adminRequired, uploadDB.single('file'), option.uploadDatabase);
 router.get('/option/shutdown', adminRequired, option.shutdown);
 router.get('/option/:name', adminRequired, option.get);
 router.put('/option', adminRequired, option.update);

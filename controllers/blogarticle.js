@@ -339,6 +339,7 @@ async function showChanShuo(req, res, next) {
         let author = await CSArticle.findAll({ where: { link: 'author' }, raw: true });
         json.author = author ? author[0] : {};
         let data = await getArticleCategories();
+        console.log('blog category data:',data);
         json.data = data;
     }
     catch (e) {

@@ -1,6 +1,6 @@
 const { updateView, getLinks, convertContent, getPageListByTag, getPagesByRange } = require('../common/cache');
 const { loadAllBlogs } = require('../common/blogcache');
-const { getDate } = require('../common/util');
+const { getDate,dateFormat } = require('../common/util');
 const { Page, Formula } = require('../models');
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createGzip } = require('zlib');
@@ -31,6 +31,7 @@ async function getIndex(req, res, next) {
   if (page !== 0 && pages.length === 0) {
     res.redirect('/');
   } else {
+    //pages = pages.map((item)=>{ item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');return item; });
     res.render('index', { pages: pages, prev: `?p=${page - 1}`, next: `?p=${page + 1}` });
   }
 }

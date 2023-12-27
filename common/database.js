@@ -11,6 +11,8 @@ const sequelize = new Sequelize({
   host: config.mysql_host,
   port: config.mysql_port,
   dialect: 'mysql',
+  timezone: '+08:00',
+  logging: true,
   pool: {                         //连接池设置
     max: 5,
     min: 0,
