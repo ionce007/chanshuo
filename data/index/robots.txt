@@ -1,2 +1,5 @@
 User-agent: *
+Sitemap:   https://cms.foryet.com/sitemap.xml
+Sitemap:   https://chanshuo.onrender.com/sitemap.xml
 Disallow: /admin/
+Disallow: /error.html
