@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>s828y46514.goho.co</id>
     <title>缠说 ● 股经</title>
-    <updated>2023-12-26T13:46:08.615Z</updated>
+    <updated>2023-12-27T06:42:30.015Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -13,61 +13,61 @@
     <subtitle>股票交易技术交流，指标公式、选股公式编写，股票投资经验汇集，量化交易策略编写及技术分享，“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[ant design confirm的使用说明]]></title>
-        <id>ant-design-confirm的使用说明</id>
-        <link href="https://s828y46514.goho.co/page/ant-design-confirm的使用说明"/>
-        <updated>2023-12-02T15:26:42.672Z</updated>
-        <summary type="html"><![CDATA[ant design confirm的使用说明]]></summary>
+        <title type="html"><![CDATA[一文通过案例将MACD指标讲清楚]]></title>
+        <id>一文通过案例将macd指标讲清楚</id>
+        <link href="https://s828y46514.goho.co/page/一文通过案例将macd指标讲清楚"/>
+        <updated>2023-12-27T05:21:55.829Z</updated>
+        <summary type="html"><![CDATA[MACD是由三条线和红绿色柱体构成，黑色线是DIF线，称之为快线;紫色线是DEA线，称为慢线。中间的一条直线是零轴，红色和绿色的柱体是能量柱。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[React组件之easy-antd-modal简介]]></title>
-        <id>react组件之easy-antd-modal简介</id>
-        <link href="https://s828y46514.goho.co/page/react组件之easy-antd-modal简介"/>
-        <updated>2023-11-10T15:29:26.157Z</updated>
-        <summary type="html"><![CDATA[ease-antd-modal 是一个简化 Ant Design Modal 的使用方式的库, 通过对 Modal 的封装]]></summary>
+        <title type="html"><![CDATA[股票交易中的分歧，一致和分歧转一致及实例分析]]></title>
+        <id>股票交易中的分歧，一致和分歧转一致及实例分析</id>
+        <link href="https://s828y46514.goho.co/page/股票交易中的分歧，一致和分歧转一致及实例分析"/>
+        <updated>2023-12-27T05:10:32.535Z</updated>
+        <summary type="html"><![CDATA[股票交易中的分歧，一致和分歧转一致，发现很多人不知道怎么看分歧和一致。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[React使用Portals手写模态框Dialog]]></title>
-        <id>天舟七号将发射-中国空间站将升级为“十”字型</id>
-        <link href="https://s828y46514.goho.co/page/天舟七号将发射-中国空间站将升级为“十”字型"/>
-        <updated>2023-11-10T15:18:45.049Z</updated>
-        <summary type="html"><![CDATA[本文详细介绍React使用Portals开发模态框Dialog的步骤及详细源代码]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[React实现Modal弹窗效果]]></title>
+        <title type="html"><![CDATA[筹码峰识别主力及回踩一线天]]></title>
         <id>links</id>
         <link href="https://s828y46514.goho.co/page/links"/>
-        <updated>2023-11-10T15:00:14.226Z</updated>
-        <summary type="html"><![CDATA[这篇文章主要为大家详细介绍了react实现Modal弹窗效果，文中示例代码介绍的非常详细，具有一定的参考价值，感兴趣的小伙伴们可以参考一下]]></summary>
+        <updated>2023-12-27T05:06:03.562Z</updated>
+        <summary type="html"><![CDATA[筹码峰可以帮助我们及时发现阶段性底部筹码集中的个股，跟随主力在拉升前介入，那如何通过筹码峰识别主力有建仓并拉升的意向呢？建议收藏研究！]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[React组件方法注入js脚本并执行]]></title>
-        <id>react组件方法注入js脚本并执行</id>
-        <link href="https://s828y46514.goho.co/page/react组件方法注入js脚本并执行"/>
-        <updated>2023-11-10T14:53:04.991Z</updated>
-        <summary type="html"><![CDATA[本文介绍React 组件方法注入 JavaScript 脚本并执行的步骤]]></summary>
+        <title type="html"><![CDATA[MACD、KDJ、RSI三项指标顶底背离及金叉共振指标公式]]></title>
+        <id>macd、kdj、rsi三项指标顶底背离及金叉共振指标公式</id>
+        <link href="https://s828y46514.goho.co/page/macd、kdj、rsi三项指标顶底背离及金叉共振指标公式"/>
+        <updated>2023-12-27T04:39:53.209Z</updated>
+        <summary type="html"><![CDATA[MACD;KDJ;RSI;技术指标;顶背离;底背离;金叉共振]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[React Hook 手写 Modal 模态框组件]]></title>
-        <id>react-hook-手写-modal-模态框组件</id>
-        <link href="https://s828y46514.goho.co/page/react-hook-手写-modal-模态框组件"/>
-        <updated>2023-11-10T14:47:30.712Z</updated>
-        <summary type="html"><![CDATA[Modal (模态框) 是 web 开发中十分常见的组件，即从页面中弹出的对话框。今天我们一起来用 React Hook 手写 Modal 模态框组件.]]></summary>
+        <title type="html"><![CDATA[短线牛股突破形态之“仙人指路”，堪称经典，深受资深股民的喜爱！]]></title>
+        <id>“仙人指路”形态</id>
+        <link href="https://s828y46514.goho.co/page/“仙人指路”形态"/>
+        <updated>2023-12-27T03:06:12.627Z</updated>
+        <summary type="html"><![CDATA[在K线形态中，仙人指路，是主力向上攻击的试盘动作。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[指标之王：MACD的9个选股步骤，看懂没一个穷人！]]></title>
+        <id>ant-design-confirm的使用说明</id>
+        <link href="https://s828y46514.goho.co/page/ant-design-confirm的使用说明"/>
+        <updated>2023-12-27T02:51:33.154Z</updated>
+        <summary type="html"><![CDATA[技术指标MACD的应用]]></summary>
         <author>
             <name/>
         </author>

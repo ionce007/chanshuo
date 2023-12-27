@@ -109,8 +109,8 @@ async function uploadDatabase(req, res, next) {
   let message = 'ok';
   try {
     //let file = await File.create(newFile);
-    //await getAllPages();
-    //await updateBlogCache();
+    await getAllPages();
+    await updateBlogCache();
     status = true;
   } catch (e) {
     message = e.message;

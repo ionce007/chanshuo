@@ -156,7 +156,6 @@ article {
     word-wrap: break-word;
     color: #24292f;
 }
-
 article p, article blockquote, article ul, article ol, article dl, article table, article pre, article details {
     margin-top: 0;
     margin-bottom: 16px;
@@ -445,3 +444,4 @@ span.line {
 .table>tbody>tr>td>a{color:#363636}
 .box h2{padding-bottom: 0.3em;font-size:1em;color: #ee00dd;margin-top: 20px;margin-bottom: 16px;font-weight: 600;line-height: 1.5;margin-block-start: 1em;margin-block-end: 0.2em;}
 .utterances{max-width:100%;}
+article > p:has(img) {text-align: center; margin: 0 auto;}
