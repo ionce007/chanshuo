@@ -16,7 +16,7 @@ async function getAllBlogs() {
         let blogs = await CSArticle.findAndCountAll({
             //attributes: { exclude: ['content'] },
             include: CSCategory,
-            order: [['issuedate', 'DESC'], ['updatedAt', 'DESC']], raw: true
+            order: [['issuedate', 'ASC'], ['updatedAt', 'DESC']], raw: true
         });
         return blogs;
     }

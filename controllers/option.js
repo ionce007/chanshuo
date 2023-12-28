@@ -104,7 +104,6 @@ async function uploadDatabase(req, res, next) {
     path: config.database,// '/' + file.filename,
     id: file.id
   };
-  console.log('option.uploadDatabase.newFile', newFile);
   let status = false;
   let message = 'ok';
   try {

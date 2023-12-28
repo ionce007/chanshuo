@@ -17,7 +17,6 @@ exports.uploadDB = multer({
     filename: async function (req, file, callback) {
       try {
         //file.originalname = file.originalname.replaceAll(" ", "_");
-        console.log('file', file) //上传的文件信息
         var fileFormat = (file.originalname).split('.')
         var filename = new Date().getTime()
         callback(null, file.originalname)
