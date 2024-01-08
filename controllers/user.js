@@ -5,7 +5,6 @@ const { v4: uuidv4 } = require('uuid');
 const { hashPasswordWithSalt, checkPassword } = require('../common/util');
 
 async function login(req, res) {
-  debugger;
   let username = req.body.username;
   let password = req.body.password;
   if (username) username = username.trim();
