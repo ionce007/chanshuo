@@ -23,6 +23,7 @@ import {
   VerifiedOutlined,
   FileDoneOutlined,
   StockOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
 
 import { Link, Switch, Route } from 'react-router-dom';
@@ -150,7 +151,7 @@ class App extends React.Component {
             <Menu.Item key="6" icon={<UserOutlined />}>
               <Link to={'/users'}>用户管理</Link>
             </Menu.Item>
-            <Menu.Item key="7" icon={<SettingOutlined />}>
+            <Menu.Item key="12" icon={<SettingOutlined />}>
               <Link to={'/settings'}>系统设置</Link>
             </Menu.Item>
           </Menu>

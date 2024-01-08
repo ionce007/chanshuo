@@ -24,7 +24,6 @@ exports.uploadDB = multer({
       catch (error) {
         console.log('uploadDB.multer.filename error：', error.message);
       }
-
     }
   })
 });

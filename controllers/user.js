@@ -8,6 +8,7 @@ async function login(req, res) {
   debugger;
   let username = req.body.username;
   let password = req.body.password;
+  console.log('username = ',username, '  password = ',password);
   if (username) username = username.trim();
   if (password) password = password.trim();
   if (username === '' || password === '') {

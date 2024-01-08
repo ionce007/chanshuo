@@ -3,6 +3,7 @@ const router = express.Router();
 const { userRequired, adminRequired, tokenAuth } = require('../middlewares/api-auth');
 const { upload } = require('../middlewares/upload');
 const { uploadDB } = require('../middlewares/uploaddb');
+//const UploadBigFile  = require("../middlewares/uploadBigFile");
 
 const page = require('../controllers/page');
 const accessToken = require('../controllers/accesstoken');
@@ -88,4 +89,12 @@ router.post('/qywxcb', qywx.qywx_callback);
 router.get('/qywx_provider', qywxProvider.qywx_callback);
 router.post('/qywx_provider', qywxProvider.qywx_callback);
 
+/*
+const uploadBigFile = new UploadBigFile();
+router.get('/bigfile/verify', adminRequired, uploadBigFile.handleVerifyUpload);
+router.post('/bigfile', adminRequired, uploadBigFile.handleFormData);
+router.post('/bigfile/', adminRequired, uploadBigFile.handleFormData);
+router.post('/bigfile/merge', adminRequired, uploadBigFile.handleMerge);
+router.post('/bigfile/delete', adminRequired, uploadBigFile.deleteFiles);
+*/
 module.exports = router;

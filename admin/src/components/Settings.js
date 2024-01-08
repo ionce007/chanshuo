@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { message as Message, Button, Tabs, Form, Input, Upload } from 'antd';
+//import SparkMD5 from 'spark-md5';
+import { message as Message, Button, Tabs, Form, Input, Upload, } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
@@ -108,8 +109,7 @@ const tabs = [
       },
       {
         key: 'message_push_api',
-        description:
-          '消息推送 API 链接，具体参见：https://github.com/ionce007/message-pusher',
+        description: '消息推送 API 链接，具体参见：https://github.com/ionce007/message-pusher',
       },
     ],
   },
@@ -230,78 +230,90 @@ class Settings extends Component {
       this.setState({ submitLoading: false });
     }
   };
+ 
 
-  render() {
-    const uploadProps = {
-      name: 'file',
-      multiple: true,
-      action: '/api/option/uploaddb',
-      onChange(info) {
-        const { status } = info.file;
-        if (status === 'done') {
-          Message.success(`文件上传成功：${info.file.name}`);
-          that.fetchData().then((r) => {});
-        } else if (status === 'error') {
-          Message.error(`文件上传失败：${info.file.name}`);
-        }
-      },
-    };
+fileSelected = async (e) => {
+  debugger;
+  //const file = e.target.files[0];
+}
+uploadFile = async () => {
+  debugger;
+  const fileEl = document.getElementById("file");
+  fileEl.click();
+}
+render() {
+  const uploadProps = {
+    name: 'file',
+    multiple: true,
+    //action: '/api/option/uploaddb',
+    onChange(info) {
+      debugger;
+      const { status } = info.file;
+      if (status === 'done') {
+        Message.success(`文件上传成功：${info.file.name}`);
+        that.fetchData().then((r) => { });
+      } else if (status === 'error') {
+        Message.error(`文件上传失败：${info.file.name}`);
+      }
+    },
+  };
 
-    return (
-      <div className={'content-area'}>
-        <h1>系统设置</h1>
-        <div style={{ background: '#fff', padding: 16 }}>
-          <Tabs tabPosition={'left'}>
-            {tabs.map((tab) => {
-              tab.settings.sort((a, b) => {
-                if (a.key < b.key) {
-                  return -1;
-                }
-                if (a.key > b.key) {
-                  return 1;
-                }
-                return 0;
-              });
-              return (
-                <TabPane tab={tab.label} key={tab.label}>
-                  <Form layout={'vertical'}>
-                    {tab.settings.map((setting) => {
-                      setting.label = setting.key.replaceAll('_', ' ').toUpperCase();
-                      return (
-                        <Form.Item label={setting.label ? setting.label : setting.key}>
-                          {setting.isBlock ? (
-                            <Input.TextArea placeholder={setting.description} value={this.state.options[setting.key]}
-                              onChange={(e) => { this.updateOption(setting.key, e.target.value); }}
-                              rows={10}
-                            />
-                          ) : (
-                            <Input placeholder={setting.description} value={this.state.options[setting.key]}
-                              onChange={(e) => {
-                                this.updateOption(setting.key, e.target.value);
-                              }}
-                            />
-                          )}
-                        </Form.Item>
-                      );
-                    })}
-                    <Button type="primary" onClick={() => this.submit()}>
-                      保存设置
-                    </Button>
-                    <Button type="primary" style={{ 'margin-left': '20px' }} onClick={() => this.backupDatabase()}>
-                      {this.state.backupText}
-                    </Button>
-                    
-                    <Upload {...uploadProps} ShowUploadList={false}><Button style={{ 'margin-left': '20px' }} icon={<UploadOutlined />}>上传数据库</Button></Upload>
+  return (
+    <div className={'content-area'}>
+      <h1>系统设置</h1>
+      <div style={{ background: '#fff', padding: 16 }}>
+        <Tabs tabPosition={'left'}>
+          {tabs.map((tab) => {
+            tab.settings.sort((a, b) => {
+              if (a.key < b.key) {
+                return -1;
+              }
+              if (a.key > b.key) {
+                return 1;
+              }
+              return 0;
+            });
+            return (
+              <TabPane tab={tab.label} key={tab.label}>
+                <Form layout={'vertical'}>
+                  {tab.settings.map((setting) => {
+                    setting.label = setting.key.replaceAll('_', ' ').toUpperCase();
+                    return (
+                      <Form.Item label={setting.label ? setting.label : setting.key}>
+                        {setting.isBlock ? (
+                          <Input.TextArea placeholder={setting.description} value={this.state.options[setting.key]}
+                            onChange={(e) => { this.updateOption(setting.key, e.target.value); }}
+                            rows={10}
+                          />
+                        ) : (
+                          <Input placeholder={setting.description} value={this.state.options[setting.key]}
+                            onChange={(e) => {
+                              this.updateOption(setting.key, e.target.value);
+                            }}
+                          />
+                        )}
+                      </Form.Item>
+                    );
+                  })}
+                  <Button type="primary" onClick={() => this.submit()}>
+                    保存设置
+                  </Button>
+                  <Button type="primary" style={{ 'margin-left': '20px' }} onClick={() => this.backupDatabase()}>
+                    {this.state.backupText}
+                  </Button>
 
-                  </Form>
-                </TabPane>
-              );
-            })}
-          </Tabs>
-        </div>
+                  <Upload {...uploadProps} ShowUploadList={false}><Button style={{ 'margin-left': '20px' }} icon={<UploadOutlined />}>{this.state.uploadText}</Button></Upload>
+
+                </Form>
+                <Input type='file' id='file' onChange={(e) => this.fileSelected(e)} style={{ display: 'none' }} /><Button style={{ 'margin-top': '10px' }} icon={<UploadOutlined />} onClick={() => this.uploadFile()}>{this.state.uploadText}</Button>
+              </TabPane>
+            );
+          })}
+        </Tabs>
       </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 const mapStateToProps = (state) => {

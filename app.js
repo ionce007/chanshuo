@@ -11,6 +11,7 @@ const path = require('path');
 const enableRSS = require('./common/rss').enableRSS;
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
+const UploadBigFile  = require("./middlewares/uploadBigFile");
 const dotEnv  = require('dotenv');
 dotEnv.config();
 
@@ -100,6 +101,36 @@ app.use(flash());
     }
   });
 })();
+
+const upload = new UploadBigFile();
+
+server.on("request", async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  if (req.method === "OPTIONS") {
+    res.status = 200;
+    res.end();
+    return;
+  }
+  if (req.url === "/bigfile/verify") {
+    await upload.handleVerifyUpload(req, res);
+    return;
+  }
+
+  if (req.url === "/bigfile/merge") {
+    await upload.handleMerge(req, res);
+    return;
+  }
+
+  if (req.url === "/bigfile" || req.url === '/bigfile/') {
+    await upload.handleFormData(req, res);
+  }
+
+  if (req.url === "/bigfile/delete") {
+    console.log('/bigfile/delete request method: ',req.method);
+    await upload.deleteFiles(req, res);
+  }
+});
 
 server.listen(config.port);
 
