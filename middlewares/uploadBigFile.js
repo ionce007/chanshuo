@@ -76,6 +76,7 @@ const mergeFileChunk = async (filePath, fileHash, size, totalChunks) => {
             );
         })
     );
+    
     // 合并后删除保存切片的目录
     // delete chunk directory after merging
     //fse.rmdirSync(chunkDir);
