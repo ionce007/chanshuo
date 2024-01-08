@@ -11,14 +11,14 @@ _✨ 基于 Node.js 的个人博客系统 ✨_
 </div>
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/songquanpeng/blog/master/LICENSE">
-    <img src="https://img.shields.io/github/license/songquanpeng/blog?color=brightgreen" alt="license">
+  <a href="https://raw.githubusercontent.com/ionce007/blog/master/LICENSE">
+    <img src="https://img.shields.io/github/license/ionce007/blog?color=brightgreen" alt="license">
   </a>
-  <a href="https://github.com/songquanpeng/blog/releases/latest">
-    <img src="https://img.shields.io/github/v/release/songquanpeng/blog?color=brightgreen&include_prereleases" alt="release">
+  <a href="https://github.com/ionce007/blog/releases/latest">
+    <img src="https://img.shields.io/github/v/release/ionce007/blog?color=brightgreen&include_prereleases" alt="release">
   </a>
-  <a href="https://github.com/songquanpeng/blog/releases/latest">
-    <img src="https://img.shields.io/github/downloads/songquanpeng/blog/total?color=brightgreen&include_prereleases" alt="release">
+  <a href="https://github.com/ionce007/blog/releases/latest">
+    <img src="https://img.shields.io/github/downloads/ionce007/blog/total?color=brightgreen&include_prereleases" alt="release">
   </a>
   <a href="https://hub.docker.com/repository/docker/justsong/blog">
     <img src="https://img.shields.io/docker/pulls/justsong/blog?color=brightgreen" alt="docker pull">
@@ -28,11 +28,11 @@ _✨ 基于 Node.js 的个人博客系统 ✨_
 <p align="center">
   <a href="#截图展示">截图展示</a>
   ·
-  <a href="https://iamazing.cn/">在线演示</a>
+  <a href="https://cms.foryet.com/">在线演示</a>
   ·
   <a href="#部署">部署教程</a>
   ·
-  <a href="https://github.com/songquanpeng/blog/issues">意见反馈</a>
+  <a href="https://github.com/ionce007/blog/issues">意见反馈</a>
 </p>
 
 
@@ -49,11 +49,11 @@ _✨ 基于 Node.js 的个人博客系统 ✨_
 
 ## 主题
 1. Bulma：Bulma CSS 风格主题，内置的默认主题。
-2. Bootstrap：[Bootstrap 风格主题](https://github.com/songquanpeng/blog-theme-bootstrap)（推荐使用）。
-3. W3：[W3.css 风格主题](https://github.com/songquanpeng/blog-theme-w3)。
-4. V2EX: [V2EX 风格主题](https://github.com/songquanpeng/blog-theme-v2ex)。
-5. Next: [Hexo Next 风格主题](https://github.com/songquanpeng/blog-theme-next)。
-6. Bootstrap5: 借鉴自 [CodeLunatic/halo-theme-simple-bootstrap](https://github.com/CodeLunatic/halo-theme-simple-bootstrap) 的 [Bootstrap5 风格主题](https://github.com/songquanpeng/blog-theme-bootstrap5)。
+2. Bootstrap：[Bootstrap 风格主题](https://github.com/ionce007/blog-theme-bootstrap)（推荐使用）。
+3. W3：[W3.css 风格主题](https://github.com/ionce007/blog-theme-w3)。
+4. V2EX: [V2EX 风格主题](https://github.com/ionce007/blog-theme-v2ex)。
+5. Next: [Hexo Next 风格主题](https://github.com/ionce007/blog-theme-next)。
+6. Bootstrap5: 借鉴自 [CodeLunatic/halo-theme-simple-bootstrap](https://github.com/CodeLunatic/halo-theme-simple-bootstrap) 的 [Bootstrap5 风格主题](https://github.com/ionce007/blog-theme-bootstrap5)。
 
 注意：
 1. 更改主题的步骤：打开后台管理系统中的设置页面 -> 自定义设置 -> 找到 THEME -> 修改后点击保存设置，记得浏览器 `Ctrl + F5` 刷新缓存。
@@ -62,8 +62,8 @@ _✨ 基于 Node.js 的个人博客系统 ✨_
 
 ## 演示
 ### 在线演示
-1. [JustSong 的个人博客](https://iamazing.cn) (可能并非最新版本).
-2. [Render App](https://nodejs-blog.onrender.com) ([后台管理系统地址](https://nodejs-blog.onrender.com/admin/) 默认用户名 `admin` 以及密码 `123456`)
+1. [铜豌豆 的个人博客](https://cms.foryet.com) (可能并非最新版本).
+2. [Render App](https://chanshuo.onrender.com) ([后台管理系统地址](https://chanshuo.onrender.com/admin/) 默认用户名 `admin` )
 
 ### 截图展示
 ![桌面端首页](https://user-images.githubusercontent.com/39998050/108320215-76e02e00-71fd-11eb-8ecc-caeff90eb0da.png)
@@ -84,7 +84,7 @@ _✨ 基于 Node.js 的个人博客系统 ✨_
 
 ### 通过源码部署
 ```shell script
-git clone https://github.com/songquanpeng/blog.git
+git clone https://github.com/ionce007/chanshuo.git
 cd blog
 # 获取主题
 git submodule init
