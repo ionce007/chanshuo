@@ -12,7 +12,6 @@ async function login(req, res) {
   if (username === '' || password === '') {
     return res.json({ status: false, message: '无效的参数' });
   }
-
   let user = await User.findOne({ where: { [Op.and]: [{ username }] }, raw: true });
   if (user && checkPassword(password, user.password)) {
     if (!user.isBlocked) {
