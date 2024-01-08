@@ -31,13 +31,22 @@ async function getIndex(req, res, next) {
   if (page !== 0 && pages.length === 0) {
     res.redirect('/');
   } else {
-    //pages = pages.map((item)=>{ item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');return item; });
+    pages = pages.map((item)=>{ 
+      item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
+      return item; 
+    });
     res.render('index', { pages: pages, prev: `?p=${page - 1}`, next: `?p=${page + 1}` });
   }
 }
 
 async function getArchive(req, res, next) {
   let pages = await getPagesByRange(0, -1);
+  pages = pages.map((item)=>{ 
+    item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
+    item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
+    return item; 
+  });
   res.render('archive', {
     pages: pages.reverse()
   });

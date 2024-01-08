@@ -317,7 +317,8 @@ async function getArticleCategories() {
     try {
         //CSCategory.hasMany(CSArticle, {foreignKey: 'cid'});
         //CSArticle.belongsTo(CSCategory, {foreignKey: 'cid'});
-        let parents = await CSCategory.findAll({ group: 'parent', order: [['iorder', 'ASC']], raw: true });
+        //let parents = await CSCategory.findAll({ group: 'parent', order: [['iorder', 'ASC']], raw: true });
+        let parents = await CSCategory.findAll({ group: 'parent', attributes:['parent'], raw: true });
         let categories = await CSCategory.findAll({ where: { isEnable: 1 }, raw: true, order: [['iorder', 'ASC']] });
         for (var item of parents) {
             let label = item.parent;

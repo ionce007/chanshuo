@@ -36,7 +36,17 @@ async function get(req, res) {
   }
   res.json({ status, message, option });
 }
-
+async function resetCache(req, res, next) {
+  let json = { status: true, message: 'success'}
+  try {
+    await loadAllPages();
+    await updateBlogCache();
+  }
+  catch (error) {
+    json = { status: false, message: error.message }
+  }
+  res.json(json);
+}
 async function update(req, res, next) {
   const options = req.body;
   for (const [key, value] of Object.entries(options)) {
@@ -123,4 +133,5 @@ module.exports = {
   getAll,
   backupDatabase,
   uploadDatabase,
+  resetCache,
 };

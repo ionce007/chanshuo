@@ -169,6 +169,9 @@ class Settings extends Component {
     options[key] = value;
     this.setState({ options });
   };
+  resetCache = async() => {
+    const res = await axios.post(`/api/option/resetCache`);
+  }
   backupDatabase = async () => {
     try {
       //let that = this;
@@ -298,14 +301,15 @@ render() {
                   <Button type="primary" onClick={() => this.submit()}>
                     保存设置
                   </Button>
-                  <Button type="primary" style={{ 'margin-left': '20px' }} onClick={() => this.backupDatabase()}>
+                  {/*<Button type="primary" style={{ 'margin-left': '20px' }} onClick={() => this.backupDatabase()}>
                     {this.state.backupText}
+                  </Button>*/}
+                  <Button type="primary" style={{ 'margin-left': '20px' }} onClick={() => this.resetCache()}>
+                    重置缓存
                   </Button>
-
                   <Upload {...uploadProps} ShowUploadList={false}><Button style={{ 'margin-left': '20px' }} icon={<UploadOutlined />}>{this.state.uploadText}</Button></Upload>
 
                 </Form>
-                <Input type='file' id='file' onChange={(e) => this.fileSelected(e)} style={{ display: 'none' }} /><Button style={{ 'margin-top': '10px' }} icon={<UploadOutlined />} onClick={() => this.uploadFile()}>{this.state.uploadText}</Button>
               </TabPane>
             );
           })}
