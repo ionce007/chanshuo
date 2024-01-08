@@ -94,7 +94,7 @@ function DateAdd ( date, strInterval, number) {
 };
 
 function dateFormat(date, format) {
-  if(typeof(date) !== 'object') date = new Date(date);
+  if(typeof(date) !== 'object') date = new Date(date)
   const o = {
     'M+': date.getMonth() + 1, // 月份
     'd+': date.getDate(), // 日
