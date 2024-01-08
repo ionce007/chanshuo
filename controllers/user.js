@@ -104,6 +104,7 @@ async function get(req, res) {
       where: { id },
       raw: true
     });
+    
     status = user !== null;
   } catch (e) {
     message = e.message;
