@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 ● 股经</title>
-    <updated>2024-01-08T14:29:15.614Z</updated>
+    <updated>2024-01-15T02:04:53.038Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -10,8 +10,78 @@
     </author>
     <link rel="alternate" href="https://cms.foryet.com/"/>
     <link rel="self" href="https://example.com/atom.xml"/>
-    <subtitle>股票交易技术交流，指标公式、选股公式编写，股票投资经验汇集，量化交易策略编写及技术分享，“缠中说禅”博文。</subtitle>
+    <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[散户炒股法宝――学会画“趋势线”]]></title>
+        <id>学会画“趋势线”</id>
+        <link href="https://cms.foryet.com/page/学会画“趋势线”"/>
+        <updated>2024-01-15T01:54:52.000Z</updated>
+        <summary type="html"><![CDATA[在中期上升趋势中，股价的低点和高点都不断上移。将两个低点用直线连接起来，便构成一条上升趋势线，它将成为股价回档时的支撑。当股价每次回调至该线不跌破并且止跌回升时，便是上升趋势中的短线买入时机。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[股市最可靠的“银山谷”买入法，看到这一走势大胆选择满仓！]]></title>
+        <id>股市最可靠的“银山谷”买入法</id>
+        <link href="https://cms.foryet.com/page/股市最可靠的“银山谷”买入法"/>
+        <updated>2024-01-14T14:58:45.000Z</updated>
+        <summary type="html"><![CDATA[俗话说金山不如银山，但是在股市中银山的出现是在给金山做铺垫。股市瞬息万变，看透的人，处处是生机;看不透的人，处处是困境。涨时不贪，跌时不慌，保持清醒，方能进退自如。只有不断学习才能不断进步，下面小编来介绍下极常见的“银山谷”战法。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[主力拉高建仓洗盘再启动的首板买入方法]]></title>
+        <id>主力拉高建仓洗盘再启动的首板买入方法</id>
+        <link href="https://cms.foryet.com/page/主力拉高建仓洗盘再启动的首板买入方法"/>
+        <updated>2024-01-14T00:58:49.000Z</updated>
+        <summary type="html"><![CDATA[今天主要介绍两种打首板的方法，虽然是图形为主，但图形的背后逻辑是主力快速拉高建仓，洗盘，再启动主升。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？]]></title>
+        <id>如何通过周线、月线判断股票主升浪开始？</id>
+        <link href="https://cms.foryet.com/page/如何通过周线、月线判断股票主升浪开始？"/>
+        <updated>2024-01-12T03:16:25.000Z</updated>
+        <summary type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？坊间俗语“月线看势，周线选股，日线辨强弱。”通过K线技术来选择股票，是有一定道理的。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[板块龙头的判断及第一买点的方法]]></title>
+        <id>板块龙头的判断及第一买点的方法</id>
+        <link href="https://cms.foryet.com/page/板块龙头的判断及第一买点的方法"/>
+        <updated>2024-01-11T14:57:02.000Z</updated>
+        <summary type="html"><![CDATA[如果一只股票在连板的初期，被我们判断为可能的板块龙头（判断板块龙头的讲解在文章后面），那么它的最佳介入点是第一次的分歧板或者是分歧板次日的加速板，大多数时候，我们面临的只是非市场总龙头的板块龙头，对于板块龙头来说，通常的上涨过程一般情况下最多可能只有一两次的分歧与加速的过程]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[抓龙头主升的具体操作方法]]></title>
+        <id>抓龙头主升的具体操作方法</id>
+        <link href="https://cms.foryet.com/page/抓龙头主升的具体操作方法"/>
+        <updated>2024-01-11T14:53:53.000Z</updated>
+        <summary type="html"><![CDATA[关于龙头战法的心法部分在大佬的帖子里都有，这里试着来说一下具体的操作方案。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[股票出现“仙人指路”形态，说明主力正在强势洗盘，股价或将喷发式上涨]]></title>
+        <id>仙人指路</id>
+        <link href="https://cms.foryet.com/page/仙人指路"/>
+        <updated>2024-01-10T05:19:21.000Z</updated>
+        <summary type="html"><![CDATA[价处在大调整阶段的中期底部、拉升阶段初期或者拉升波段中期，当天股价盘中高开高走放量攻击，但股价冲高之后，主力却在盘中实施回头波打压震荡盘跌。全天量比1倍以上，换手率在5%以内，振幅在7%以上。股价在盘中反复盘跌后，最终以一要带长上影小阴阳K线报收。收盘时，股价当天仍然保持在1%-3%左右的涨跌幅。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[一文通过案例将MACD指标讲清楚]]></title>
         <id>一文通过案例将macd指标讲清楚</id>
@@ -38,36 +108,6 @@
         <link href="https://cms.foryet.com/page/links"/>
         <updated>2023-12-26T21:06:04.000Z</updated>
         <summary type="html"><![CDATA[筹码峰可以帮助我们及时发现阶段性底部筹码集中的个股，跟随主力在拉升前介入，那如何通过筹码峰识别主力有建仓并拉升的意向呢？建议收藏研究！]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MACD、KDJ、RSI三项指标顶底背离及金叉共振指标公式]]></title>
-        <id>macd、kdj、rsi三项指标顶底背离及金叉共振指标公式</id>
-        <link href="https://cms.foryet.com/page/macd、kdj、rsi三项指标顶底背离及金叉共振指标公式"/>
-        <updated>2023-12-26T20:39:53.000Z</updated>
-        <summary type="html"><![CDATA[MACD;KDJ;RSI;技术指标;顶背离;底背离;金叉共振]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[短线牛股突破形态之“仙人指路”，堪称经典，深受资深股民的喜爱！]]></title>
-        <id>“仙人指路”形态</id>
-        <link href="https://cms.foryet.com/page/“仙人指路”形态"/>
-        <updated>2023-12-26T19:06:13.000Z</updated>
-        <summary type="html"><![CDATA[在K线形态中，仙人指路，是主力向上攻击的试盘动作。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[指标之王：MACD的9个选股步骤，看懂没一个穷人！]]></title>
-        <id>ant-design-confirm的使用说明</id>
-        <link href="https://cms.foryet.com/page/ant-design-confirm的使用说明"/>
-        <updated>2023-12-26T18:51:33.000Z</updated>
-        <summary type="html"><![CDATA[技术指标MACD的应用]]></summary>
         <author>
             <name/>
         </author>
