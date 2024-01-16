@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 ● 股经</title>
-    <updated>2024-01-15T02:04:53.038Z</updated>
+    <updated>2024-01-16T02:59:43.012Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -12,6 +12,16 @@
     <link rel="self" href="https://example.com/atom.xml"/>
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[如何判断主力吸筹完成后的试盘]]></title>
+        <id>如何判断主力吸筹完成后的</id>
+        <link href="https://cms.foryet.com/page/如何判断主力吸筹完成后的"/>
+        <updated>2024-01-16T01:53:17.000Z</updated>
+        <summary type="html"><![CDATA[拒绝在拉升前下车：牢记这4种“试盘特征”，一旦出现，坚定持仓，股价或将直飞冲天！主力吸货完毕之后，并不是马上进入拉升状态。虽然此时提升的心情十分急切，但还要最后一次对盘口进行全面的测试。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[散户炒股法宝――学会画“趋势线”]]></title>
         <id>学会画“趋势线”</id>
@@ -98,16 +108,6 @@
         <link href="https://cms.foryet.com/page/股票交易中的分歧，一致和分歧转一致及实例分析"/>
         <updated>2023-12-26T21:10:33.000Z</updated>
         <summary type="html"><![CDATA[股票交易中的分歧，一致和分歧转一致，发现很多人不知道怎么看分歧和一致。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[筹码峰识别主力及回踩一线天]]></title>
-        <id>links</id>
-        <link href="https://cms.foryet.com/page/links"/>
-        <updated>2023-12-26T21:06:04.000Z</updated>
-        <summary type="html"><![CDATA[筹码峰可以帮助我们及时发现阶段性底部筹码集中的个股，跟随主力在拉升前介入，那如何通过筹码峰识别主力有建仓并拉升的意向呢？建议收藏研究！]]></summary>
         <author>
             <name/>
         </author>

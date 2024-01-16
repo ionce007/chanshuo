@@ -121,7 +121,7 @@ class Editor extends Component {
         pageStatus: 1,
         commentStatus: 1,
         title: '',
-        content: '---\ntitle: \ndescription: \ntags: \n- Others\n---\n',
+        content: '---\ntitle: \ndescription: \ntags: \n- Others: \n---\n',
         tag: '',
         password: '',
         description: ''
@@ -303,7 +303,7 @@ class Editor extends Component {
         break;
       }
     }
-    page.tag = tag.trim().slice(1);
+    page.tag = tag.trim().replaceAll('Others:','').slice(1);
     page.title = title.trim();
     page.description = description;
     if (page.link === '') page.link = this.getValidLink(page.title);

@@ -440,6 +440,9 @@ span.line {
     .table tr{height:35px;line-height:35px;}
     .navbar>.container {display: block;min-height:3.25rem;}
 }
+@media screen and (max-width: 1023px){
+    .navbar>.container {display: block;min-height:3.25rem;}
+}
 .author{display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-wrap: break-word;white-space: normal !important;max-height:120px;}
 .table>tbody>tr>td>a{color:#363636}
 .box h2{padding-bottom: 0.3em;font-size:1em;color: #ee00dd;margin-top: 20px;margin-bottom: 16px;font-weight: 600;line-height: 1.5;margin-block-start: 1em;margin-block-end: 0.2em;}

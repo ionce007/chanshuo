@@ -211,14 +211,15 @@ async function getMonthArchive(req, res, next) {
   try {
     let pages = await Page.findAll({
       where: {
-        pageStatus: {
-          [Op.not]: PAGE_STATUS.RECALLED
-        },
-        createdAt: {
-          [Op.between]: [startDate, endDate]
-        }
+        pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
+        createdAt: { [Op.between]: [startDate, endDate]}
       },
       raw: true
+    });
+    pages = pages.map((item)=>{ 
+      item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
+      return item; 
     });
     res.render('list', { pages, title: time });
   } catch (e) {
@@ -234,14 +235,15 @@ async function getTag(req, res, next) {
   try {
     let pages = await Page.findAll({
       where: {
-        pageStatus: {
-          [Op.not]: PAGE_STATUS.RECALLED
-        },
-        tag: {
-          [Op.like]: `%${tag}%`
-        }
+        pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
+        tag: { [Op.like]: `%${tag}%` }
       },
       raw: true
+    });
+    pages = pages.map((item)=>{ 
+      item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
+      return item; 
     });
     res.render('list', { pages, title: tag });
   } catch (e) {
