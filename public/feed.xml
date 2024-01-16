@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 ● 股经</title>
-    <updated>2024-01-16T02:59:43.012Z</updated>
+    <updated>2024-01-16T14:25:02.316Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -12,6 +12,16 @@
     <link rel="self" href="https://example.com/atom.xml"/>
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[只有少数人知道的K线黑马形态——美人肩，遇到重仓买入，主力抬轿帮你拉升！]]></title>
+        <id>“美人肩”形态</id>
+        <link href="https://cms.foryet.com/page/“美人肩”形态"/>
+        <updated>2024-01-16T13:23:21.000Z</updated>
+        <summary type="html"><![CDATA[投资既是一门科学，更是一门艺术，只有真正投身于市场的投资者才能理解其中的含义。投资的成功与否，关键在于投资者是否有一套行之有效的分析操作方法，其中K线形态是非常重要的部分。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[如何判断主力吸筹完成后的试盘]]></title>
         <id>如何判断主力吸筹完成后的</id>
@@ -98,16 +108,6 @@
         <link href="https://cms.foryet.com/page/一文通过案例将macd指标讲清楚"/>
         <updated>2023-12-26T21:21:56.000Z</updated>
         <summary type="html"><![CDATA[MACD是由三条线和红绿色柱体构成，黑色线是DIF线，称之为快线;紫色线是DEA线，称为慢线。中间的一条直线是零轴，红色和绿色的柱体是能量柱。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[股票交易中的分歧，一致和分歧转一致及实例分析]]></title>
-        <id>股票交易中的分歧，一致和分歧转一致及实例分析</id>
-        <link href="https://cms.foryet.com/page/股票交易中的分歧，一致和分歧转一致及实例分析"/>
-        <updated>2023-12-26T21:10:33.000Z</updated>
-        <summary type="html"><![CDATA[股票交易中的分歧，一致和分歧转一致，发现很多人不知道怎么看分歧和一致。]]></summary>
         <author>
             <name/>
         </author>

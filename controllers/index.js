@@ -47,9 +47,7 @@ async function getArchive(req, res, next) {
     item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
     return item; 
   });
-  res.render('archive', {
-    pages: pages.reverse()
-  });
+  res.render('archive', {pages: pages.reverse()});
 }
 async function getDonate(req, res, next){
   const link = 'donate';

@@ -116,7 +116,7 @@ async function getAllPages() {
 }
 async function getPageListByTag(tag) {
   // Check cache.
-  if (categoryCache.has(tag)) {
+ if (categoryCache.has(tag)) {
     return categoryCache.get(tag);
   }
 
@@ -125,7 +125,7 @@ async function getPageListByTag(tag) {
   try {
     list = await Page.findAll({
       where: {
-        [Op.or]: [{ tag: { [Op.like]: `${tag};%` } }, { tag: { [Op.eq]: `${tag}` } }],
+        [Op.or]: [{ tag: { [Op.like]: `%${tag};%` } }, { tag: { [Op.eq]: `${tag}` } }],
         [Op.not]: [{ pageStatus: PAGE_STATUS.RECALLED }]
       },
       attributes: ['link', 'title'],
