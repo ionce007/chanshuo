@@ -22,7 +22,7 @@ const app = express();
 const server = http.createServer(app);
 const { initializeDatabase } = require('./models');
 const { loadAllPages } = require('./common/cache');
-const { loadAllBlogs } = require('./common/blogcache');
+//const { loadAllBlogs } = require('./common/blogcache');
 const localUtil = require('./common/local');
 
 app.use( rateLimit({windowMs: 30 * 1000, max: 60 }) );
@@ -64,7 +64,7 @@ app.use(flash());
   enableRSS(app.locals.config);
   // load pages
   await loadAllPages();
-  await loadAllBlogs();
+  //await loadAllBlogs();
 
   // Then we set up the app.
   let serveStaticOptions = {

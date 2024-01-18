@@ -66,63 +66,65 @@ async function search(req, res, next) {
     }
     res.json({ status, message, total, articles });
 */
-    let articles =[];
-    let message = 'ok';
-    let status = true;
-    let total = 0;
-    try {
-        const data = await blogcache.loadAllBlogs();
-        var blogs = data.blogs;
-        var type = req.body.type;
-        if (type === undefined || type === '全部') type = '';
-
-        if (type.length > 0) blogs = blogs.filter((item) => { return item.cid === type });
-
-        let keyword = req.body.keyword;
-        keyword = keyword ? keyword.trim() : '';
-        if (keyword.length > 0) blogs = blogs.filter((item) => { return item.title.indexOf(keyword) >= 0 || item.content.indexOf(keyword) >= 0; })
-        total = blogs.length;
-        let pageIndex = req.body.pageIndex || 1;
-        let pageSize = req.body.pageSize || 10;
-        let startIndex = (pageIndex - 1) * pageSize;
-        articles = blogs.slice(startIndex, startIndex + pageSize);
-    }
-    catch (e) {
-        status = false;
-        message = e.message;
-        console.error(e);
-    }
-    res.json({ status, message, total, articles });
-
     /*
-        var type = req.body.type;
-        if (type === undefined || type === '全部') type = '';
-    
-        let keyword = req.body.keyword;
-        keyword = keyword ? keyword.trim() : '';
-        let pageIndex = req.body.pageIndex || 1;
-        let pageSize = req.body.pageSize || 10;
-        let articles = [];
+        let articles =[];
         let message = 'ok';
         let status = true;
         let total = 0;
-        let where = {};
-        if (keyword.length > 0) where = { [Op.or]: [{ title: { [Op.like]: `%${keyword}%` } }, { content: { [Op.like]: `%${keyword}%` } }] }
-        if (type.length > 0) {
-            where = { [Op.and]: [{ cid: { [Op.eq]: type } }, { [Op.or]: [{ title: { [Op.like]: `%${keyword}%` } }, { content: { [Op.like]: `%${keyword}%` } }] }] }
-        }
         try {
-            let all = await CSArticle.findAll({ where: where, attributes: { exclude: ['content'] }, include: CSCategory, order: [sequelize.literal('"issuedate" DESC')] });
-            total = all.length;
+            const data = await blogcache.loadAllBlogs();
+            var blogs = data.blogs;
+            var type = req.body.type;
+            if (type === undefined || type === '全部') type = '';
+    
+            if (type.length > 0) blogs = blogs.filter((item) => { return item.cid === type });
+    
+            let keyword = req.body.keyword;
+            keyword = keyword ? keyword.trim() : '';
+            if (keyword.length > 0) blogs = blogs.filter((item) => { return item.title.indexOf(keyword) >= 0 || item.content.indexOf(keyword) >= 0; })
+            total = blogs.length;
+            let pageIndex = req.body.pageIndex || 1;
+            let pageSize = req.body.pageSize || 10;
             let startIndex = (pageIndex - 1) * pageSize;
-            articles = all.slice(startIndex, startIndex + pageSize);
-        } catch (e) {
+            articles = blogs.slice(startIndex, startIndex + pageSize);
+        }
+        catch (e) {
             status = false;
             message = e.message;
             console.error(e);
         }
         res.json({ status, message, total, articles });
-        */
+    */
+
+
+        
+    var type = req.body.type;
+    if (type === undefined || type === '全部') type = '';
+
+    let keyword = req.body.keyword;
+    keyword = keyword ? keyword.trim() : '';
+    let pageIndex = req.body.pageIndex || 1;
+    let pageSize = req.body.pageSize || 10;
+    let articles = [];
+    let message = 'ok';
+    let status = true;
+    let total = 0;
+    let where = {};
+    if (keyword.length > 0) where = { [Op.or]: [{ title: { [Op.like]: `%${keyword}%` } }, { content: { [Op.like]: `%${keyword}%` } }] }
+    if (type.length > 0) {
+        where = { [Op.and]: [{ cid: { [Op.eq]: type } }, { [Op.or]: [{ title: { [Op.like]: `%${keyword}%` } }, { content: { [Op.like]: `%${keyword}%` } }] }] }
+    }
+    try {
+        let all = await CSArticle.findAll({ where: where, attributes: { exclude: ['content'] }, include: CSCategory, order: [sequelize.literal('"issuedate" DESC')] });
+        total = all.length;
+        let startIndex = (pageIndex - 1) * pageSize;
+        articles = all.slice(startIndex, startIndex + pageSize);
+    } catch (e) {
+        status = false;
+        message = e.message;
+        console.error(e);
+    }
+    res.json({ status, message, total, articles });
 }
 async function getArticle(req, res, next) {
     const id = req.params.id;
@@ -166,7 +168,7 @@ async function Create(req, res, next) {
     } catch (e) {
         message = e.message;
     }
-    await blogcache.updateBlogCache();
+    //await blogcache.updateBlogCache();
     res.json({ status: article !== undefined, message });
 }
 async function Update(req, res, next) {
@@ -191,7 +193,7 @@ async function Update(req, res, next) {
             await CSArticle.update(newArticle, { where: { id: id } });
         }
         status = article !== null;
-        await blogcache.updateBlogCache();
+        //await blogcache.updateBlogCache();
     } catch (e) {
         message = e.message;
         console.error(e);
@@ -318,7 +320,7 @@ async function getArticleCategories() {
         //CSCategory.hasMany(CSArticle, {foreignKey: 'cid'});
         //CSArticle.belongsTo(CSCategory, {foreignKey: 'cid'});
         //let parents = await CSCategory.findAll({ group: 'parent', order: [['iorder', 'ASC']], raw: true });
-        let parents = await CSCategory.findAll({ group: 'parent', attributes:['parent'], raw: true });
+        let parents = await CSCategory.findAll({ group: 'parent', attributes: ['parent'], raw: true });
         let categories = await CSCategory.findAll({ where: { isEnable: 1 }, raw: true, order: [['iorder', 'ASC']] });
         for (var item of parents) {
             let label = item.parent;
@@ -349,6 +351,7 @@ async function showChanShuo(req, res, next) {
     res.render('chanshuo', json);
 }
 async function blogList(req, res, next) {
+
     let cid = req.body.cID;
     let pageIndex = req.body.pageIndex || 1;
     if (!pageIndex || pageIndex <= 1) pageIndex = 1;
@@ -364,8 +367,12 @@ async function blogList(req, res, next) {
         let catData = await getArticleCategories()
         json.cid = cid;
         json.catData = catData;
-        let data = await blogcache.loadAllBlogs();
-        let blogs = data.blogs.filter((item) => { return item.cid === cid && item.isEnable ===1 });
+        //let data = await blogcache.loadAllBlogs();
+        //let blogs = data.blogs.filter((item) => { return item.cid === cid && item.isEnable === 1 });
+        let data = await blogcache.getAllBlogsTitle();
+        console.log('data: ',data);
+        let blogs = data.rows.filter((item) => { return item.cid === cid && item.isEnable === 1 });
+        console.log('blogs: ',blogs);
         pageIndex = Number(pageIndex);
         pageSize = Number(pageSize);
         let startIndex = (pageIndex - 1) * pageSize;
@@ -376,10 +383,13 @@ async function blogList(req, res, next) {
         json.pageSize = pageSize;
     }
     catch (e) {
+        console.log('error:',e.message);
         let json = { status: false, msg: e.message, cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
     }
     res.render('blogList', json);
-    /*let cid = req.body.cID;
+
+/*
+    let cid = req.body.cID;
     let pageIndex = req.body.pageIndex || 1;
     if (!pageIndex || pageIndex <= 1) pageIndex = 1;
     let pageSize = req.body.pageSize || 15;
@@ -410,7 +420,8 @@ async function blogList(req, res, next) {
     catch (e) {
         let json = { status: false, msg: e.message, cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
     }
-    res.render('blogList', json);*/
+    res.render('blogList', json);
+    */
 }
 async function getBlogList(req, res, next) {
     let cid = req.query.id;

@@ -42,8 +42,8 @@ class Files extends Component {
         title: '文件名',
         dataIndex: 'filename',
         render: (value, record) => (
-          <a href={this.filePrefix + record.path} download={value}>
-            {value}
+          <a href={this.filePrefix + record.path} download={record.path.substring(record.path.lastIndexOf('/') + 1)}>
+            {record.path.substring(record.path.lastIndexOf('/') + 1)}
           </a>
         ),
       },

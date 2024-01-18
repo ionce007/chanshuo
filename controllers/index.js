@@ -1,5 +1,6 @@
 const { updateView, getLinks, convertContent, getPageListByTag, getPagesByRange } = require('../common/cache');
-const { loadAllBlogs } = require('../common/blogcache');
+//const { loadAllBlogs } = require('../common/blogcache');
+const { getAllBlogsTitle } = require('../common/blogcache');
 const { getDate,dateFormat } = require('../common/util');
 const { Page, Formula } = require('../models');
 const { SitemapStream, streamToPromise } = require('sitemap');
@@ -161,7 +162,6 @@ async function getSitemap(req, res, next) {
         });
       }
     });
-
     let pages = await getPagesByRange(0, -1);
     pages.forEach(page => {
       let url = `/page/` + page.link;
@@ -176,9 +176,9 @@ async function getSitemap(req, res, next) {
         smStream.write({ url: url, priority: 1, changefreq: 'daily' });
       });
     }
-
-    let data = await loadAllBlogs();
-    let blogs = data.blogs;
+    //let data = await loadAllBlogs();
+    let data = await getAllBlogsTitle();
+    let blogs = data;
     if (blogs.length > 0) {
       let blogdata = blogs.filter((item) => { return item.isEnable === 1 && item['CSCategory.isEnable'] === 1 });
       console.log('blogdata.length:', blogdata.length);

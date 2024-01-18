@@ -25,6 +25,20 @@ async function getAllBlogs() {
         return undefined;
     }
 }
+async function getAllBlogsTitle() {
+    try {
+        let blogs = await CSArticle.findAndCountAll({
+            attributes: { exclude: ['content'] },
+            include: CSCategory,
+            order: [['issuedate', 'ASC'], ['updatedAt', 'DESC']], raw: true
+        });
+        return blogs;
+    }
+    catch (error) {
+        console.log(`blogCache.getAllBlogsTitle error：${error.message}`);
+        return undefined;
+    }
+}
 async function updateBlogs() {
     try {
         let blogs = await getAllBlogs();
@@ -37,7 +51,7 @@ async function updateBlogs() {
         console.log('Failed to updateBlogs！error:' + error.message);
     }
 }
-async function updateBlogCache() {
+async function _updateBlogCache() {
     try {
         if (cache.has(BLOG_CACHE_KEY)) {
             cache.delete(BLOG_CACHE_KEY);
@@ -51,7 +65,7 @@ async function updateBlogCache() {
         return undefined;
     }
 }
-async function loadAllBlogs() {
+async function _loadAllBlogs() {
     try {
         if (cache.has(BLOG_CACHE_KEY)) {
             let blogs = cache.get(BLOG_CACHE_KEY);
@@ -80,6 +94,8 @@ async function loadAllBlogs() {
 }
 
 module.exports = {
-    loadAllBlogs,
-    updateBlogCache,
+    _loadAllBlogs,
+    _updateBlogCache,
+    getAllBlogs,
+    getAllBlogsTitle,
 }
