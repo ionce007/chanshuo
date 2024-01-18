@@ -119,10 +119,7 @@ class Files extends Component {
 
   search = () => {
     this.setState({ loading: true });
-    axios
-      .post('/api/file/search', {
-        keyword: this.state.keyword,
-      })
+    axios.post('/api/file/search', {keyword: this.state.keyword,})
       .then(async (res) => {
         this.setState({ loading: false });
         this.setState({ files: res.data.files });
