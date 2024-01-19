@@ -24,7 +24,7 @@ const sequelize = new Sequelize(config.pg_bdname, config.pg_user, config.pg_pwd,
   port: config.pg_port,
   dialect: 'postgres',
   timezone: '+08:00',
-  logging: true,
+  logging: false,
   quoteIdentifiers: true,
   pool: {                         //连接池设置
     max: 5,
