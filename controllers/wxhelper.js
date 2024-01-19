@@ -1,7 +1,7 @@
 const request = require('sync-request');
 const crypto = require('crypto')
 const {  AccessToken } = require('../models');
-const {  DateAdd } = require('../common/util');
+const {  DateAdd, dateFormat } = require('../common/util');
 const dotEnv  = require('dotenv');
 dotEnv.config();
 
@@ -12,8 +12,11 @@ function encrypt_sh1(str){
     return crypto.createHash('sha1').update(str).digest('hex')
 }
 async function wechatAuth(req, res, next){
-    console.log('wechatAuth','req.method');
-    console.log('req.method',req.method);
+    //console.log('wechatAuth','req.method');
+    var time = dateFormat((new Date()), 'yyyy-MM-dd HH:mm:ss');
+    console.log(`${time} enter wxhelper.wechatAuth:`, `req.method = ${req.method}, 发起URL = “${req.path}”`);
+
+    //console.log('req.method',req.method);
     let {signature = '', timestamp = '', nonce = '', echostr = ''} = req.query
     let token = process.env.WX_TOKEN
     // 验证token
@@ -28,16 +31,16 @@ async function wechatAuth(req, res, next){
     }
 }
 async function qyWechatAuth(req, res, next){
-    console.log(req);
+    //console.log(req);
     let {msg_signature = '', timestamp = '', nonce = '', echostr = ''} = req.query
-    console.log(`msg_signature = '${msg_signature}', timestamp = '${timestamp}', nonce = '${nonce}', echostr = '${echostr}'`)
+    //console.log(`msg_signature = '${msg_signature}', timestamp = '${timestamp}', nonce = '${nonce}', echostr = '${echostr}'`)
     let token = process.env.QYWX_CS_TOKEN
     // 验证token
     let str = [token, timestamp, nonce].sort().join('')
-    console.log(`str = ${str}`);
+    //console.log(`str = ${str}`);
     let sha1 = encrypt_sh1(str)
     if (sha1 !== msg_signature) {
-        console.log(`sha1 = ${sha1}, signature = ${msg_signature}`);
+        //console.log(`sha1 = ${sha1}, signature = ${msg_signature}`);
         req.body = 'token验证失败'
         res.send('token验证失败')
     } else {
@@ -49,7 +52,7 @@ async function qyWechatAuth(req, res, next){
 async function qywxGetAccessTokenApi(req, res, next){
     try{
         var token = await AccessToken.findOne({where: { supplier: 'qywx_cs'  }}, { raw: true });
-        console.log('wxhelper.qywxGetAccessToken.001',token);
+        //console.log('wxhelper.qywxGetAccessToken.001',token);
         var isExpire = false;
         var notExistToken = false;
         var access_token = '';
@@ -62,7 +65,7 @@ async function qywxGetAccessTokenApi(req, res, next){
         if(notExistToken || isExpire){
             const corpid = process.env.QYWX_CORPID;
             const secret = process.env.QYWX_CS_SECRET;
-            console.log(`corpid=${corpid}，secret=${secret}`);
+            //console.log(`corpid=${corpid}，secret=${secret}`);
             var reqUrl = `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${corpid}&corpsecret=${secret}`
             var ret = request('GET', reqUrl);
             var json = JSON.parse(ret.getBody('utf8'))
@@ -125,7 +128,7 @@ async function qywxGetAccessToken(){
         if(notExistToken || isExpire){
             const corpid = process.env.QYWX_CORPID;
             const secret = process.env.QYWX_CS_SECRET;
-            console.log(`corpid=${corpid}，secret=${secret}`);
+            //console.log(`corpid=${corpid}，secret=${secret}`);
             var reqUrl = `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${corpid}&corpsecret=${secret}`
             var ret = request('GET', reqUrl);
             var json = JSON.parse(ret.getBody('utf8'))

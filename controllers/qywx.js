@@ -12,7 +12,10 @@ var EncodingAESKey = process.env.QYWX_CS_EncodingAESKey;
 
 
 async function qywx_callback(req, res, next) {
-  console.log('qywx_callback.000');
+  //console.log('qywx_callback.000');
+  var time = dateFormat((new Date()), 'yyyy-MM-dd HH:mm:ss');
+  console.log(`${time} enter qywx.qywx_callback:`, `req.method = ${req.method}, 发起URL = “${req.path}”`);
+
   var method = req.method;
   var sVerifyMsgSig = req.query.msg_signature;
   var sVerifyTimeStamp = req.query.timestamp;
@@ -24,10 +27,10 @@ async function qywx_callback(req, res, next) {
   /* GET home page. */
   if (method == 'GET') {
     var MsgSig = cryptor.getSignature(sVerifyTimeStamp, sVerifyNonce, sVerifyEchoStr);
-    console.log('qywx.qywx_callback.002', `MsgSig = ${MsgSig}, sVerifyMsgSig = ${sVerifyMsgSig}`);
+    //console.log('qywx.qywx_callback.002', `MsgSig = ${MsgSig}, sVerifyMsgSig = ${sVerifyMsgSig}`);
     if (sVerifyMsgSig == MsgSig) {
       sEchoStr = cryptor.decrypt(sVerifyEchoStr).message;
-      console.log('qywx.qywx_callback.003', `ok`);
+      //console.log('qywx.qywx_callback.003', `ok`);
       res.send(sEchoStr);
     } else {
       res.send("-40001_invaild MsgSig")
@@ -37,57 +40,57 @@ async function qywx_callback(req, res, next) {
   else if (method == 'POST') {
     load(req, function (err, buff) {
       var date = dateFormat(new Date(), 'yyyy-MM-dd HH:mm:ss.S');
-      console.log(`${date}`);
+      //console.log(`${date}`);
       try {
         if (err) {
           var loadErr = new Error('weChat load message error');
           loadErr.name = 'weChat';
-          console.log(`0001`);
+          //console.log(`0001`);
           return;
         }
         var xml = buff.toString('utf-8');
         if (!xml) {
-          console.log(`0002`);
+          //console.log(`0002`);
           var emptyErr = new Error('-40002_body is empty');
           emptyErr.name = 'weChat';
           return;
         }
-        console.log('XML:', xml);
+        //console.log('XML:', xml);
         xml2js.parseString(xml, { trim: true }, function (err, result) {
           if (err) {
-            console.log(`0003`);
+            //console.log(`0003`);
             var parseErr = new Error('-40008_parse xml error');
             parseErr.name = 'weChat';
             return;
           }
-          console.log('result.xml:', result.xml);
+          //console.log('result.xml:', result.xml);
           
           var xml = formatMessage(result.xml);
 
           var encryptMessage = xml.Encrypt;
           if (sVerifyMsgSig != cryptor.getSignature(sVerifyTimeStamp, sVerifyNonce, encryptMessage)) {
-            console.log(`0005`);
+            //console.log(`0005`);
             return;
           }
           var decrypted = cryptor.decrypt(encryptMessage);
           var messageWrapXml = decrypted.message;
-          console.log('messageWrapXml:', messageWrapXml);
+          //console.log('messageWrapXml:', messageWrapXml);
           if (messageWrapXml === '') {
             res.status(401).end('-40005_Invalid corpId');
             return;
           }
           xml2js.parseString(messageWrapXml, { trim: true }, function (err, result) {
             if (err) {
-              console.log(`0007`);
+              //console.log(`0007`);
               var parseErr = new Error('-40008_BadMessage:' + err.name);
               parseErr.name = 'weChat';
             }
-            console.log(`messageWrapXml.parseString：`,result.xml);
+            //console.log(`messageWrapXml.parseString：`,result.xml);
             var message = formatMessage(result.xml);
-            console.log(`messageWrapXml.message`,message);
+            //console.log(`messageWrapXml.message`,message);
             if(message.hasOwnProperty('InfoType')){
               const infoType = message.InfoType;
-              console.log('InfoType: ',infoType)
+              //console.log('InfoType: ',infoType)
               switch(infoType){
                 case 'create_auth':
                   res.send('success');
@@ -102,7 +105,7 @@ async function qywx_callback(req, res, next) {
               var fromUsername = message.ToUserName;
               var toUsername = message.FromUserName;
               var msg_1 = JSON.parse(message)
-              console.log(`0008`, `msgType = ${msgType}, toUsername=${toUsername}, fromUsername=${fromUsername}, message=${msg_1}`);
+              //console.log(`0008`, `msgType = ${msgType}, toUsername=${toUsername}, fromUsername=${fromUsername}, message=${msg_1}`);
               switch (msgType) {
                 case 'text':
                   var sendContent = send(fromUsername, toUsername);
