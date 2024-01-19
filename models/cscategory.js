@@ -8,7 +8,7 @@ CSCategory.init(
     cid: { type: DataTypes.STRING, defaultValue: DataTypes.UUIDV4, primaryKey: true,},
     title: DataTypes.STRING,
     parent:DataTypes.STRING,
-    isEnable: DataTypes.TINYINT,
+    isEnable: DataTypes.INTEGER,
     iorder: DataTypes.INTEGER,
     href: DataTypes.STRING,
     link: DataTypes.STRING

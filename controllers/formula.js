@@ -140,9 +140,9 @@ async function getFormula(req, res, next) {
   }
 }
 async function showPreviewPage(req, res, next) {
-  let fs_id = parseInt(req.query.id);
+  let fs_id = req.query.id;//parseInt(req.query.id).toString();
   var data = {};
-  if (!fs_id) data = { code: -1, state: 'failed!', msg: '没有指定预览的文件！', fs_id: '' };
+  if (!fs_id || fs_id.trim() === '') data = { code: -1, state: 'failed!', msg: '没有指定预览的文件！', fs_id: '' };
   else {
     let doc = await Formula.findOne({ where: { fs_id: fs_id }, raw: true });
     if (!doc) data = { code: -2, state: 'failed!', msg: '预览的文件不存在！', fs_id: '' };

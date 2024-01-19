@@ -256,7 +256,7 @@ class BlogEditor extends React.Component {
                                 <Button size="middle" type="primary" htmlType="submit" onClick={this.handleSubmit}>提  交</Button>
                             </FormItem>
                         </Col>
-                        <Col span={2}><a type='button' href='' onClick={this.prevPage}>返回列表</a></Col>
+                        <Col span={2}><a type='button' href='#' onClick={this.prevPage}>返回列表</a></Col>
                     </Row>
                 </Form>
             </div>

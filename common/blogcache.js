@@ -13,6 +13,7 @@ const cache = new LRU(options);
 
 async function getAllBlogs() {
     try {
+        console.log('getAllBlogs starting......')
         let blogs = await CSArticle.findAndCountAll({
             //attributes: { exclude: ['content'] },
             include: CSCategory,
@@ -51,7 +52,7 @@ async function updateBlogs() {
         console.log('Failed to updateBlogs！error:' + error.message);
     }
 }
-async function _updateBlogCache() {
+async function updateBlogCache() {
     try {
         if (cache.has(BLOG_CACHE_KEY)) {
             cache.delete(BLOG_CACHE_KEY);
@@ -65,11 +66,12 @@ async function _updateBlogCache() {
         return undefined;
     }
 }
-async function _loadAllBlogs() {
+async function loadAllBlogs() {
     try {
         if (cache.has(BLOG_CACHE_KEY)) {
             let blogs = cache.get(BLOG_CACHE_KEY);
             if (!blogs || blogs.length === 0) {
+                console.log('get all blogs from database - starting!')
                 blogs = await getAllBlogs();
                 var data = { total: blogs.count, blogs: blogs.rows };
                 cache.delete(BLOG_CACHE_KEY);
@@ -94,8 +96,8 @@ async function _loadAllBlogs() {
 }
 
 module.exports = {
-    _loadAllBlogs,
-    _updateBlogCache,
+    loadAllBlogs,
+    updateBlogCache,
     getAllBlogs,
     getAllBlogsTitle,
 }

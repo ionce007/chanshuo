@@ -19,7 +19,13 @@ let config = {
   mysql_user: 'huangm',
   mysql_pwd: '34756fb129acd30c',
   mysql_host: 'mysql.sqlpub.com',
-  mysql_port: 3306
+  mysql_port: 3306,
+
+  pg_bdname: 'db403ff2be13ad49c9a7bd43f620cd2de9stockblog',
+  pg_user: 'ionce',
+  pg_pwd: 'exitVB13@ifc',
+  pg_host: '139.196.89.94',
+  pg_port: 5433
 };
 
 function init() {

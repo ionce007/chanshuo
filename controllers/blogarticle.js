@@ -36,7 +36,7 @@ async function getCategoryList(req, res, next) {
     }
 }
 async function search(req, res, next) {
-    /*
+    
     var type = req.body.type;
     if (type === undefined || type === '全部') type = '';
 
@@ -65,7 +65,7 @@ async function search(req, res, next) {
         console.error(e);
     }
     res.json({ status, message, total, articles });
-*/
+
     /*
         let articles =[];
         let message = 'ok';
@@ -98,7 +98,7 @@ async function search(req, res, next) {
 
 
         
-    var type = req.body.type;
+/*    var type = req.body.type;
     if (type === undefined || type === '全部') type = '';
 
     let keyword = req.body.keyword;
@@ -124,7 +124,7 @@ async function search(req, res, next) {
         message = e.message;
         console.error(e);
     }
-    res.json({ status, message, total, articles });
+    res.json({ status, message, total, articles });*/
 }
 async function getArticle(req, res, next) {
     const id = req.params.id;
@@ -168,7 +168,7 @@ async function Create(req, res, next) {
     } catch (e) {
         message = e.message;
     }
-    //await blogcache.updateBlogCache();
+    await blogcache.updateBlogCache();
     res.json({ status: article !== undefined, message });
 }
 async function Update(req, res, next) {
@@ -253,7 +253,7 @@ async function categoryCreate(req, res, next) {
     let cate = undefined;
     try {
         cate = await CSCategory.create({ cid, title, parent, isEnable, iorder, href, link });
-        console.log('categoryCreate', cate)
+        //console.log('categoryCreate', cate)
     } catch (e) {
         message = e.message;
         console.log('categoryCreate', e.message)
@@ -307,7 +307,7 @@ async function getCate(req, res, next) {
     let message = 'ok';
     try {
         category = await CSCategory.findOne({ where: { cid: id }, raw: true });
-        console.log('getCate', category);
+        //console.log('getCate', category);
         status = category !== null;
     } catch (e) {
         message = e.message;
@@ -353,9 +353,11 @@ async function showChanShuo(req, res, next) {
 async function blogList(req, res, next) {
 
     let cid = req.body.cID;
-    let pageIndex = req.body.pageIndex || 1;
+    let pageIndex1 = req.body.pageIndex || 1;
+    let pageIndex = Number(pageIndex1);
     if (!pageIndex || pageIndex <= 1) pageIndex = 1;
-    let pageSize = req.body.pageSize || 15;
+    let pageSize1 = req.body.pageSize || 15;
+    let pageSize = Number(pageSize1);
     if (!pageSize) pageSize = 15;
     let json = { status: true, msg: 'ok', cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
     if (!cid) {
@@ -367,12 +369,10 @@ async function blogList(req, res, next) {
         let catData = await getArticleCategories()
         json.cid = cid;
         json.catData = catData;
-        //let data = await blogcache.loadAllBlogs();
-        //let blogs = data.blogs.filter((item) => { return item.cid === cid && item.isEnable === 1 });
-        let data = await blogcache.getAllBlogsTitle();
-        console.log('data: ',data);
-        let blogs = data.rows.filter((item) => { return item.cid === cid && item.isEnable === 1 });
-        console.log('blogs: ',blogs);
+        let data = await blogcache.loadAllBlogs();
+        let blogs = data.blogs.filter((item) => { /*console.log('item: ',item);*/ return item.cid === cid && item.isEnable === true });
+        //let data = await blogcache.getAllBlogsTitle();
+        //let blogs = data.rows.filter((item) => { return item.cid === cid && item.isEnable === 1 });
         pageIndex = Number(pageIndex);
         pageSize = Number(pageSize);
         let startIndex = (pageIndex - 1) * pageSize;
@@ -477,7 +477,7 @@ async function blogArticle(req, res, next) {
 async function getBlogArticle(req, res, next) {
     let cid = '';
     let id = req.query.id;
-    console.log('req.query.id：', req.query.id);
+    //console.log('req.query.id：', req.query.id);
     let json = { status: true, msg: 'ok', cid: cid, article: {}, data: null }
     try {
 

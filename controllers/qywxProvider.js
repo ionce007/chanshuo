@@ -101,7 +101,7 @@ async function qywx_callback(req, res, next) {
             return;
           }
           //console.log(`0004，result：`,result);
-          console.log('result.xml:', result.xml);
+          //console.log('result.xml:', result.xml);
 
           var xml = formatMessage(result.xml);
 
@@ -128,16 +128,18 @@ async function qywx_callback(req, res, next) {
               var parseErr = new Error('-40008_BadMessage:' + err.name);
               parseErr.name = 'weChat';
             }
-            //console.log(`messageWrapXml.parseString：`, result.xml);
+            console.log(`messageWrapXml.parseString：`, result.xml);
             var message = formatMessage(result.xml);
             //console.log(`messageWrapXml.message`, message);
             if (!message.hasOwnProperty('MsgType')) {
-              //console.log(`message.key`, `message中不包含 MsgType`);
+              console.log(`message.key`, `message中不包含 MsgType`);
+              res.status(200).end('success');
+              return;
             }
             var msgType = message.MsgType;
             var fromUsername = message.ToUserName;
             var toUsername = message.FromUserName;
-            var msg_1 = JSON.parse(message)
+            //var msg_1 = JSON.parse(message)
             //console.log(`0008`, `msgType = ${msgType}, toUsername=${toUsername}, fromUsername=${fromUsername}, message=${msg_1}`);
             switch (msgType) {
               case 'text':
