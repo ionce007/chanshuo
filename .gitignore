@@ -2,6 +2,7 @@
 node_modules
 *.db
 .vs
+.env
 data.db-journal
 /public/admin
 /public/ads.txt

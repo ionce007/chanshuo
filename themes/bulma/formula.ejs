@@ -146,9 +146,9 @@
                 type: 'get',
                 dataType: 'json',
                 success: function (ret) {
-                    //console.log(ret);
+                    let url = ret.url.replace("http://", "https://");
                     //layer.close(index); 
-                    location.href = ret.url;
+                    location.href = url;
                     removeLoading('downloadDoc');
                 },
                 error: function (XMLHttpRequest) {
