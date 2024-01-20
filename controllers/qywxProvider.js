@@ -12,20 +12,22 @@ const suiteId = process.env.QYWX_PROVIDER_ZNKF_SuiteID;
 */
 
 const QYWX_OPTIONS_PROVIDER_APP = {
-  corpId: 'ww23811fcbc79d3081',
-  providerId: 'ww23811fcbc79d3081',
-  token: 'TJNHBfOPmqprb5i4X',
-  EncodingAESKey: 'XIq87eYsykpmaGwDTfN2xIVxsbhRtQWIjBOgm34XFJw',
-  secret: 'Oke8LZxsAvtndz1v7pfLm3fudxlvOeaIn67iYOX5yaQ',
-  suiteId: 'wwd383272c4cabb3dc',
+  corpId: process.env.QYWX_CORPID,
+  providerId: process.env.QYWX_PROVIDERID,
+  token: process.env.QYWX_PROVIDER_APP_TOKEN,
+  EncodingAESKey: process.env.QYWX_PROVIDER_APP_EncodingAESKey,
+  secret: process.env.QYWX_PROVIDER_APP_SECRET,
+  suiteId: process.env.QYWX_PROVIDER_APP_SUITEID,
 }
+
 const QYWX_OPTIONS_PROVIDER_COMM = {
-  corpId: 'ww23811fcbc79d3081',
-  providerId: 'ww23811fcbc79d3081',
-  token: 'QrHseC',
-  EncodingAESKey: 'iBxM4kNx2vlUfiQm4ii696FP3kRdRWkvHniYikNzwtO',
-  secret: 'BXqAsqXT1niYNX320uYh48v3nqa7Ebx33hpkd2f1rDte7FI3WzLpKoCKfxjYXmFT',
+  corpId: process.env.QYWX_CORPID,
+  providerId: process.env.QYWX_CORPID,
+  token: process.env.QYWX_PROVIDER_COMM_TOKEN,
+  EncodingAESKey: process.env.QYWX_PROVIDER_COMM_EncodingAESKey,
+  secret: process.env.QYWX_PROVIDER_COMM_SECRET,
 }
+
 const token = QYWX_OPTIONS_PROVIDER_APP.token;
 const EncodingAESKey = QYWX_OPTIONS_PROVIDER_APP.EncodingAESKey;
 const corpId = QYWX_OPTIONS_PROVIDER_APP.corpId;

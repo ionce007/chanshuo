@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 ● 股经</title>
-    <updated>2024-01-19T14:31:18.695Z</updated>
+    <updated>2024-01-20T01:56:49.197Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -12,6 +12,16 @@
     <link rel="self" href="https://example.com/atom.xml"/>
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[炒股必备技巧之低位启动低吸法]]></title>
+        <id>炒股必备技巧之低位启动低吸法</id>
+        <link href="https://cms.foryet.com/page/炒股必备技巧之低位启动低吸法"/>
+        <updated>2024-01-19T15:15:13.401Z</updated>
+        <summary type="html"><![CDATA[交易不仅需要技术，还需要一些运气。那么在运气来之前，首先要做好一件事，积累交易的实战技巧。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[最强势的反转形态——“出水芙蓉”，经常出现中线大牛股第一安全买点！]]></title>
         <id>最强势的反转形态——“出水芙蓉”</id>
@@ -98,16 +108,6 @@
         <link href="https://cms.foryet.com/page/抓龙头主升的具体操作方法"/>
         <updated>2024-01-11T14:53:53.000Z</updated>
         <summary type="html"><![CDATA[关于龙头战法的心法部分在大佬的帖子里都有，这里试着来说一下具体的操作方案。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[股票出现“仙人指路”形态，说明主力正在强势洗盘，股价或将喷发式上涨]]></title>
-        <id>仙人指路</id>
-        <link href="https://cms.foryet.com/page/仙人指路"/>
-        <updated>2024-01-10T05:19:21.000Z</updated>
-        <summary type="html"><![CDATA[价处在大调整阶段的中期底部、拉升阶段初期或者拉升波段中期，当天股价盘中高开高走放量攻击，但股价冲高之后，主力却在盘中实施回头波打压震荡盘跌。全天量比1倍以上，换手率在5%以内，振幅在7%以上。股价在盘中反复盘跌后，最终以一要带长上影小阴阳K线报收。收盘时，股价当天仍然保持在1%-3%左右的涨跌幅。]]></summary>
         <author>
             <name/>
         </author>
