@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 ● 股经</title>
-    <updated>2024-01-20T03:18:41.909Z</updated>
+    <updated>2024-01-26T02:53:26.263Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -13,21 +13,41 @@
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[炒股必备技巧之低位启动低吸法]]></title>
-        <id>炒股必备技巧之低位启动低吸法</id>
-        <link href="https://cms.foryet.com/page/炒股必备技巧之低位启动低吸法"/>
-        <updated>2024-01-19T15:15:13.401Z</updated>
-        <summary type="html"><![CDATA[交易不仅需要技术，还需要一些运气。那么在运气来之前，首先要做好一件事，积累交易的实战技巧。]]></summary>
+        <title type="html"><![CDATA[抓龙头主升的具体操作方法]]></title>
+        <id>抓龙头主升的具体操作方法</id>
+        <link href="https://cms.foryet.com/page/抓龙头主升的具体操作方法"/>
+        <updated>2024-01-21T12:16:51.787Z</updated>
+        <summary type="html"><![CDATA[关于龙头战法的心法部分在大佬的帖子里都有，这里试着来说一下具体的操作方案。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[板块龙头的判断及第一买点的方法]]></title>
+        <id>板块龙头的判断及第一买点的方法</id>
+        <link href="https://cms.foryet.com/page/板块龙头的判断及第一买点的方法"/>
+        <updated>2024-01-21T12:13:33.737Z</updated>
+        <summary type="html"><![CDATA[如果一只股票在连板的初期，被我们判断为可能的板块龙头（判断板块龙头的讲解在文章后面），那么它的最佳介入点是第一次的分歧板或者是分歧板次日的加速板，大多数时候，我们面临的只是非市场总龙头的板块龙头，对于板块龙头来说，通常的上涨过程一般情况下最多可能只有一两次的分歧与加速的过程]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
         <title type="html"><![CDATA[最强势的反转形态——“出水芙蓉”，经常出现中线大牛股第一安全买点！]]></title>
-        <id>最强势的反转形态——“出水芙蓉”</id>
-        <link href="https://cms.foryet.com/page/最强势的反转形态——“出水芙蓉”"/>
-        <updated>2024-01-18T00:40:30.000Z</updated>
+        <id>最强势的反转形态之“出水芙蓉”</id>
+        <link href="https://cms.foryet.com/page/最强势的反转形态之“出水芙蓉”"/>
+        <updated>2024-01-21T12:07:18.923Z</updated>
         <summary type="html"><![CDATA[炒股都想抓牛股，那么大家有没有去总结下牛股有什么形态特征呢，出水芙蓉是K线与均线结合的产物。指横盘整理或下跌过程中，在股票市场中有人把一阳穿三线称之为出水芙蓉。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[炒股必备技巧之低位启动低吸法]]></title>
+        <id>炒股必备技巧之低位启动低吸法</id>
+        <link href="https://cms.foryet.com/page/炒股必备技巧之低位启动低吸法"/>
+        <updated>2024-01-19T15:15:13.401Z</updated>
+        <summary type="html"><![CDATA[交易不仅需要技术，还需要一些运气。那么在运气来之前，首先要做好一件事，积累交易的实战技巧。]]></summary>
         <author>
             <name/>
         </author>
@@ -88,26 +108,6 @@
         <link href="https://cms.foryet.com/page/如何通过周线、月线判断股票主升浪开始？"/>
         <updated>2024-01-12T03:16:25.000Z</updated>
         <summary type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？坊间俗语“月线看势，周线选股，日线辨强弱。”通过K线技术来选择股票，是有一定道理的。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[板块龙头的判断及第一买点的方法]]></title>
-        <id>板块龙头的判断及第一买点的方法</id>
-        <link href="https://cms.foryet.com/page/板块龙头的判断及第一买点的方法"/>
-        <updated>2024-01-11T14:57:02.000Z</updated>
-        <summary type="html"><![CDATA[如果一只股票在连板的初期，被我们判断为可能的板块龙头（判断板块龙头的讲解在文章后面），那么它的最佳介入点是第一次的分歧板或者是分歧板次日的加速板，大多数时候，我们面临的只是非市场总龙头的板块龙头，对于板块龙头来说，通常的上涨过程一般情况下最多可能只有一两次的分歧与加速的过程]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[抓龙头主升的具体操作方法]]></title>
-        <id>抓龙头主升的具体操作方法</id>
-        <link href="https://cms.foryet.com/page/抓龙头主升的具体操作方法"/>
-        <updated>2024-01-11T14:53:53.000Z</updated>
-        <summary type="html"><![CDATA[关于龙头战法的心法部分在大佬的帖子里都有，这里试着来说一下具体的操作方案。]]></summary>
         <author>
             <name/>
         </author>

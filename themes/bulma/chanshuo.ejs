@@ -2,23 +2,8 @@
 <link rel="stylesheet" href="/static/article.css" />
 <script type="text/javascript">tag = 'chanshuo'</script>
 
-<div class="columns is-mobile">
-    <div class="column is-2">
-        <aside class="menu">
-            <form method="POST" action="/chanshuo/list" id="catSelector" ><input type="hidden" id="cID" name="cID" value="" /></form>
-            <% if(data.length) { %>
-                <% data.forEach((parentCat) => { %>
-                    <p class="menu-label"><%= parentCat.label %></p>
-                    <ul class="menu-list">
-                        <% parentCat.categories.forEach((cat) => {%>
-                            <li><a onclick=showArticleList(`<%= cat.cid %>`)><%= cat.title %></a></li>
-                        <% }) %>
-                    </ul>
-                <% }) %> 
-            <% } %>
-        </aside>
-    </div>
-    <div class="column is-10">
+<div class="columns is-desktop">
+    <div class="column is-9">
         <section class="block hidden">
             <input type="checkbox" id="chk">
             <div class="case-block case-block-mask" style="display:block;">
@@ -26,6 +11,28 @@
             </div>
             <div class="detail"></div>
         </section>
+    </div>
+    <div class="column is-3 is-one-quarter-fullhd">
+        <aside class="menu toc">
+            <ul class="menu-list">
+                <li id='toc-container'>
+                    <p style='font-size: large; font-weight: bold;text-align:center;'>目录</p>
+                </li>
+                <li>
+                    <% if(data.length) { %>
+                        <% data.forEach((parentCat) => { %>
+                            <p class="menu-label" style='font-size:medium; font-weight: bold'><%= parentCat.label %></p>
+                            <ul>
+                                <% parentCat.categories.forEach((cat) => {%>
+                                    <li><a onclick="showArticleList('<%= cat.cid %>')"><%= cat.title %></a></li>
+                                <% }) %>
+                            </ul>
+                        <% }) %>
+                    <% } %>
+                </li>
+            </ul>
+            <form method="POST" action="/chanshuo/list" id="catSelector" ><input type="hidden" id="cID" name="cID" value="" /></form>
+        </aside>
     </div>
 </div>
 

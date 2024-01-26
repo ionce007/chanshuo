@@ -1,7 +1,7 @@
 const { updateView, getLinks, convertContent, getPageListByTag, getPagesByRange } = require('../common/cache');
 //const { loadAllBlogs } = require('../common/blogcache');
 const { getAllBlogsTitle } = require('../common/blogcache');
-const { getDate,dateFormat } = require('../common/util');
+const { getDate, dateFormat } = require('../common/util');
 const { Page, Formula } = require('../models');
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createGzip } = require('zlib');
@@ -32,25 +32,59 @@ async function getIndex(req, res, next) {
   if (page !== 0 && pages.length === 0) {
     res.redirect('/');
   } else {
-    pages = pages.map((item)=>{ 
-      item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
-      item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
-      return item; 
+    pages = pages.map((item) => {
+      item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
+      return item;
     });
     res.render('index', { pages: pages, prev: `?p=${page - 1}`, next: `?p=${page + 1}` });
   }
 }
-
 async function getArchive(req, res, next) {
   let pages = await getPagesByRange(0, -1);
-  pages = pages.map((item)=>{ 
-    item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
-    item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
-    return item; 
+  pages = pages.map((item) => {
+    item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
+    item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
+    return item;
   });
-  res.render('archive', {pages: pages.reverse()});
+  res.render('archive', { pages: pages.reverse() });
 }
-async function getDonate(req, res, next){
+async function getPageList(req, res, next) {
+  let pageIndex = req.query.pageNumber || 1;
+  if (!pageIndex || pageIndex <= 1) pageIndex = 1;
+  let pageSize = req.query.pageSize || 10;
+  if (!pageSize) pageSize = 10;
+
+  try {
+    let datus = await Page.findAndCountAll({
+      where: {
+        pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
+      },
+      order: [['createdAt', 'DESC']],
+      limit: pageSize,
+      offset: pageSize * (pageIndex - 1),
+      raw: true
+    });
+    let pages = datus.rows.map((item) => {
+      item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
+      return item;
+    });
+    res.json({ status: true, message: 'ok', pages,  total: datus.count });
+  } catch (e) {
+    res.json({ tatus: false,  message: e.message, pages: [], total: 0  });
+  }
+/*
+  let pages = await getPagesByRange(0, -1);
+  pages = pages.map((item) => {
+    item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
+    item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
+    return item;
+  });
+  res.render('archive', { pages: pages.reverse() });
+  */
+}
+async function getDonate(req, res, next) {
   const link = 'donate';
   let page = await Page.findOne({
     where: {
@@ -210,14 +244,14 @@ async function getMonthArchive(req, res, next) {
     let pages = await Page.findAll({
       where: {
         pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
-        createdAt: { [Op.between]: [startDate, endDate]}
+        createdAt: { [Op.between]: [startDate, endDate] }
       },
       raw: true
     });
-    pages = pages.map((item)=>{ 
-      item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
-      item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
-      return item; 
+    pages = pages.map((item) => {
+      item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
+      return item;
     });
     res.render('list', { pages, title: time });
   } catch (e) {
@@ -228,10 +262,39 @@ async function getMonthArchive(req, res, next) {
   }
 }
 
+async function getTagData(req, res, next) {
+  const tag = req.query.tag;
+  let pageIndex = req.query.pageNumber || 1;
+  if (!pageIndex || pageIndex <= 1) pageIndex = 1;
+  let pageSize = req.query.pageSize || 10;
+  if (!pageSize) pageSize = 10;
+
+  try {
+    let datus = await Page.findAndCountAll({
+      where: {
+        pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
+        tag: { [Op.like]: `%${tag}%` }
+      },
+      order: [['createdAt', 'ASC']],
+      limit: pageSize,
+      offset: pageSize * (pageIndex - 1),
+      raw: true
+    });
+    let pages = datus.rows.map((item) => {
+      item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
+      return item;
+    });
+    res.json({ status: true, message: 'ok', pages, title: tag, total: datus.count });
+  } catch (e) {
+    res.json({ tatus: false, title: '错误', message: e.message, pages: [] });
+  }
+}
+
 async function getTag(req, res, next) {
   const tag = req.params.tag;
   try {
-    let pages = await Page.findAll({
+    /*let pages = await Page.findAll({
       where: {
         pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
         tag: { [Op.like]: `%${tag}%` }
@@ -242,7 +305,8 @@ async function getTag(req, res, next) {
       item.createdAt = dateFormat(item.createdAt,'yyyy-MM-dd HH:mm:ss');
       item.updatedAt = dateFormat(item.updatedAt,'yyyy-MM-dd HH:mm:ss');
       return item; 
-    });
+    });*/
+    let pages = [];
     res.render('list', { pages, title: tag });
   } catch (e) {
     res.render('message', {
@@ -359,5 +423,7 @@ module.exports = {
   getStaticFile,
   getAboutMe,
   getDonate,
+  getTagData,
+  getPageList,
 };
 

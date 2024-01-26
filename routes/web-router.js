@@ -20,6 +20,7 @@ router.post('/chanshuo/list', blog.blogList);
 router.post('/chanshuo/article', blog.blogArticle);
 //router.get('/chanshuo/list', blog.getBlogList);
 router.get('/chanshuo/article', blog.getBlogArticle);
+router.get('/chanshuo/:year/:month', blog.getMonthBlogShow);
 
 router.get('/sitemap.xml', index.getSitemap);
 router.get('/tag/:tag', index.getTag);

@@ -2,6 +2,7 @@ const sequelize = require('sequelize');
 const { Op } = require('sequelize');
 const crypto = require('crypto');
 const blogcache = require('../common/blogcache');
+const { dateFormat } = require('../common/util');
 const { CSArticle, CSCategory } = require('../models');
 
 async function getCategory(req, res, next) {
@@ -350,15 +351,110 @@ async function showChanShuo(req, res, next) {
     }
     res.render('chanshuo', json);
 }
-async function blogList(req, res, next) {
-
-    let cid = req.body.cID;
-    let pageIndex1 = req.body.pageIndex || 1;
-    let pageIndex = Number(pageIndex1);
+async function blogArcticleList(req, res, next) {
+    let cid = req.query.cID;
+    let pageIndex = req.query.pageIndex || 1;
+    pageIndex = Number(pageIndex);
     if (!pageIndex || pageIndex <= 1) pageIndex = 1;
-    let pageSize1 = req.body.pageSize || 15;
-    let pageSize = Number(pageSize1);
-    if (!pageSize) pageSize = 15;
+    let pageSize = req.query.pageSize || 10;
+    pageSize = Number(pageSize);
+    if (!pageSize) pageSize = 10;
+    let json = { status: true, msg: 'ok', cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
+    if (!cid) {
+        let json = { status: false, msg: '参数错误！', cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
+        res.json(json);
+        return;
+    }
+    try {
+        json.cid = cid;
+        let data = await blogcache.loadAllBlogs();
+        let blogs = data.blogs.filter((item) => { return item.cid === cid && item.isEnable === true });
+        pageIndex = Number(pageIndex);
+        pageSize = Number(pageSize);
+        let startIndex = (pageIndex - 1) * pageSize;
+        let artData = blogs.slice(startIndex, startIndex + pageSize);
+
+        json.artData = artData;
+        json.total = blogs.length;
+        json.curPage = pageIndex;
+        json.pageSize = pageSize;
+    }
+    catch (e) {
+        console.log('error:',e.message);
+        let json = { status: false, msg: e.message, cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
+    }
+    res.json(json);
+}
+
+async function getMonthBlog(req, res, next) {
+    console.log('getMonthBlog: ','json');
+    let year = req.query.year;
+    let month = req.query.month;
+    console.log('year: ',year, '   month: ',month);
+    let pageIndex = req.query.pageNumber || 1;
+    pageIndex = Number(pageIndex);
+    if (!pageIndex || pageIndex <= 1) pageIndex = 1;
+    let pageSize = req.query.pageSize || 10;
+    pageSize = Number(pageSize);
+    if (!pageSize) pageSize = 10;
+    let json = { status: true, msg: 'ok', total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
+
+    try {
+        let data = await blogcache.loadAllBlogs();
+        let blogs = [];
+        if(year === '-' || month === '-') { blogs = data.blogs.filter((item) => { return (!item.issuedate || item.issuedate === '') && item.isEnable === true });}
+        else{
+            const time = year + '-' + month;
+            let startDate = new Date(year, parseInt(month) - 1, 1, 0, 0, 0, 0);
+            let endDate = new Date(startDate);
+            endDate.setMonth(startDate.getMonth() + 1)
+            startDate = dateFormat(startDate,'yyyy-MM-dd');
+            endDate = dateFormat(endDate,'yyyy-MM-dd');
+            blogs = data.blogs.filter((item) => { return item.issuedate >= startDate && item.issuedate < endDate && item.isEnable === true });
+        }
+        pageIndex = Number(pageIndex);
+        pageSize = Number(pageSize);
+        let startIndex = (pageIndex - 1) * pageSize;
+        let artData = blogs.slice(startIndex, startIndex + pageSize);
+
+        json.year = year;
+        json.month = month;
+        json.artData = artData;
+        json.total = blogs.length;
+        json.curPage = pageIndex;
+        json.pageSize = pageSize;
+    }
+    catch (e) {
+        console.log('error:',e.message);
+        let json = { status: false, msg: e.message, total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
+    }
+    res.json(json);
+}
+
+
+async function getMonthBlogShow(req, res, next) {
+    const year = (!req.params.year ? '-' : req.params.year);
+    const month = (!req.params.month ? '-' : req.params.month);
+    const pageIndex = 1;
+    const pageSize = 10;
+    const catData = await getArticleCategories()
+    const json = { year, month, pageIndex, pageSize, catData};
+    res.render('blogDateList', json);
+}
+
+async function getArticleDesc(artId){
+    let article = await CSArticle.findOne({ where: { id: artId }, raw: true });
+    return article.content;
+}
+async function blogList(req, res, next) {
+    let cid = req.body.cID;
+    let pageIndex = req.body.pageIndex || 1;
+    pageIndex = Number(pageIndex);
+    if (!pageIndex || pageIndex <= 1) pageIndex = 1;
+    let pageSize = req.body.pageSize || 10;
+    pageSize = Number(pageSize);
+    if (!pageSize) pageSize = 10;
+    console.log('cid:',cid,'pageIndex:',pageIndex,'pageSize:',pageSize);
     let json = { status: true, msg: 'ok', cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
     if (!cid) {
         let json = { status: false, msg: '参数错误！', cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
@@ -392,8 +488,8 @@ async function blogList(req, res, next) {
     let cid = req.body.cID;
     let pageIndex = req.body.pageIndex || 1;
     if (!pageIndex || pageIndex <= 1) pageIndex = 1;
-    let pageSize = req.body.pageSize || 15;
-    if (!pageSize) pageSize = 15;
+    let pageSize = req.body.pageSize || 10;
+    if (!pageSize) pageSize = 10;
     let json = { status: true, msg: 'ok', cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
     if (!cid) {
         let json = { status: false, msg: '参数错误！', cid: req.body.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
@@ -427,8 +523,8 @@ async function getBlogList(req, res, next) {
     let cid = req.query.id;
     let pageIndex = req.query.pageIndex || 1;
     if (!pageIndex || pageIndex <= 1) pageIndex = 1;
-    let pageSize = req.query.pageSize || 15;
-    if (!pageSize) pageSize = 15;
+    let pageSize = req.query.pageSize || 10;
+    if (!pageSize) pageSize = 10;
     let json = { status: true, msg: 'ok', cid: req.query.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
     if (!cid) {
         let json = { status: false, msg: '参数错误！', cid: req.query.cID, catData: [], total: 0, artData: [], curPage: pageIndex, pageSize: pageSize }
@@ -512,4 +608,7 @@ module.exports = {
     getBlogArticle,
     getBlogList,
     testCache,
+    blogArcticleList,
+    getMonthBlogShow,
+    getMonthBlog
 }

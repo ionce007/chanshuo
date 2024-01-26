@@ -91,7 +91,43 @@ async function search(req, res, next) {
 
   res.json({ status, message, total, formulas });
 }
+async function getFormulaData(req, res, next) {
+  let pageIndex = parseInt(req.query.pageNumber);
+  if (!pageIndex || pageIndex <= 1) pageIndex = 1;
+  let pageSize = parseInt(req.query.pageSize);
+  if (!pageSize || pageSize <= 1) pageSize = 10;
+  let key = req.query.k;
+  if (!key) key = '';
+  var retJson = {};
+  try{
+    let tabData = await Formula.findAll({
+      where: { isdir: 0, [Op.and]: { isSell: 1 } },// { [Op.and]: [ { isdir: { [Op.eq]: 0 } }, { isSell: { [Op.eq]: 1 } }] },  //{ [Op.and]: [ { isdir: { [Op.eq]: 0 } }, { isSell: { [Op.eq]: 1 } }] },
+      group: 'kind',
+      attributes: ['kind', [sequelize.fn('count', sequelize.col('kind')), 'total']],
+      order: [[sequelize.literal('total'), 'DESC']],
+      raw: true,
+    });
+    if (tabData) {
+      tabData.forEach((node) => node.key = node.kind);
+      var taballItem = { kind: '全部', total: util.calcJsonFieldSum(tabData, 'total'), key: '' }
+      tabData.unshift(taballItem);
+    }
 
+    let offset = (pageIndex - 1) * pageSize;
+    var where = { isdir: 0, isSell: 1 };
+    if (key && key.length > 0) where = { isdir: 0, isSell: 1, kind: key };
+    let formulas = await Formula.findAndCountAll({ where: where, order: [['lastupdate', 'DESC']], limit: pageSize, offset: offset, raw: true})
+
+    if (pageIndex !== 0 && formulas.rows.length === 0) { res.redirect('/'); return; }
+    let data = {tabs: tabData, formulas: formulas.rows }
+    retJson = {status:true, msg:'ok', data: data, total: formulas.count, pageSize: pageSize, curPage: pageIndex, key: key }
+  }
+  catch(error){
+    let data = {tabs: null, formulas: null }
+    retJson = {status:false, msg:error.message, data: data, total: 0, pageSize: pageSize, curPage: pageIndex, key: key }
+  }
+  res.json( retJson);
+}
 async function getFormula(req, res, next) {
   let pageIndex = parseInt(req.query.p);
   if (!pageIndex || pageIndex <= 1) pageIndex = 1;
@@ -506,4 +542,5 @@ module.exports = {
   updaueFormula,
   deleteFormula,
   panSynchronize,
+  getFormulaData,
 };

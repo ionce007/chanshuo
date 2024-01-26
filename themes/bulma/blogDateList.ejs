@@ -1,17 +1,20 @@
 <%- include('./partials/header') %>
 <link rel="stylesheet" href="/static/article.css" />
 <link rel="stylesheet" href="/static/pagination.css">
-<script src="/static/pagination.js"></script>
+<script src="/static/pagination.js?t=123"></script>
 <script type="text/javascript">tag = 'chanshuo'</script>
 
 <div class="columns is-desktop">
     <div class="column is-9">
         <form method="POST" action="/chanshuo/article" id="artSelector" >
             <input type="hidden" id="artID" name="artID" value="" />
-            <input type="hidden" id="cID" name="cID" value="<%= cid %>" />
+            <input type="hidden" id="year" name="year" class="year" value="<%= year %>" />
+            <input type="hidden" id="month" name="month" class="month" value="<%= month %>" />
         </form>
         <div class="page-card-list">
-            <div class="box" style='padding-top: 16px' id="content"></div>
+            <div class="box" style='padding-top: 16px' id="content">
+
+            </div>
             <div id='pagination'></div>
         </div>
     </div>
@@ -35,8 +38,10 @@
                 <%}%>
             </ul>
             <form method="POST" action="/chanshuo/list" id="catSelector" >
-                <input type="hidden" id="cID" name="cID" class="catID" value="" />
-                <input type="hidden" id="pageIndex" name="pageIndex" value="<%= curPage %>" />
+                <input type="hidden" id="catID" name="catID" class="catID" value="" />
+                <input type="hidden" id="year" name="year" class="year" value="<%= year %>" />
+                <input type="hidden" id="month" name="month" class="month" value="<%= month %>" />
+                <input type="hidden" id="pageIndex" name="pageIndex" value="<%= pageIndex %>" />
                 <input type="hidden" id="pageSize" name="pageSize" value="<%= pageSize %>" />
             </form>
         </aside>
@@ -45,28 +50,26 @@
 <%- include('./partials/footer') %>
 
 <script type="text/javascript">
-    var total = <%= total %>, // 总数
-        curPage = <%= curPage %>,
-        pageSize =  <%= pageSize %>; // 每页个数
-    $('#cID').val('<%= cid %>');
-    $('.catID').val('<%= cid %>');
 
     let pageIndex = 1;
     $(function(){
-        paginator();
+        paginator('month');
     })
     var key = ''
-    var paginator = function(){
+    var paginator = function(kind, cId){
+        let year = '<%= year %>';
+        let month = '<%= month %>';
         var container = $('#pagination');
         if (!container.length) return;
-        let cId = $('.catID').val()
+        let url = `/api/blog/datelist?year=${year}&month=${month}`;
+        if(kind === 'category') url=`/api/blog/list?cID=${cId}`;
         container.pagination({
-            dataSource: `/api/blog/list?cID=${cId}`,
+            dataSource: url,
             locator: 'artData',
             pageNumber: pageIndex,
             showSizeChanger: true,
             totalNumberLocator:function(res) { return res.total; },
-            pageSize: pageSize,
+            pageSize: 10,
             ajax: {
                 beforeSend: function() {
                     $('#content').html(`<p style='text-align:center;font-size:16px;magin:40px auto;'>正在获取数据，请稍候 ......</p>`);
@@ -92,6 +95,7 @@
         pageIndex = pagination.pageNumber;
         $('#content').html(dataHtml);
     }
+    
     function removeHtml(html){
         var regex = /<[^>]+>/g
         let result = html.replaceAll(regex, "");
@@ -103,12 +107,10 @@
         $('#pageIndex').val(1);
         $('#pageSize').val((pageSize || 10));
         pageIndex = 1;
-        paginator(pageIndex)
+        paginator('category',catId)
         //$('#catSelector').submit();
     }
     function showArticle(id){
-        var cid = '<%= cid %>';
-        $('#cID').val(cid);
         $('#artID').val(id);
         $('#artSelector').submit();
     }

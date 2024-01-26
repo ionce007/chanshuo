@@ -2,7 +2,9 @@
     <script type="text/javascript">tag = 'formula'</script>
     <link rel="stylesheet" href="/static/animate.css">
     <link rel="stylesheet" href="/static/loading.css">
+    <link rel="stylesheet" href="/static/pagination.css">
     <script src="/static/loading.js"></script>
+    <script src="/static/pagination.js"></script>
 
     <div class="columns is-mobile">
         <div class="column is-12">
@@ -25,9 +27,9 @@
     </div>
     <div class="columns is-mobile">
         <div class="column is-12">
-            <div class="tabs">
-                <ul>
-                    <% tabs.forEach(item=> { %>
+            <div class="tabs" style='display:flow;white-space:normal;'>
+                <ul id="tabs">
+                    <!--<% tabs.forEach(item=> { %>
                         <% if(item.key===key) {%>
                             <li class="is-active">
                                 <a class="origin-tab" key="<%= item.key %>" onclick="switchTab('<%= item.key %>')">
@@ -41,13 +43,16 @@
                                     </a>
                                 </li>
                         <% }%>
-                     <% })%>
+                     <% })%>-->
                 </ul>
             </div>
         </div>
     </div>
     <div class="columns is-mobile">
         <div class="column is-12">
+            <div id="formula"></div>
+            <div id="pagination"></div>
+        <!--
             <table class="table is-fullwidth is-hoverable is-striped">
                 <thead>
                     <tr>
@@ -63,8 +68,7 @@
                         <tr>
                             <% if(item.kind=="指标公式" || item.kind=="选股公式" ) { %>
                                 <td><a href="#" onclick="showWxQR();">
-                                        <%= item.server_filename.substr(0,item.server_filename.lastIndexOf('.')) %>
-                                    </a></td>
+                                        <%= item.server_filename.substr(0,item.server_filename.lastIndexOf('.')) %></a></td>
                                 <% } else {%>
                                     <td><a href="/preview?id=<%= item.fs_id %>" target="_blank">
                                             <%= item.server_filename.substr(0,item.server_filename.lastIndexOf('.')) %>
@@ -89,6 +93,7 @@
                 </tbody>
             </table>
             <div id='paginator'></div>
+        -->
             <div id="open-modal" class="modal-window modal-hidden">
                 <div>
                     <a title="Close" class="modal-close" onclick="closePop()">Close</a>
@@ -99,27 +104,71 @@
         </div>
     </div>
     <script>
-        var total = <%= total %>, // 总数
-            curPage = <%= curPage %>,
-                pageSize = <%= pageSize %>; // 每页个数
-        var paginator = new Page({
-            el: '#paginator',
-            nums: total,
-            counts: pageSize,
-            defaultPage: curPage,
-            showHeadFoot: !false, // 显示首页尾页
-            head: '首页', // 更改首页文字
-            foot: '尾页', // 更改尾页文字
-            jumpToOrder: true, // 跳转到指定页
-            showNowAndAll: true, // 当前页/共几页
-            clickEvent: function (curPage, _this) {
-                var key = $('div.tabs li.is-active').children()[0].attributes['key'].value;
-                location.href = `/formula?p=${curPage}&k=${key}`;
-            }
-        });
-        function switchTab(key) {
-            curPage = 1;
-            location.href = `/formula?p=${curPage}&k=${key}`;
+        let pageIndex = 1;
+        $(function(){
+            paginator(pageIndex);
+        })
+        var key = ''
+        var paginator = function(){
+            var container = $('#pagination');
+            if (!container.length) return;
+            let pageIndex ;
+            container.pagination({
+                dataSource: `/api/formula?k=${key}`,
+                locator: 'data.formulas',
+                pageNumber: pageIndex,
+                //showGoInput: true,
+                //showGoButton: true,
+                //showNavigator: true,
+                showSizeChanger: true,
+                totalNumberLocator:function(res) {
+                    var tabHtml = "";
+                    $.each(res.data.tabs,function(index, item){
+                        if(item.key === key) tabHtml += `<li class='is-active'><a class='origin-tab' key='${item.key}>' onclick="switchTab('${item.kind}')">${item.kind}(${item.total})</a></li>`;
+                        else tabHtml += `<li><a class='origin-tab' key='${item.key}>' onclick="switchTab('${item.key}')">${item.kind}(${item.total})</a></li>`;
+                    }); 
+                    $('#tabs').html(tabHtml);
+
+                    return res.total;
+                },
+                pageSize: 10,
+                ajax: {
+                    beforeSend: function() {
+                        container.prev().html(`<p style='text-align:center;font-size:16px;magin:40px auto;'>正在获取数据，请稍候 ...</p>`);
+                    }
+                },
+                callback: function(data, pagination) {
+                    console.log('data: ',data);
+                    var dataHtml = "<table class='table is-fullwidth is-hoverable is-striped'><thead><tr><th>文件标题</th><th width='15%'>类型</th><th width='20%'>文件大小</th><th width='8%'>售价</th><th width='15%'>操作</th></tr></thead>";
+                    dataHtml += "<tbody>"
+                    $.each(data, function(index,item){
+                        if(item.kind=="指标公式" || item.kind=="选股公式" ){
+                            dataHtml += `<tr><td><a href='#' onclick='showWxQR();'>${item.server_filename.substr(0,item.server_filename.lastIndexOf('.'))}</a></td>`;
+                            dataHtml += `<td>${item.kind}</td>`;
+                            dataHtml += `<td>${formatBytes(item.size,2)}</td>`;
+                            dataHtml += `<td>${item.price===0 ? "--" : "￥" + item.price}</td>`
+                            dataHtml += `<td><a onclick='showPayQR()''>赞赏</a></td></tr>`
+                        }
+                        else{
+                            dataHtml += `<tr><td><a href="/preview?id=${item.fs_id}" target="_blank">${item.server_filename.substr(0,item.server_filename.lastIndexOf('.'))}</a></td>`;
+                            dataHtml += `<td>${item.kind}</td>`;
+                            dataHtml += `<td>${formatBytes(item.size,2)}</td>`;
+                            dataHtml += `<td>${item.price===0 ? "--" : "￥" + item.price}</td>`
+                            dataHtml += `<td><a onclick="downloadDoc('${item.fs_id}')">下载</a></td></tr>`
+                        }
+                    })
+                    dataHtml+="</tbody></table>"
+                    console.log('pagination:',pagination);
+                    pageIndex = pagination.pageNumber;
+                    container.prev().html(dataHtml);
+                }
+            })
+        }
+
+        function switchTab(_key) {
+            pageIndex = 1;
+            key = _key;
+            paginator(pageIndex);
         }
         function closePop() { $('#open-modal').removeClass('modal-hidden').addClass('modal-hidden'); }
         function showWxQR() {
@@ -133,7 +182,6 @@
             $('#open-modal').removeClass('modal-hidden');
         }
         function downloadDoc(fs_id) {
-            //var index = layer.load(1, { content: '加载中...',shade: [0.5, '#fde5e5'] });//0.1透明度的白色背景
             $('body').loading({
                 loadingWidth: 240, title: '下载中，请稍候...', name: 'downloadDoc', discription: '这是一个描述...', direction: 'row', type: 'origin',
                 originBg: '#71EA71', originDivWidth: 30, originDivHeight: 30, originWidth: 4, originHeight: 4, smallLoading: false,
@@ -147,13 +195,10 @@
                 dataType: 'json',
                 success: function (ret) {
                     let url = ret.url.replace("http://", "https://");
-                    //layer.close(index); 
                     location.href = url;
                     removeLoading('downloadDoc');
                 },
                 error: function (XMLHttpRequest) {
-                    //layer.close(index); 
-                    //layer.msg('下载文件出错！')
                     removeLoading('downloadDoc');
                     alert('下载文件出错！')
                 }

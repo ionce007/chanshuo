@@ -172,6 +172,48 @@ async function getAll(req, res) {
   res.json({ status, message, pages });
 }
 
+async function getAllTest(req, res) {
+  let pages;
+  let status = true;
+  let message = 'ok';
+  let total = 0;
+  let pageSize = req.query.pageSize || 3;
+  pageSize = Number(pageSize);
+  let pageIndex = req.query.pageNumber || 1;
+  pageIndex = Number(pageIndex);
+  try {
+    let datus = await Page.findAndCountAll({
+      attributes: [
+        'id',
+        'type',
+        'link',
+        'pageStatus',
+        'commentStatus',
+        'title',
+        'tag',
+        'password',
+        'view',
+        'upVote',
+        'downVote',
+        'createdAt',
+        'updatedAt',
+        'UserId'
+      ],
+      order: [['updatedAt', 'DESC']],
+      limit: pageSize,
+      offset: pageSize * (pageIndex - 1)
+    });
+    console.log('datus: ', datus);
+    pages = datus.rows;
+    total = datus.count;
+  } catch (e) {
+    console.error(e);
+    message = e.message;
+    status = false;
+  }
+  res.json({ status, message, total, pages });
+}
+
 async function export_(req, res, next) {
   const id = req.params.id;
   try {
@@ -327,5 +369,6 @@ module.exports = {
   get,
   getRenderedPage,
   update,
-  delete_
+  delete_,
+  getAllTest
 };

@@ -1,37 +1,56 @@
-<%- include('./partials/header') %>
-<script type="text/javascript">tag='archive';</script>
-<div class="container">
-    <p class="title is-3" style='margin-top: 24px'><%= title %></p>
-    <table class="table is-fullwidth is-hoverable is-striped">
-        <thead>
-        <tr>
-            <th>标题</th>
-            <th>发布时间</th>
-            <th>编辑时间</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% pages.sort((a,b) => (a.createdAt > b.createdAt) ? 1 : ((b.createdAt > a.createdAt) ? -1 : 0)).forEach(page => { %>
-            <tr>
-                <td>
-                    <a href="/page/<%= page.link %>">
-                        <%= page.title %>
-                    </a>
-                </td>
-                <td>
-                    <time>
-                        <%= page.createdAt.substring(0, 10) %>
-                    </time>
-                </td>
-                <td>
-                    <time>
-                        <%= page.updatedAt.substring(0, 10) %>
-                    </time>
-                </td>
-            </tr>
-        <% }) %>
-        </tbody>
-    </table>
-</div>
+    <%- include('./partials/header') %>
+    <link rel="stylesheet" href="/static/pagination.css">
+    <script src="/static/pagination.js?t=123"></script>
 
-<%- include('./partials/footer') %>
+    <script type="text/javascript">tag = 'archive';</script>
+    <div class="container">
+        <p class="title is-3" style='margin-top: 24px'>
+            <%= title %>
+        </p>
+        <div id="list"></div>
+        <div id="pagination"></div>
+    </div>
+    <script type="text/javascript">
+        let pageIndex = 1;
+        let key = '<%= title%>'
+        $(function () {
+            paginator();
+        })
+        var paginator = function () {
+            var container = $('#pagination');
+            if (!container.length) return;
+            let url = `/api/pagetag?tag=${key}`;
+            container.pagination({
+                dataSource: url,
+                locator: 'pages',
+                pageNumber: pageIndex,
+                showSizeChanger: true,
+                totalNumberLocator: function (res) { return res.total; },
+                pageSize: 10,
+                ajax: {
+                    beforeSend: function () {
+                        $('#list').html(`<p style='text-align:center;font-size:16px;magin:40px auto;'>正在获取数据，请稍候 ......</p>`);
+                    }
+                },
+                callback: function (data, pagination) {
+                    setTimeout(function () { genHtml(data); }, 500);
+                    pageIndex = pagination.pageNumber;
+                }
+            })
+        }
+        function genHtml(data) {
+            var dataHtml = "<table class='table is-fullwidth is-hoverable is-striped'>";
+            dataHtml += '<thead><tr><th>标题</th><th>发布时间</th><th>编辑时间</th></tr></thead><tbody>'
+            $.each(data, function (index, item) {
+                dataHtml += '<tr>';
+                dataHtml += `<td><a href='/page/${item.link}'>${item.title}</a></td>`;
+                dataHtml += `<td><time>${item.createdAt.substring(0, 10)}</time></td>`;
+                dataHtml += `<td><time>${item.updatedAt.substring(0, 10)}</time></td>`;
+                dataHtml += '</tr>';
+            })
+            dataHtml += '</tbody></table>'
+            $('#list').html(dataHtml);
+        }
+
+    </script>
+    <%- include('./partials/footer') %>

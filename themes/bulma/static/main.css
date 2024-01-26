@@ -72,7 +72,15 @@ code {
 .page-card-text {
     margin-top: 16px;
 }
-
+.page-card-text-desc{
+    display: -webkit-box; /* WebKit引擎 */
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    
+    display: -moz-box; /* Firefox引擎 */
+    -moz-max-lines: 2;
+    overflow: hidden;
+}
 .pagination {
     margin: 16px 4px;
 }
@@ -448,3 +456,4 @@ span.line {
 .box h2{padding-bottom: 0.3em;font-size:1em;color: #ee00dd;margin-top: 20px;margin-bottom: 16px;font-weight: 600;line-height: 1.5;margin-block-start: 1em;margin-block-end: 0.2em;}
 .utterances{max-width:100%;}
 article > p:has(img) {text-align: center; margin: 0 auto;}
+.menu-list a{cursor:pointer;}

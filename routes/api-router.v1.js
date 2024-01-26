@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const index = require('../controllers/index');
+const page = require('../controllers/page');
+
 const { userRequired, adminRequired, tokenAuth } = require('../middlewares/api-auth');
 const { upload } = require('../middlewares/upload');
 const { uploadDB } = require('../middlewares/uploaddb');
 //const UploadBigFile  = require("../middlewares/uploadBigFile");
 
-const page = require('../controllers/page');
 const accessToken = require('../controllers/accesstoken');
 const formula = require('../controllers/formula');
 
@@ -22,14 +24,17 @@ const qywxProvider = require('../controllers/qywxProvider');
 router.post('/page/search', userRequired, page.search);
 router.post('/page', tokenAuth, userRequired, page.create);
 router.get('/page', userRequired, page.getAll);
+router.get('/page_test', page.getAllTest);
 router.get('/page/export/:id', userRequired, page.export_);
 router.get('/page/render/:id', page.getRenderedPage);
 router.get('/page/:id', userRequired, page.get);
 router.put('/page', userRequired, page.update);
 router.delete('/page/:id', userRequired, page.delete_);
 
+
 router.get('/accesstoken/get', accessToken.getAccessToken);
 router.post('/formula', userRequired, formula.getAllFormulas);
+router.get('/formula', formula.getFormulaData);
 router.post('/formula/search', userRequired, formula.search);
 router.put('/formula', userRequired, formula.updaueFormula);
 router.post('/formula/async', userRequired, formula.panSynchronize);
@@ -46,6 +51,10 @@ router.get('/bdauth_code', adminRequired, accessToken.getBaiduAuthCode);
 router.get('/blog/category', userRequired, blogarticle.getCategory);
 router.get('/blog/catelist', userRequired, blogarticle.getCategoryList);
 router.post('/blog', userRequired, blogarticle.Create);
+router.get('/blog/list', blogarticle.blogArcticleList);
+router.get('/blog/datelist', blogarticle.getMonthBlog);
+router.get('/pagetag', index.getTagData);
+router.get('/pagelist', index.getPageList);
 router.get('/blog/test', blogarticle.testCache);
 router.put('/blog', userRequired, blogarticle.Update);
 router.post('/blog/search', userRequired, blogarticle.search);
@@ -89,6 +98,7 @@ router.get('/qywxcb', qywx.qywx_callback);
 router.post('/qywxcb', qywx.qywx_callback);
 router.get('/qywx_provider', qywxProvider.qywx_callback);
 router.post('/qywx_provider', qywxProvider.qywx_callback);
+
 
 /*
 const uploadBigFile = new UploadBigFile();
