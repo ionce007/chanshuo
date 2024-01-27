@@ -4,7 +4,7 @@
 <script type="text/javascript">tag='archive';</script>
 
 <div class="container">
-    <p class="title is-3" style='margin-top: 24px'>文章总览</p>
+    <p class="title is-3" style='margin-top: 24px'></p>
     <div id="list"></div>
     <div id="pagination"></div>
 </div>
@@ -21,7 +21,12 @@
             locator: 'pages',
             pageNumber: pageIndex,
             showSizeChanger: true,
-            totalNumberLocator: function (res) { return res.total; },
+            totalNumberLocator: function (res) { 
+                debugger;
+                if(res.kind === 'month') $('.title').text(`发布时间：${res.time}`)
+                else $('.title').text(`文章总览`)
+                return res.total; 
+            },
             pageSize: 10,
             ajax: {
                 beforeSend: function () {

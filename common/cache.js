@@ -205,8 +205,6 @@ function updateView(id) {
   }
 }
 
-
-
 let formulas = undefined;
 async function getFormulasByRange(start, num) {
   if (formulas === undefined) {

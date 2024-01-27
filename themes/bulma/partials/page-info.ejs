@@ -6,7 +6,11 @@
             <a class="tag is-light" href='/tag/<%= tag %>'><%= tag %></a>
         <% }}); %>
     </span>
-    <span class="line">发布于：<span class="tag is-light"><%-page.createdAt%></span></span>
-    <span class="line">编辑于：<span class="tag is-light"><%-page.updatedAt%></span></span>
-    <span class="line">浏览量：<span class="tag is-light"><%-page.view%></span></span>
+    <span class="line">发布于：<span class="tag is-light" id="cd"></span></span>
+    <span class="line">编辑于：<span class="tag is-light" id="ud"></span></span>
+    <span class="line">浏览量：<span class="tag is-light"><%= page.view%></span></span>
 </div>
+<script>
+    $('#cd').text(new Date('<%= page.createdAt %>').format('yyyy-MM-dd HH:mm:ss'));
+    $('#ud').text(new Date('<%= page.updatedAt %>').format('yyyy-MM-dd HH:mm:ss'));
+</script>

@@ -12,20 +12,24 @@
     </div>
     <script type="text/javascript">
         let pageIndex = 1;
+        let kind = '<%= kind %>'
         let key = '<%= title%>'
+        console.log(`kind：${kind},   key：${key}`);
         $(function () {
             paginator();
         })
         var paginator = function () {
             var container = $('#pagination');
             if (!container.length) return;
-            let url = `/api/pagetag?tag=${key}`;
+            let url = `/api/pagelist?tag=${key}&kind=${kind}`;
             container.pagination({
                 dataSource: url,
                 locator: 'pages',
                 pageNumber: pageIndex,
                 showSizeChanger: true,
-                totalNumberLocator: function (res) { return res.total; },
+                totalNumberLocator: function (res) {
+                    return res.total; 
+                },
                 pageSize: 10,
                 ajax: {
                     beforeSend: function () {

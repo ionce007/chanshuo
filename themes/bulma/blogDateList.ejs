@@ -11,6 +11,7 @@
             <input type="hidden" id="year" name="year" class="year" value="<%= year %>" />
             <input type="hidden" id="month" name="month" class="month" value="<%= month %>" />
         </form>
+        <p class="title is-3" style='margin-top: 24px'></p>
         <div class="page-card-list">
             <div class="box" style='padding-top: 16px' id="content">
 
@@ -68,7 +69,10 @@
             locator: 'artData',
             pageNumber: pageIndex,
             showSizeChanger: true,
-            totalNumberLocator:function(res) { return res.total; },
+            totalNumberLocator:function(res) {
+                if(kind === 'category') $('.title').text(`博文类别：${res.artData[0]['CSCategory.title']}`);
+                else { ((res.year === '-' || res.month === '-') ? $('.title').text(`发表日期：未知`) : $('.title').text(`发表日期：${res.year}-${res.month}`) ); }
+                return res.total; },
             pageSize: 10,
             ajax: {
                 beforeSend: function() {

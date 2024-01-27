@@ -1,7 +1,7 @@
 const { updateView, getLinks, convertContent, getPageListByTag, getPagesByRange } = require('../common/cache');
 //const { loadAllBlogs } = require('../common/blogcache');
 const { getAllBlogsTitle } = require('../common/blogcache');
-const { getDate, dateFormat } = require('../common/util');
+const { getDate, dateFormat,formatDateTime } = require('../common/util');
 const { Page, Formula } = require('../models');
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createGzip } = require('zlib');
@@ -47,32 +47,42 @@ async function getArchive(req, res, next) {
     item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
     return item;
   });
-  res.render('archive', { pages: pages.reverse() });
+  res.render('archive', { pages: pages.reverse(),kind:'summary' });
 }
 async function getPageList(req, res, next) {
   let pageIndex = req.query.pageNumber || 1;
   if (!pageIndex || pageIndex <= 1) pageIndex = 1;
   let pageSize = req.query.pageSize || 10;
   if (!pageSize) pageSize = 10;
-
+  let kind = req.query.kind;
+  let tag = req.query.tag;
+  let where = {};
+  console.log('kind: ',kind);
+  if(kind === 'tag') where = {pageStatus: { [Op.not]: PAGE_STATUS.RECALLED }, tag: { [Op.like]: `%${tag}%` }};
+  else if(kind === 'month') {
+    let year = tag.split('-')[0];
+    let month = tag.split('-')[1];
+    let startDate = new Date(year, parseInt(month) - 1, 1, 0, 0, 0, 0);
+    let endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1);
+    where = {pageStatus: { [Op.not]: PAGE_STATUS.RECALLED }, createdAt: { [Op.between]: [startDate, endDate] }};
+  }
   try {
     let datus = await Page.findAndCountAll({
-      where: {
-        pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
-      },
+      where: where,
       order: [['createdAt', 'DESC']],
       limit: pageSize,
       offset: pageSize * (pageIndex - 1),
       raw: true
     });
-    let pages = datus.rows.map((item) => {
+    let pages = datus.rows.map( (item) =>  {
       item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
       item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
       return item;
     });
-    res.json({ status: true, message: 'ok', pages,  total: datus.count });
+    res.json({ status: true, message: 'ok', pages,  total: datus.count, kind: kind});
   } catch (e) {
-    res.json({ tatus: false,  message: e.message, pages: [], total: 0  });
+    res.json({ tatus: false,  message: e.message, pages: [], total: 0, kind: kind  });
   }
 /*
   let pages = await getPagesByRange(0, -1);
@@ -237,10 +247,11 @@ async function getMonthArchive(req, res, next) {
   const year = req.params.year;
   let month = req.params.month;
   const time = year + '-' + month;
-  let startDate = new Date(year, parseInt(month) - 1, 1, 0, 0, 0, 0);
-  let endDate = new Date(startDate);
-  endDate.setMonth(startDate.getMonth() + 1);
   try {
+    /*let startDate = new Date(year, parseInt(month) - 1, 1, 0, 0, 0, 0);
+    let endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1);
+  
     let pages = await Page.findAll({
       where: {
         pageStatus: { [Op.not]: PAGE_STATUS.RECALLED },
@@ -252,8 +263,9 @@ async function getMonthArchive(req, res, next) {
       item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
       item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
       return item;
-    });
-    res.render('list', { pages, title: time });
+    });*/
+    res.render('list', { pages:[], title: time ,kind: 'month'});
+    //res.render('archive', { pages, title: time ,kind: 'month'});
   } catch (e) {
     res.render('message', {
       title: '错误',
@@ -307,13 +319,27 @@ async function getTag(req, res, next) {
       return item; 
     });*/
     let pages = [];
-    res.render('list', { pages, title: tag });
+    res.render('list', { pages, title: tag, kind: 'tag' });
   } catch (e) {
     res.render('message', {
       title: '错误',
       message: e.message
     });
   }
+}
+function format(date){
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  month = month < 10 ? ('0' + month) : month;
+  let day = date.getDate();
+  day = day < 10 ? ('0' + day) : day;
+  let hour = date.getHours();
+  hour = hour < 10 ? ('0' + hour) : hour;
+  let min = date.getMinutes();
+  min = min < 10 ? ('0' + min) : min;
+  let sec = date.getSeconds();
+  sec = sec < 10 ? ('0' + sec) : sec;
+  return `${year}-${month}-${day} ${hour}:${min}:${sec}`;
 }
 
 async function getPage(req, res, next) {
@@ -334,9 +360,8 @@ async function getPage(req, res, next) {
   page.increment('view').then();
   page = page.get({ plain: true });
   // Change the data format.
-  page.createdAt = getDate('default', page.createdAt);
-  page.updatedAt = getDate('default', page.updatedAt);
-
+  //page.createdAt = format(page.createdAt);
+  //page.updatedAt = format(page.updatedAt);
   page.view++;
   updateView(page.id);
   if (page.password) {

@@ -17,7 +17,7 @@
                                     <% page.tag.trim().split(";").forEach(function (tag) { if(tag !== ""){ %>
                                         <a class="tag is-light" href='/tag/<%= tag %>'><%= tag %></a>
                                     <% }}); %>
-                                    <a class="tag is-light" href="/archive/<%= page.createdAt.split('-')[0] + '/' + page.createdAt.split('-')[1] %>"><%= page.createdAt.substring(0, 10) %></a>
+                                    <a class="tag is-light" href="/tag/<%= page.createdAt.split('-')[0] + '/' + page.createdAt.split('-')[1] %>"><%= page.createdAt.substring(0, 10) %></a>
                                     <span class="tag is-light"><%- page.view %> views</span>
                                     <div class="page-card-text">
                                         <%= page.description ? page.description : "无描述信息" %>

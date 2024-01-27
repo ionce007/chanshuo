@@ -78,23 +78,37 @@ function checkPassword(plainTextPassword, hashedPasswordWithSalt) {
   return hashedPassword === realHashedPassword;
 }
 
-function DateAdd ( date, strInterval, number) {
+function DateAdd(date, strInterval, number) {
   //y年 q季度 m月 d日 w周 h小时 n分钟 s秒 ms毫秒
   var dtTmp = date; //this;
   switch (strInterval) {
-  case 's': return new Date(Date.parse(dtTmp) + (1000 * number));
-  case 'n': return new Date(Date.parse(dtTmp) + (60000 * number));
-  case 'h': return new Date(Date.parse(dtTmp) + (3600000 * number));
-  case 'd': return new Date(Date.parse(dtTmp) + (86400000 * number));
-  case 'w': return new Date(Date.parse(dtTmp) + ((86400000 * 7) * number));
-  case 'q': return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + number * 3, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
-  case 'm': return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + number, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
-  case 'y': return new Date((dtTmp.getFullYear() + number), dtTmp.getMonth(), dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+    case 's': return new Date(Date.parse(dtTmp) + (1000 * number));
+    case 'n': return new Date(Date.parse(dtTmp) + (60000 * number));
+    case 'h': return new Date(Date.parse(dtTmp) + (3600000 * number));
+    case 'd': return new Date(Date.parse(dtTmp) + (86400000 * number));
+    case 'w': return new Date(Date.parse(dtTmp) + ((86400000 * 7) * number));
+    case 'q': return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + number * 3, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+    case 'm': return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + number, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+    case 'y': return new Date((dtTmp.getFullYear() + number), dtTmp.getMonth(), dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
   }
 };
-
+var formatDateTime = function (date) {
+  date = new Date(date);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ('0' + m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ('0' + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ('0' + h) : h;
+  var minute = date.getMinutes();
+  minute = minute < 10 ? ('0' + minute) : minute;
+  var second = date.getSeconds();
+  second = second < 10 ? ('0' + second) : second;
+  return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+}
 function dateFormat(date, format) {
-  if(typeof(date) !== 'object') date = new Date(date)
+  if (typeof (date) !== 'object') date = new Date(date)
   const o = {
     'M+': date.getMonth() + 1, // 月份
     'd+': date.getDate(), // 日
@@ -121,12 +135,12 @@ function dateFormat(date, format) {
   return format;
 }
 
-function getRequestParams(paramsStr){
-  const paramsArr=paramsStr.split('&');
+function getRequestParams(paramsStr) {
+  const paramsArr = paramsStr.split('&');
   const query = {};
-  paramsArr.forEach(item=>{
-    const param=item.split("=");
-    query[param[0]]=param[1];
+  paramsArr.forEach(item => {
+    const param = item.split("=");
+    query[param[0]] = param[1];
   });
   return query;
 }
@@ -138,18 +152,18 @@ function calcJsonFieldSum(jsonData, fieldKey) {
 
   return sum;
 }
-function Toast(msg, duration){  
-  duration = isNaN(duration) ? 3000 : duration;  
-  var m = document.createElement('div');  
-  m.innerHTML = msg;  
-  m.style.cssText="font-size: .32rem;color: rgb(255, 255, 255);background-color: rgba(0, 0, 0, 0.6);padding: 10px 15px;margin: 0 0 0 -60px;border-radius: 4px;position: fixed;    top: 50%;left: 50%;width: 130px;text-align: center;";
-  document.body.appendChild(m);  
-  setTimeout(function() {  
-      var d = 0.5;
-      m.style.opacity = '0';  
-      setTimeout(function() { document.body.removeChild(m) }, d * 1000);  
-  }, duration);  
-}  
+function Toast(msg, duration) {
+  duration = isNaN(duration) ? 3000 : duration;
+  var m = document.createElement('div');
+  m.innerHTML = msg;
+  m.style.cssText = "font-size: .32rem;color: rgb(255, 255, 255);background-color: rgba(0, 0, 0, 0.6);padding: 10px 15px;margin: 0 0 0 -60px;border-radius: 4px;position: fixed;    top: 50%;left: 50%;width: 130px;text-align: center;";
+  document.body.appendChild(m);
+  setTimeout(function () {
+    var d = 0.5;
+    m.style.opacity = '0';
+    setTimeout(function () { document.body.removeChild(m) }, d * 1000);
+  }, duration);
+}
 
 module.exports = {
   titleToLink,
@@ -164,4 +178,5 @@ module.exports = {
   getRequestParams,
   calcJsonFieldSum,
   Toast,
+  formatDateTime,
 };

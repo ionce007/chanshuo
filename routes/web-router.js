@@ -10,7 +10,7 @@ router.get('/', index.getIndex);
 router.get('/archive', index.getArchive);
 router.get('/about', index.getAboutMe);
 router.get('/donate', index.getDonate);
-router.get('/archive/:year/:month', index.getMonthArchive);
+router.get('/tag/:year/:month', index.getMonthArchive);
 router.get('/formula', formula.getFormula);
 router.get('/preview', formula.showPreviewPage);
 router.get('/hotstock', hotstock.showHotStock);
