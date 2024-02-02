@@ -364,7 +364,7 @@ class Editor extends Component {
     this.setState({ language: value });
     if (this.state.noUserInputContent && this.state.isNewPage) {
       let page = { ...this.state.page };
-      let content = '---\ntitle: \ndescription: \ntags: \n- Others\n---\n';
+      let content = '---\ntitle: \ndescription: \ntags: \n- Others: \n---\n';
       if (
         [
           'java',
@@ -377,13 +377,13 @@ class Editor extends Component {
           'sql'
         ].includes(value)
       ) {
-        content = '/*\ntitle: \ndescription: \ntags: \n- Others\n*/\n';
+        content = '/*\ntitle: \ndescription: \ntags: \n- Others: \n*/\n';
       } else if (['html', 'ejs'].includes(value)) {
-        content = '<!--\ntitle: \ndescription: \ntags: \n- Others\n\n-->\n';
+        content = '<!--\ntitle: \ndescription: \ntags: \n- Others: \n\n-->\n';
       } else if (['python'].includes(value)) {
         content = '"""\ntitle: \ndescription: \ntags: \n- Others\n"""\n';
       } else if (['ruby'].includes(value)) {
-        content = '=begin\ntitle: \ndescription: \ntags: \n- Others\n=end\n';
+        content = '=begin\ntitle: \ndescription: \ntags: \n- Others: \n=end\n';
       }
       page.content = content;
       this.setState({ page });
@@ -442,7 +442,9 @@ class Editor extends Component {
       this.state.isNewPage ? this.postNewPage() : this.updatePage();
     }
   };
-
+  submitUrlToBaidu = () =>{
+    
+  }
   getDate(format) {
     if (format === undefined) format = 'yyyy-MM-dd';
     const date = new Date();

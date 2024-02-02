@@ -14,6 +14,7 @@ let config = {
   PAN_APPID: process.env.PAN_APPID,
   PAN_APIKEY: process.env.PAN_APIKEY,
   PAN_SECRETKEY: process.env.PAN_SECRETKEY,
+  BDZZ_TOKEN: process.env.BDZZ_TOKEN,
 
   MYSQL: {
     bdname: process.env.MYSQL_DBNAME,

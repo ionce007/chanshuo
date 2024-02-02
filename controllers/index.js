@@ -179,6 +179,7 @@ async function getAboutMe(req, res, next) {
 }
 
 async function getSitemap(req, res, next) {
+  //res.header('Content-Type', 'application/xml');
   res.header('Content-Type', 'application/xml;charset=UTF-8');
   res.header('Content-Encoding', 'gzip');
 
@@ -191,6 +192,7 @@ async function getSitemap(req, res, next) {
 
     const smStream = new SitemapStream({ hostname });
     const pipeline = smStream.pipe(createGzip());
+    //const pipeline = smStream.pipe();
 
     let dropdowns = JSON.parse(req.app.locals.config.nav_links);
     var firstOne = dropdowns.shift();

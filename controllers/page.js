@@ -1,12 +1,14 @@
 const { convertContent, deleteCacheEntry } = require('../common/cache');
 const sequelize = require('sequelize');
 const { Op } = require('sequelize');
-const { Page } = require('../models');
+const request = require('sync-request');
+const { Page, Option } = require('../models');
 const Stream = require('stream');
 const { loadNoticeContent } = require('../common/config');
 const { updateCache, loadAllPages } = require('../common/cache');
 const { getDate } = require('../common/util');
 const { PAGE_STATUS, PAGE_TYPES } = require('../common/constant');
+const config = require('../config');
 
 async function search(req, res) {
   const type = Number(req.body.type);
@@ -125,6 +127,7 @@ async function create(req, res) {
       // WTF, the date attributes here are object.
       page.createdAt = getDate('default', page.createdAt.toUTCString());
       page.updatedAt = getDate('default', page.updatedAt.toUTCString());
+      await SEO2Baidu(page);
       id = page.id;
       status = true;
       updateCache(page, true, true);
@@ -139,7 +142,44 @@ async function create(req, res) {
   }
   res.json({ status, message, id });
 }
-
+async function SEO2Baidu(page){
+  try {
+    var option = await Option.findOne({ where: { key: 'domain' }, raw: true });
+    var domain = (!option ? 'cms.foryet.com' : option.value);
+    var postData = `https://${domain}/page/${page.link}`
+    headers = {
+      host: 'data.zz.baidu.com',
+      'User-Agent': 'curl/7.12.1',
+      'Content-Type': 'text/plain',
+    };
+    const url = `http://data.zz.baidu.com/urls?site=https://${domain}&token=${config.BDZZ_TOKEN}`;
+    const ret = request('POST', url, { headers: headers, body: postData });
+    return JSON.parse(ret);
+  }
+  catch (error) {
+    return {status: false, msg: error.message };
+  }
+}
+async function submitUrlToBaidu(req, res, next) {
+  try {
+    var option = Option.findOne({ where: { key: 'domain' }, raw: true });
+    var domain = (!option ? 'cms.foryet.com' : option.value);
+    var postData = req.body.urls;
+    var postBody = decodeURIComponent(postData);
+    headers = {
+      host: 'data.zz.baidu.com',
+      'User-Agent': 'curl/7.12.1',
+      'Content-Type': 'text/plain',
+    };
+    const url = `http://data.zz.baidu.com/urls?site=https://${domain}&token=${config.BDZZ_TOKEN}`;
+    const ret = request('POST', url, { headers: headers, body: postBody });
+    console.log('submitUrlToBaidu -> ret', ret);
+    res.json(ret);
+  }
+  catch (error) {
+    res.json({status: false, msg: error.message });
+  }
+}
 async function getAll(req, res) {
   let pages;
   let status = true;
@@ -319,7 +359,7 @@ async function update(req, res, next) {
   let status = false;
   let updateConvertedContent = false;
   try {
-    let page = await Page.findOne({where: { id }});
+    let page = await Page.findOne({ where: { id } });
     if (page) {
       let oldContent = page.get().content;
       await page.update(newPage);
@@ -370,5 +410,6 @@ module.exports = {
   getRenderedPage,
   update,
   delete_,
-  getAllTest
+  submitUrlToBaidu,
+  getAllTest,
 };

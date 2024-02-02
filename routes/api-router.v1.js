@@ -23,6 +23,7 @@ const qywxProvider = require('../controllers/qywxProvider');
 
 router.post('/page/search', userRequired, page.search);
 router.post('/page', tokenAuth, userRequired, page.create);
+router.post('/builder', userRequired, page.submitUrlToBaidu);
 router.get('/page', userRequired, page.getAll);
 router.get('/page_test', page.getAllTest);
 router.get('/page/export/:id', userRequired, page.export_);

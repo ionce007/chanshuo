@@ -2,7 +2,7 @@ const Feed = require('feed').Feed;
 const { getPagesByRange } = require('./cache');
 const fs = require('fs');
 const { convertContent } = require('./cache');
-const { md2html } = require('./util');
+//const { md2html } = require('./util');
 
 let Config;
 

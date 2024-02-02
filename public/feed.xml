@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 ● 股经</title>
-    <updated>2024-01-27T13:34:31.830Z</updated>
+    <updated>2024-02-02T15:26:20.531Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -12,6 +12,56 @@
     <link rel="self" href="https://example.com/atom.xml"/>
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[如何判断主力吸筹完成后的试盘]]></title>
+        <id>如何判断主力吸筹完成后的</id>
+        <link href="https://cms.foryet.com/page/如何判断主力吸筹完成后的"/>
+        <updated>2024-01-28T14:48:16.167Z</updated>
+        <summary type="html"><![CDATA[拒绝在拉升前下车：牢记这4种“试盘特征”，一旦出现，坚定持仓，股价或将直飞冲天！主力吸货完毕之后，并不是马上进入拉升状态。虽然此时提升的心情十分急切，但还要最后一次对盘口进行全面的测试。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？]]></title>
+        <id>如何通过周线、月线判断股票主升浪开始？</id>
+        <link href="https://cms.foryet.com/page/如何通过周线、月线判断股票主升浪开始？"/>
+        <updated>2024-01-28T14:46:27.365Z</updated>
+        <summary type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？坊间俗语“月线看势，周线选股，日线辨强弱。”通过K线技术来选择股票，是有一定道理的。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[首板第二天溢价规则]]></title>
+        <id>首板第二天溢价规则</id>
+        <link href="https://cms.foryet.com/page/首板第二天溢价规则"/>
+        <updated>2024-02-02T15:21:39.961Z</updated>
+        <summary type="html"><![CDATA[总结九条首板第二天溢价规则]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[一进二的买卖逻辑思维：在首板里找出龙头和补涨龙]]></title>
+        <id>一进二的买卖逻辑思维：在首板里找出龙头和补涨龙</id>
+        <link href="https://cms.foryet.com/page/一进二的买卖逻辑思维：在首板里找出龙头和补涨龙"/>
+        <updated>2024-01-28T14:58:07.360Z</updated>
+        <summary type="html"><![CDATA[一进二要找出龙头和补涨龙，.就得懂得周期划分，在旧龙头周期结束时，找出新周期龙头，在新周期去一进二试错找出补涨龙。周期怎么划分呢？]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[进攻犀利的低位强势反转]]></title>
+        <id>进攻犀利的低位强势反转</id>
+        <link href="https://cms.foryet.com/page/进攻犀利的低位强势反转"/>
+        <updated>2024-01-28T14:45:02.718Z</updated>
+        <summary type="html"><![CDATA[今天给大家分享的会相对进攻犀利一些，是一种低位反转式。看到这里，大家可以先点个赞，然后好好看余下的精彩部分。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[抓龙头主升的具体操作方法]]></title>
         <id>抓龙头主升的具体操作方法</id>
@@ -58,56 +108,6 @@
         <link href="https://cms.foryet.com/page/“美人肩”形态"/>
         <updated>2024-01-16T13:23:21.000Z</updated>
         <summary type="html"><![CDATA[投资既是一门科学，更是一门艺术，只有真正投身于市场的投资者才能理解其中的含义。投资的成功与否，关键在于投资者是否有一套行之有效的分析操作方法，其中K线形态是非常重要的部分。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[如何判断主力吸筹完成后的试盘]]></title>
-        <id>如何判断主力吸筹完成后的</id>
-        <link href="https://cms.foryet.com/page/如何判断主力吸筹完成后的"/>
-        <updated>2024-01-16T01:53:17.000Z</updated>
-        <summary type="html"><![CDATA[拒绝在拉升前下车：牢记这4种“试盘特征”，一旦出现，坚定持仓，股价或将直飞冲天！主力吸货完毕之后，并不是马上进入拉升状态。虽然此时提升的心情十分急切，但还要最后一次对盘口进行全面的测试。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[散户炒股法宝――学会画“趋势线”]]></title>
-        <id>学会画“趋势线”</id>
-        <link href="https://cms.foryet.com/page/学会画“趋势线”"/>
-        <updated>2024-01-15T01:54:52.000Z</updated>
-        <summary type="html"><![CDATA[在中期上升趋势中，股价的低点和高点都不断上移。将两个低点用直线连接起来，便构成一条上升趋势线，它将成为股价回档时的支撑。当股价每次回调至该线不跌破并且止跌回升时，便是上升趋势中的短线买入时机。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[股市最可靠的“银山谷”买入法，看到这一走势大胆选择满仓！]]></title>
-        <id>股市最可靠的“银山谷”买入法</id>
-        <link href="https://cms.foryet.com/page/股市最可靠的“银山谷”买入法"/>
-        <updated>2024-01-14T14:58:45.000Z</updated>
-        <summary type="html"><![CDATA[俗话说金山不如银山，但是在股市中银山的出现是在给金山做铺垫。股市瞬息万变，看透的人，处处是生机;看不透的人，处处是困境。涨时不贪，跌时不慌，保持清醒，方能进退自如。只有不断学习才能不断进步，下面小编来介绍下极常见的“银山谷”战法。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[主力拉高建仓洗盘再启动的首板买入方法]]></title>
-        <id>主力拉高建仓洗盘再启动的首板买入方法</id>
-        <link href="https://cms.foryet.com/page/主力拉高建仓洗盘再启动的首板买入方法"/>
-        <updated>2024-01-14T00:58:49.000Z</updated>
-        <summary type="html"><![CDATA[今天主要介绍两种打首板的方法，虽然是图形为主，但图形的背后逻辑是主力快速拉高建仓，洗盘，再启动主升。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？]]></title>
-        <id>如何通过周线、月线判断股票主升浪开始？</id>
-        <link href="https://cms.foryet.com/page/如何通过周线、月线判断股票主升浪开始？"/>
-        <updated>2024-01-12T03:16:25.000Z</updated>
-        <summary type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？坊间俗语“月线看势，周线选股，日线辨强弱。”通过K线技术来选择股票，是有一定道理的。]]></summary>
         <author>
             <name/>
         </author>

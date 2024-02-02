@@ -236,11 +236,9 @@ class Settings extends Component {
  
 
 fileSelected = async (e) => {
-  debugger;
   //const file = e.target.files[0];
 }
 uploadFile = async () => {
-  debugger;
   const fileEl = document.getElementById("file");
   fileEl.click();
 }
@@ -250,7 +248,6 @@ render() {
     multiple: true,
     //action: '/api/option/uploaddb',
     onChange(info) {
-      debugger;
       const { status } = info.file;
       if (status === 'done') {
         Message.success(`文件上传成功：${info.file.name}`);
