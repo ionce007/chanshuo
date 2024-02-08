@@ -6,9 +6,13 @@
     <%if(page !== undefined){%>
     <title><%= page.title %></title>
     <meta name="description" content="<%= page.description %>"/>
+    <% if(page.tag !== undefined) {%> <meta name="keywords" content="<%= page.tag.replaceAll(';',',') + ',' + config.site_key %>"/> <%} else {%>
+      <meta name="keywords" content="<%= config.site_key %>"/>
+      <%}%>
     <%} else{%>
     <title><%= config.title %></title>
     <meta name="description" content="<%= config.description %>"/>
+    <meta name="keywords" content="<%= config.site_key %>"/>
     <%}%>
     <meta name="baidu-site-verification" content="codeva-ahVjvX7V4w" />
     <meta name="theme-color" content="#ffffff"/>
@@ -24,6 +28,7 @@
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icon512.png">
     <link rel="shortcut icon" href="<%- config.favicon %>">
+
     <%- config.extra_header_code %>
 </head>
 <body>

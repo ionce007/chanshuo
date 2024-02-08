@@ -51,19 +51,10 @@ async function update(req, res, next) {
   const options = req.body;
   for (const [key, value] of Object.entries(options)) {
     if (req.app.locals.config[key] !== value) {
-      let newOption = {
-        key,
-        value
-      };
+      let newOption = { key, value };
       try {
-        let option = await Option.findOne({
-          where: {
-            key
-          }
-        });
-        if (option) {
-          await option.update(newOption);
-        }
+        let option = await Option.findOne({ where: { key } });
+        if (option) { await option.update(newOption);}
       } catch (e) {
         console.error(e);
       }

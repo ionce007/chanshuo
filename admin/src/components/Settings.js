@@ -38,13 +38,11 @@ const tabs = [
     settings: [
       {
         key: 'theme',
-        description:
-          "博客主题，可选值：bulma, bootstrap, bootstrap5, v2ex, next 以及 w3",
+        description: "博客主题，可选值：bulma, bootstrap, bootstrap5, v2ex, next 以及 w3",
       },
       {
         key: 'code_theme',
-        description:
-          '从这里选择一个代码主题：https://www.jsdelivr.com/package/npm/highlight.js?path=styles',
+        description: '从这里选择一个代码主题：https://www.jsdelivr.com/package/npm/highlight.js?path=styles',
       },
       {
         key: 'site_name',
@@ -53,6 +51,10 @@ const tabs = [
       {
         key: 'description',
         description: '网站描述信息',
+      },
+      {
+        key: 'site_key',
+        description: '网站关键字，用于网站SEO优化',
       },
       {
         key: 'nav_links',
@@ -283,7 +285,7 @@ render() {
                         {setting.isBlock ? (
                           <Input.TextArea placeholder={setting.description} value={this.state.options[setting.key]}
                             onChange={(e) => { this.updateOption(setting.key, e.target.value); }}
-                            rows={10}
+                            rows={5}
                           />
                         ) : (
                           <Input placeholder={setting.description} value={this.state.options[setting.key]}
