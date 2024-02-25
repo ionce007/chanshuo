@@ -3,7 +3,9 @@
     <div id="disqus_thread"></div>
     <link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet' />
     <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
-    
+    <style>
+      .wl-editor{max-height:8.75em;}
+    </style>
     <script>
       const params = new URLSearchParams(location.search.slice(1));
       const locale = {
