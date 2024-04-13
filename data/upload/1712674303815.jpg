@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <title>路虽远，行则将至 | 缠说 • 股经</title>
+    <meta name="description" content="股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。"/>
+    <meta name="keywords" content="股票,财经,证券,金融,港股,行情,基金,债券,期货,外汇,科创板,保险,银行,博客,股吧,财迷,论坛,数据,stock,quote,news,fund,bank,blog,data,bbs,股票,投资,交易,行情,上市公司,大盘,上证指数,基金,直播,股评,荐股,博客 ,外汇,黄金,期货,港股,美股, 财经日历,银行,新闻, 证券"/>
+    
+    <meta name="baidu-site-verification" content="codeva-ahVjvX7V4w" />
+    <meta name="theme-color" content="#ffffff"/>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="stylesheet" href="/static/bulma.min.css">
+    <link rel="stylesheet" href="/static/fontawesome.min.css">
+    <link rel="stylesheet" href="/static/main.css" />
+    <!--<link rel="stylesheet" href="/static/paging.css" />-->
+    <script src="/static/jquery3.4.1.js"></script>
+    <script src="/static/main.js"></script>
+    <!--<script src="/static/paging.js"></script>-->
+    <link rel="stylesheet" href="/index/solarized-light.css" media="none" onload="this.media='all'">
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icon512.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1a99008198284d89d6891246198a6ad0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body>
+<script>
+  var tag = '';
+  if (false && 'serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js', {scope: '/'})
+        .then(function (registration) {
+          // console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(function (err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+  }
+</script>
+
+<div id="page-container">
+    <nav class="navbar nav-shadow is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/" style='font-weight: bolder; font-size: larger'>
+                缠说 • 股经
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"data-target="mainNavbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="mainNavbar" class="navbar-menu">
+            <div class="navbar-end" style="width:60%;">
+                
+                
+                    <a class="navbar-item main-menu" href="/" tag="home"> 首页 </a>
+                
+                    <a class="navbar-item main-menu" href="/archive" tag="archive"> 归档 </a>
+                
+                    <a class="navbar-item main-menu" href="/about" tag="about"> 关于本站 </a>
+                
+                    <a class="navbar-item main-menu" href="/formula" tag="formula"> 指标公式 </a>
+                
+                    <a class="navbar-item main-menu" href="/chanshuo" tag="chanshuo"> 缠论博文 </a>
+                
+                    <a class="navbar-item main-menu" href="/hotstock" tag="hotstock"> 人气股 </a>
+                
+                
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            其他
+                        </a>
+                        <div class="navbar-dropdown">
+                            
+                                <a class="navbar-item" href="/sitemap.xml">网站地图</a>
+                            
+                                <a class="navbar-item" href="/feed.xml">订阅博客</a>
+                            
+                                <a class="navbar-item" href="/page/gratitude">特别鸣谢</a>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+            <!--<div class="navbar-end">
+                <div class="navbar-item">
+                    <input class="input" type="text" placeholder="搜索内容">
+                    <div class="buttons">
+                        <input class="input" type="text" placeholder="Text input">
+                        <a class="button is-light">搜索</a>
+                                            <a class="button is-primary">
+                                                <strong>Sign up</strong>
+                                            </a>
+                                            <a class="button is-light">
+                                                Log in
+                                            </a>
+                    </div>
+                </div>
+                <div class="navbar-item"><a class="button is-light">搜索</a></div>
+            </div>-->
+        </div>
+    </div>
+</nav>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    if ($navbarBurgers.length > 0) {
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+  /*$('.main-menu').first().parent().removeClass('active').addClass('active');
+  $('.main-menu').click(function(){
+    debugger;
+    $('.main-menu').parent().removeClass('active');
+    $(this).parent().addClass('active');
+  })*/
+</script>
+    <div id="content-wrap">
+        <div class="container">
+<div class="box">
+    所请求的页面不存在，请检查页面链接是否正确
+</div>
+</div>
+</div>
+<footer id="footer">
+    <div class="content has-text-centered">
+        
+        <p>
+            © 2024 <a href="//cms.foryet.com">铜豌豆</a>   版权所有 京ICP备14010346号
+            由 <a href="#">Blog v1.5.13</a> 驱动，主题 <a href="#">Bulma</a>
+        </p>
+    </div>
+</footer>
+
+</div>
+<script src="/static/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  $('a.navbar-item').removeClass('is-active');
+  $("a.navbar-item[tag='"+tag+"']").addClass('is-active');
+</script>
+<div class="columns"> 	<div class="column is-12" style="text-align:center;"> 	<p style='color:red'><strong>如有任何疑问，欢迎扫码加WX交流</strong></p>	<img src="/static/img/wxQRCode.jpg" style="width:180px;height:180px;"> 	</div> </div>
+</body>
+</html>
+
