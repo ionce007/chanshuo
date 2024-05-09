@@ -113,7 +113,7 @@ server.on("request", async (req, res) => {
     res.end();
     return;
   }
-  console.log('req.url = ', req.url);
+  
   if (req.url === '/api/components') {
     res.on('close',function(){
       console.log('res close!')
