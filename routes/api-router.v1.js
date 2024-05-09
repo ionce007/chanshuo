@@ -20,6 +20,7 @@ const hotstock = require('../controllers/hotstock');
 const wxhelper = require('../controllers/wxhelper');
 const qywx = require('../controllers/qywx');
 const qywxProvider = require('../controllers/qywxProvider');
+const GN = require('../controllers/stockGN');
 
 router.post('/page/search', userRequired, page.search);
 router.post('/page', tokenAuth, userRequired, page.create);
@@ -45,6 +46,18 @@ router.get('/download', formula.downloadDoc);
 router.post('/iwc_hotstock', hotstock.getWenCaiHotStock);
 router.get('/dfcf_hotstock', hotstock.getEastMoneyHotStock);
 router.get('/tgb_hotstock', hotstock.getTaogubaHotStock);
+
+router.get('/gn/:code',GN.getStockGN);
+router.post('/crawlerGN',GN.crawlerGN);
+router.post('/component',GN.componentStock);
+router.get('/gnpages',GN.getGNPages);
+router.get('/gncomponents',GN.getComponents);
+router.post('/crawlerComponent',GN.crawlerComponent);
+router.get('/partial',GN.getPartial);
+router.post('/crawlerAllConcept',GN.crawlerAllConcept);
+router.post('/dailygn',GN.getDailyStockNewGN);
+router.post('/conceptAlter',GN.conceptAlter);
+//router.get('/components',GN.componentChange);
 
 router.get('/bdpan_auth', adminRequired, accessToken.bdPanAuthPage);
 router.get('/bdauth_code', adminRequired, accessToken.getBaiduAuthCode);

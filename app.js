@@ -11,8 +11,9 @@ const path = require('path');
 const enableRSS = require('./common/rss').enableRSS;
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
-const UploadBigFile  = require("./middlewares/uploadBigFile");
-const dotEnv  = require('dotenv');
+const UploadBigFile = require("./middlewares/uploadBigFile");
+const GN = require("./middlewares/concept");
+const dotEnv = require('dotenv');
 dotEnv.config();
 
 const crypto = require('crypto');
@@ -25,8 +26,8 @@ const { loadAllPages } = require('./common/cache');
 const { loadAllBlogs } = require('./common/blogcache');
 const localUtil = require('./common/local');
 
-app.use( rateLimit({windowMs: 30 * 1000, max: 60 }) );
-app.use('/api/comment', rateLimit({windowMs: 60 * 1000,max: 5}) );
+app.use(rateLimit({ windowMs: 30 * 1000, max: 60 }));
+app.use('/api/comment', rateLimit({ windowMs: 60 * 1000, max: 5 }));
 app.use(compression());
 app.locals.systemName = config.systemName;
 app.locals.systemVersion = config.systemVersion;
@@ -92,7 +93,7 @@ app.use(flash());
   app.use('/', webRouter);
   app.use('/api', apiRouterV1);
 
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     if (!res.headersSent) {
       res.render('message', {
         title: '未找到目标页面',
@@ -112,6 +113,21 @@ server.on("request", async (req, res) => {
     res.end();
     return;
   }
+  console.log('req.url = ', req.url);
+  if (req.url === '/api/components') {
+    res.on('close',function(){
+      console.log('res close!')
+      res.end();
+    })
+    GN.componentChange(req, res);
+  }
+  if( req.url === '/api/export4TDX'){
+    res.on('close',function(){
+      console.log('res close!')
+      res.end();
+    })
+    GN.export4TDX(req, res);
+  }
   if (req.url === "/bigfile/verify") {
     await upload.handleVerifyUpload(req, res);
     return;
@@ -127,12 +143,17 @@ server.on("request", async (req, res) => {
   }
 
   if (req.url === "/bigfile/delete") {
-    console.log('/bigfile/delete request method: ',req.method);
+    console.log('/bigfile/delete request method: ', req.method);
     await upload.deleteFiles(req, res);
   }
 });
 
 server.listen(config.port);
+
+server.on('close', e => {
+  console.log(`connection on port ${config.port} is closed.`);
+  console.error(e.toString());
+});
 
 server.on('error', err => {
   console.error(

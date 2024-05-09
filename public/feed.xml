@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 • 股经</title>
-    <updated>2024-02-10T13:20:35.097Z</updated>
+    <updated>2024-05-09T09:08:16.501Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -13,101 +13,101 @@
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[如何判断主力吸筹完成后的试盘]]></title>
-        <id>如何判断主力吸筹完成后的</id>
-        <link href="https://cms.foryet.com/page/如何判断主力吸筹完成后的"/>
-        <updated>2024-01-28T14:48:16.000Z</updated>
-        <summary type="html"><![CDATA[拒绝在拉升前下车：牢记这4种“试盘特征”，一旦出现，坚定持仓，股价或将直飞冲天！主力吸货完毕之后，并不是马上进入拉升状态。虽然此时提升的心情十分急切，但还要最后一次对盘口进行全面的测试。]]></summary>
+        <title type="html"><![CDATA[“N型战法”， 大平台突破后缩量回踩浅调模型及指标公式源码]]></title>
+        <id>danyangbupo</id>
+        <link href="https://cms.foryet.com/page/danyangbupo"/>
+        <updated>2024-04-25T16:33:35.137Z</updated>
+        <summary type="html"><![CDATA[“N型战法”，也称作单阳不破，意思就是说，在一阳之后所产生的数日调整，其每个低点都不会低于前面所拉出阳线的低点,一阳后几天内的每日成交量不能超过一阳当日量的一半(长阳后越缩量越好)。出现此形态第5日尾盘介入,收长阳后当天高点走(强势时再留,第八日还不能收长阳说明形态破坏要止损走)。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？]]></title>
-        <id>如何通过周线、月线判断股票主升浪开始？</id>
-        <link href="https://cms.foryet.com/page/如何通过周线、月线判断股票主升浪开始？"/>
-        <updated>2024-01-28T14:46:27.000Z</updated>
-        <summary type="html"><![CDATA[如何通过周线、月线判断股票主升浪开始？坊间俗语“月线看势，周线选股，日线辨强弱。”通过K线技术来选择股票，是有一定道理的。]]></summary>
+        <title type="html"><![CDATA[如何捕捉极冰行情后的普涨机会？]]></title>
+        <id>如何捕捉极冰行情后的普涨机会？</id>
+        <link href="https://cms.foryet.com/page/如何捕捉极冰行情后的普涨机会？"/>
+        <updated>2024-04-24T01:36:54.472Z</updated>
+        <summary type="html"><![CDATA[市场在某交易日出现几百甚至千股涨停的局面，这就是我们所谓的普涨行情。而普涨行情大多出自二种情况：一是突然爆发级别相当高的利好消息或政策，它涉及的深度和影响面比较广，关联到的板块或个股比较多，次日往往就会出现齐涨和大面积涨停的情况，极致表现就是超出平时的涨停家数；二是大盘处于极度的恐慌暴跌，市场中连板出现几百家或更多的跌停，盘面一片绿油油，红盘个股数量屈指可数，这是大盘处于极冰状态的现象。当出现极冰后，许多人会特别沮丧和悲观，殊不知，一切皆周期，否极泰来，极冰之后往往会有疯狂的反弹与修复，次日或不久突然再现另一个极端的现象，几百家或更多的涨停，几千个股收红。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[一文通过案例将MACD指标讲清楚]]></title>
-        <id>一文通过案例将macd指标讲清楚</id>
-        <link href="https://cms.foryet.com/page/一文通过案例将macd指标讲清楚"/>
-        <updated>2024-02-04T02:52:49.000Z</updated>
-        <summary type="html"><![CDATA[MACD是由三条线和红绿色柱体构成，黑色线是DIF线，称之为快线;紫色线是DEA线，称为慢线。中间的一条直线是零轴，红色和绿色的柱体是能量柱。]]></summary>
+        <title type="html"><![CDATA[如何用“集合竞价打板”轻松选出涨停股？选择这类股，将赚到怀疑人生（附指标公式源码）]]></title>
+        <id>jihejingjia</id>
+        <link href="https://cms.foryet.com/page/jihejingjia"/>
+        <updated>2024-04-14T08:17:57.077Z</updated>
+        <summary type="html"><![CDATA[在实战中，集合竞价具有重要的定性作用，它从总体上反映了多空双方或做多或做空的倾向，由此可以了解多空基本意愿。具体操作中，主要是与昨日集合竞价和收盘价相比，看开盘高低和量能变化。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[首板第二天溢价规则]]></title>
-        <id>首板第二天溢价规则</id>
-        <link href="https://cms.foryet.com/page/首板第二天溢价规则"/>
-        <updated>2024-02-02T15:21:39.000Z</updated>
-        <summary type="html"><![CDATA[总结九条首板第二天溢价规则]]></summary>
+        <title type="html"><![CDATA[抖音上很火的“六脉神剑”指标，免费分享给大家]]></title>
+        <id>liu_mai_shen_jian</id>
+        <link href="https://cms.foryet.com/page/liu_mai_shen_jian"/>
+        <updated>2024-04-09T15:03:00.883Z</updated>
+        <summary type="html"><![CDATA[六脉神剑指标是由六个互相独立、但协同作用的指标组成，它们分别是：平滑异同平均线指标(MACD)、超买超卖随机指标（KDJ）、相对强弱（RSI）、威廉指标（LWR）、多空指标（BBI）、动量指标（MTM）。该指标综合利用了这六个指标进行市场分析。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[一进二的买卖逻辑思维：在首板里找出龙头和补涨龙]]></title>
-        <id>一进二的买卖逻辑思维：在首板里找出龙头和补涨龙</id>
-        <link href="https://cms.foryet.com/page/一进二的买卖逻辑思维：在首板里找出龙头和补涨龙"/>
-        <updated>2024-01-28T14:58:07.000Z</updated>
-        <summary type="html"><![CDATA[一进二要找出龙头和补涨龙，.就得懂得周期划分，在旧龙头周期结束时，找出新周期龙头，在新周期去一进二试错找出补涨龙。周期怎么划分呢？]]></summary>
+        <title type="html"><![CDATA[精品指标“十全十美”，十个模型（MACD、KDJ、RSI、LWR、BBI、MTM等）共同指向市场趋势，指标共振信号与市场趋势]]></title>
+        <id>sqsm</id>
+        <link href="https://cms.foryet.com/page/sqsm"/>
+        <updated>2024-04-07T02:16:16.428Z</updated>
+        <summary type="html"><![CDATA[最近网上流传的这个“十全十美”指标公式，成为各机构宣传的重点指标，讲得神乎其神，并收取高额指标费用。在这里，本网免费为大家提供该指标的源码。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[进攻犀利的低位强势反转]]></title>
-        <id>进攻犀利的低位强势反转</id>
-        <link href="https://cms.foryet.com/page/进攻犀利的低位强势反转"/>
-        <updated>2024-01-28T14:45:02.000Z</updated>
-        <summary type="html"><![CDATA[今天给大家分享的会相对进攻犀利一些，是一种低位反转式。看到这里，大家可以先点个赞，然后好好看余下的精彩部分。]]></summary>
+        <title type="html"><![CDATA[长期横盘突破战法，及指标公式]]></title>
+        <id>tupohengpan</id>
+        <link href="https://cms.foryet.com/page/tupohengpan"/>
+        <updated>2024-04-03T06:41:24.536Z</updated>
+        <summary type="html"><![CDATA[股市中有一句话叫“横有多长，竖有多高”，股价在底部经过长期的横盘蓄势后，一旦放量强势突破的话，势必将走出一波波澜壮阔的行情。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[抓龙头主升的具体操作方法]]></title>
-        <id>抓龙头主升的具体操作方法</id>
-        <link href="https://cms.foryet.com/page/抓龙头主升的具体操作方法"/>
-        <updated>2024-01-21T12:16:51.000Z</updated>
-        <summary type="html"><![CDATA[关于龙头战法的心法部分在大佬的帖子里都有，这里试着来说一下具体的操作方案。]]></summary>
+        <title type="html"><![CDATA[“三角形”整理形态的秘密，体现多空力量博弈，及主图公式]]></title>
+        <id>sanjiaoxing</id>
+        <link href="https://cms.foryet.com/page/sanjiaoxing"/>
+        <updated>2024-04-01T08:06:20.780Z</updated>
+        <summary type="html"><![CDATA[三角形形态是一种重要的整理形态，由两条收敛的趋势线构成，根据收敛的趋势，可分为对称三角形、上升三角形、下降三角形三种形态。对称三角形整理形态是指上方趋势线向下倾斜，下方趋势线向上倾斜的形态;上升三角形整理形态是指上方趋势线呈水平状态，下方趋势线向上倾斜的形态;而下降三角形整理形态是指下方趋势线呈水平状态，上方趋势线向下倾斜的形态。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[板块龙头的判断及第一买点的方法]]></title>
-        <id>板块龙头的判断及第一买点的方法</id>
-        <link href="https://cms.foryet.com/page/板块龙头的判断及第一买点的方法"/>
-        <updated>2024-01-21T12:13:33.000Z</updated>
-        <summary type="html"><![CDATA[如果一只股票在连板的初期，被我们判断为可能的板块龙头（判断板块龙头的讲解在文章后面），那么它的最佳介入点是第一次的分歧板或者是分歧板次日的加速板，大多数时候，我们面临的只是非市场总龙头的板块龙头，对于板块龙头来说，通常的上涨过程一般情况下最多可能只有一两次的分歧与加速的过程]]></summary>
+        <title type="html"><![CDATA[“MACD+布林线”双剑合璧，洞察市场的动能和波动]]></title>
+        <id>macd-boll</id>
+        <link href="https://cms.foryet.com/page/macd-boll"/>
+        <updated>2024-03-26T03:09:03.202Z</updated>
+        <summary type="html"><![CDATA[MACD是一个有效的趋势跟踪和动量指标，BOLL布林线可以观察波动的周期性，两个指标结合使用可以帮助进行高概率交易，因为它们可以衡量现有趋势的方向、强度、波动性以及动能。我们可以使用MACD指标来评估趋势是在增强还是在减弱并为可能的突破做准备，而布林带指标则可以作为信号触发器，并在随后确认。]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[最强势的反转形态——“出水芙蓉”，经常出现中线大牛股第一安全买点！]]></title>
-        <id>最强势的反转形态之“出水芙蓉”</id>
-        <link href="https://cms.foryet.com/page/最强势的反转形态之“出水芙蓉”"/>
-        <updated>2024-01-21T12:07:18.000Z</updated>
-        <summary type="html"><![CDATA[炒股都想抓牛股，那么大家有没有去总结下牛股有什么形态特征呢，出水芙蓉是K线与均线结合的产物。指横盘整理或下跌过程中，在股票市场中有人把一阳穿三线称之为出水芙蓉。]]></summary>
+        <title type="html"><![CDATA[经典的形态“美人肩”，主图公式及选股要点]]></title>
+        <id>美人肩</id>
+        <link href="https://cms.foryet.com/page/美人肩"/>
+        <updated>2024-03-21T13:09:15.021Z</updated>
+        <summary type="html"><![CDATA[美人肩形态是一种强势的建仓表现,该建仓模式最大的特征就是“洗盘时股价不跌,甚至还能涨”！说明庄家买入该股的迫切心情,只要后期股价突破肩膀的高点连线,则股价加速上涨可期！]]></summary>
         <author>
             <name/>
         </author>
     </entry>
     <entry>
-        <title type="html"><![CDATA[炒股必备技巧之低位启动低吸法]]></title>
-        <id>炒股必备技巧之低位启动低吸法</id>
-        <link href="https://cms.foryet.com/page/炒股必备技巧之低位启动低吸法"/>
-        <updated>2024-01-19T15:15:13.000Z</updated>
-        <summary type="html"><![CDATA[交易不仅需要技术，还需要一些运气。那么在运气来之前，首先要做好一件事，积累交易的实战技巧。]]></summary>
+        <title type="html"><![CDATA[经典形态头肩底原理、主图公式及选股公式]]></title>
+        <id>头肩底</id>
+        <link href="https://cms.foryet.com/page/头肩底"/>
+        <updated>2024-03-21T13:08:41.937Z</updated>
+        <summary type="html"><![CDATA[股价急速下跌，然后止跌反弹形成左肩；第一次反弹受阻再次回落跌破原来左肩的位置形成头部；头部确立再次反弹至颈线位置时又回落到左肩的位置，形成右肩。]]></summary>
         <author>
             <name/>
         </author>

@@ -17,7 +17,7 @@
     <meta name="baidu-site-verification" content="codeva-ahVjvX7V4w" />
     <meta name="theme-color" content="#ffffff"/>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="stylesheet" href="/static/bulma.min.css">
+    <link rel="stylesheet" href="/static/bulma.min.css?t=10">
     <link rel="stylesheet" href="/static/fontawesome.min.css">
     <link rel="stylesheet" href="/static/main.css" />
     <!--<link rel="stylesheet" href="/static/paging.css" />-->
@@ -28,7 +28,9 @@
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icon512.png">
     <link rel="shortcut icon" href="<%- config.favicon %>">
-
+    <style>
+      .navbar-link.is-active, .navbar-link.is-selected, a.navbar-item.is-active, a.navbar-item.is-selected{--bulma-navbar-item-background-l:none;}
+    </style>
     <%- config.extra_header_code %>
 </head>
 <body>

@@ -4,6 +4,7 @@ const router = express.Router();
 const index = require('../controllers/index');
 const formula = require('../controllers/formula');
 const hotstock = require('../controllers/hotstock');
+const GN = require('../controllers/stockGN');
 const blog = require('../controllers/blogarticle');
 
 router.get('/', index.getIndex);
@@ -14,6 +15,11 @@ router.get('/tag/:year/:month', index.getMonthArchive);
 router.get('/formula', formula.getFormula);
 router.get('/preview', formula.showPreviewPage);
 router.get('/hotstock', hotstock.showHotStock);
+
+router.get('/gn', GN.crawlerAllNewGN);
+router.get('/concept', GN.showAllNewConcept);
+router.get('/concept/:code', GN.showStockGN);
+router.get('/gnchange', GN.showConceptChange);
 
 router.get('/chanshuo', blog.showChanShuo);
 router.post('/chanshuo/list', blog.blogList);

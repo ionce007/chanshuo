@@ -7,6 +7,9 @@ const AccessToken = require('./accesstoken');
 const HotStock = require('./hotstock');
 const CSCategory = require('./cscategory');
 const CSArticle = require('./csarticle');
+const THSNewGN = require('./THSNewGN');
+const THSgnComponent = require('./THSgnComponent');
+const THSgnChange = require('./THSgnChange');
 const sequelize = require('../common/database');
 const { hashPasswordWithSalt,dateFormat } = require('../common/util');
 
@@ -74,3 +77,6 @@ exports.AccessToken = AccessToken;
 exports.HotStock = HotStock;
 exports.CSCategory = CSCategory;
 exports.CSArticle = CSArticle;
+exports.THSNewGN = THSNewGN;
+exports.THSgnComponent = THSgnComponent;
+exports.THSgnChange = THSgnChange;

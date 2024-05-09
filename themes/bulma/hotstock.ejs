@@ -13,9 +13,9 @@
             <div class="column is-12">
                 <div class="tabs">
                     <ul>
-                        <li class="is-active"><a class="origin-tab" key="tgb">淘股吧</a></li>
+                        <li class="is-active"><a class="origin-tab" key="iwc">问财(同花顺)</a></li>
                         <li><a class="origin-tab" key="dfcf">东方财富</a></li>
-                        <li><a class="origin-tab" key="iwc">问财(同花顺)</a></li>
+                        <li><a class="origin-tab" key="tgb">淘股吧</a></li>
                     </ul>
                 </div>
             </div>
@@ -32,50 +32,10 @@
         <script src="/static/loading.js?v=1.0"></script>
         <script src="/static/Hexin-V.js"></script>
         <script type="text/javascript">
-            /*
-            AES加密 / 解密算法
-                //const key = '23LWAgzjgy54hNriJQa3vSgjyfDmiArJJE7';// 32位
-                //const iv = '4387438hfdhfdjhg';// 16位
-                const key = "wijrKSCUiQuGbrwsgyEMyIx7Uogmfe85";
-                const iv  = "ho6KJIIz9WV7nozZl5fVnG7MtDUcSUB1";
-                //加密
-                function encryptCBC(text) {
-                    return CryptoJS.AES.encrypt(text, CryptoJS.enc.Utf8.parse(key), {
-                        iv: CryptoJS.enc.Utf8.parse(iv),
-                        mode: CryptoJS.mode.CBC,
-                        padding: CryptoJS.pad.Pkcs7
-                    }).toString()
-                }
-            
-                // 解密
-                function decryptCBC(text) {
-                    let decrypted = CryptoJS.AES.decrypt(text, CryptoJS.enc.Utf8.parse(key), {
-                        iv: CryptoJS.enc.Utf8.parse(iv),
-                        mode: CryptoJS.mode.CBC,
-                        padding: CryptoJS.pad.Pkcs7
-                    });
-                    return decrypted.toString(CryptoJS.enc.Utf8)
-                }
-            
-                function encryptECB(text) {
-                    return CryptoJS.AES.encrypt(text, CryptoJS.enc.Utf8.parse(key), {
-                        mode: CryptoJS.mode.ECB,
-                        padding: CryptoJS.pad.Pkcs7
-                    }).toString()
-                }
-             
-                // 解密
-                function decryptECB(text) {
-                    let decrypted = CryptoJS.AES.decrypt(text, CryptoJS.enc.Utf8.parse(key), {
-                        mode: CryptoJS.mode.ECB,
-                        padding: CryptoJS.pad.Pkcs7
-                    });
-                    return decrypted.toString(CryptoJS.enc.Utf8)
-                }
-            */
             var hotStockData = [];
             (function () {
-                getTaogubaHotStock();
+                //getTaogubaHotStock();
+                getWencaiHotStock();
             })();
 
             function loading() {

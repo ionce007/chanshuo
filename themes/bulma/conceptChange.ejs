@@ -1,0 +1,178 @@
+<%- include('./partials/header') %>
+    <style>
+        .columns h2 {height: 21px;line-height: 21px;font-weight: 700;border-left: 6px solid #cc8c52;color:528fcc;padding-left: 10px;font-size: 18px;overflow: hidden;}
+        .grid{--bulma-grid-column-min:15rem;margin-top:1.5rem;}
+        .title{font-size:1rem;}
+        .subtitle{font-size:0.75rem;}
+        .border{border: 1px solid #ffccee;}
+        .cell{border: 1px solid #ffccee;padding: 10px;border-radius: 5px;/*box-shadow: 10px 10px 5px #888888;transform: perspective(300px) rotateY(15deg);*/}
+        .ths .cell,.tdx .cell{min-height:60px;}
+        .ths, .tdx {border:1px solid #ffccee;border-radius:10px;}
+        .ths{margin-right:5px;}
+        .tdx{margin-left:5px;}
+        .middle {margin:5px auto;}
+        .content{display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-break: break-all;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}
+        .addtime{padding-left: .8rem;font-size: 14px;}
+        .card-header-title{padding:.1rem .8rem .4rem;}
+        .card-content{padding:.4rem;}
+        .tac{text-align: center;}
+        .mt--10{margin-top:-10px;}
+        .bg-stock{background:rgb(0,0,0,.04);}
+        .bg-concept{background:rgb(0,0,0,.1);}
+        .gn-action,time,.increase{font-size:12px;font-weight:600;color:rgba(239, 5, 5, 0.894);}
+        .reason{ font-size:1rem;line-height: 1.8rem;display: -webkit-box;overflow: hidden;text-overflow: ellipsis;word-break: break-all;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}
+        @media screen and (max-width: 600px) {
+            .grid{--bulma-grid-column-min:9rem;margin-top:1.5rem;}
+        }
+    </style>
+    <script type="text/javascript">tag = 'hotstock'</script>
+    <link rel="stylesheet" href="/static/animate.css">
+    <link rel="stylesheet" href="/static/loading.css">
+    <!--<link rel="stylesheet" href="/static/all.min.css">-->
+    <div class="columns is-mobile">
+        <div class="column is-12">
+            <p><strongstyle="color:#ff0000;font-size:500;">声明：</strongstyle=><br />本站发布此信息的目的在于将分散在各平台的信息集中展现，方便访问者对相似数据的比较，以提高复盘效率；本专题任何信息不构成对任何人的投资建议，投资者应当自主决策，风险自担！本页股票概念板块数据均从相关平台采集，与本站立场无关，本站不对相关数据负责！</p>
+        </div>
+    </div>
+    <div class="columns is-desktop">
+        <div class="column is-12">
+            <div class="columns is-mobile">
+                <div class="column is-7"><h2 style="margin-top:10px;">成份股变动</h2></div>
+                <div class="column is-5"><p><a class="button" href="/concept" style="float:right;margin-right:5px;">概念时间表</a></p></div>
+            </div>
+        </div>
+    </div>
+    <div class="columns is-desktop">
+        <div class="column is-12"><span>变动日期：</span><input type="date" id="tdate"/></div>
+    </div>
+    <div class="grid is-col-min-12"></div>
+
+    <%- include('./partials/footer') %>
+        <script src="/static/loading.js?v=1.34"></script>
+        <script src="/static/Hexin-V.js?t=1122"></script>
+        <script type="text/javascript">
+            function timestampToTime(timestamp) {
+                var len = (timestamp+'').length;
+                var date = new Date(len === 10 ? timestamp * 1000 : timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                var Y = date.getFullYear() + '-';
+                var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                var D = (date.getDate() < 10 ? '0' +date.getDate() : date.getDate()) + ' ';
+                var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+                var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+                var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+                return Y+M+D+h+m+s;
+            }
+            //var hexinV = getHexinV();
+            var pageIndex = 1;
+            var isQuery = false;
+            (function () { crawlerConceptChange();})();
+
+            function crawlerConceptChange(tdate){
+                var apiUrl = '/api/conceptAlter';
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: { hexinV: 'hexinV', date: tdate },
+                    dataType: 'json',
+                    beforeSend: function () {
+                        tips = Tips('数据获取中，请稍等......', 3000);
+                    },
+                    complete: function () {
+                        removeTips(tips)
+                    },
+                    success: function (res) {
+                        //console.log('res.data = ', res.data, '   res.tradeDates = ', res.tradeDates);
+                        if(res.code === 1) {
+                            $('#tdate').val(res.date);
+                            var html = '';
+                            $.each(res.data.data, function(index,item){
+                                html += "        <div class='cell'>";
+                                html += `            <h6 class='subtitle is-6'><time>${timestampToTime(item.created_at)}</time></h6>`;
+                                html += "            <div class='columns is-mobile px-2'>";
+                                html += "                <div class='column border is-5 pb-2 bg-stock'>";
+                                html += `                    <p>${item.stock.name}</p>`;
+                                html += `                    <p class='increase'>${item.stock.increase}%</p>`;
+                                html += "                </div>";
+                                html += "                <div class='column pb-2 tac gn-action'>";
+                                if(item.action === 'add_stock') html += "                    <p>新增</p><p>＞＞＞</p>";
+                                else html += "                    <p>移除</p><p>＜＜＜</p>";
+                                html += "                </div>";
+                                html += "                <div class='column border is-5 pb-2 bg-concept'>";
+                                html += `                    <p>${item.concept.name}</p>`;
+                                html += `                    <p class='increase'>${item.concept.increase}%</p>`;
+                                html += "                </div>";
+                                html += "            </div>";
+                                html += "            <div class='card'>";
+                                html += "                <div class='card-content mt--10'>";
+                                html += `                    <div class='content reason' data-url ='${item.news_url}' >`;
+                                html += `                        <a href='${item.news_url}' >${item.reason}</a>`;
+                                html += "                    </div>";
+                                html += "                </div>";
+                                html += "            </div>";
+                                html += "        </div>";
+                            });
+                            if(!isQuery) $('.grid').append(html);
+                            else {$('.grid').html(html); isQuery = false;}
+                            natDays = res.tradeDates;
+                            curTradeDate = res.date;
+                        }
+                        else{
+                            Toast(res.msg, 3000);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        Toast(err.message, 3000);
+                    }
+                })
+            }
+            var natDays ;//= ['2022-02-28', '2022-03-01', '2022-03-05'];
+            var curTradeDate;
+            $('#tdate').change(function() {
+                isQuery = true;
+                var selectedDate = $(this).val();
+                crawlerConceptChange(selectedDate);
+            });
+            function getScrollTop() {
+                var scrollTop = 0;
+                if (document.documentElement && document.documentElement.scrollTop) {
+                    scrollTop = document.documentElement.scrollTop;
+                } else if (document.body) {
+                    scrollTop = document.body.scrollTop;
+                }
+                return scrollTop;
+            }
+                
+                //获取当前可视范围的高度
+                function getClientHeight() {
+                    var clientHeight = 0;
+                    if (document.body.clientHeight && document.documentElement.clientHeight) {
+                        clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+                    } else {
+                        clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+                    }
+                    return clientHeight;
+                }
+                
+                //获取文档完整的高度
+                function getScrollHeight() {
+                    return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                }
+                
+                //滚动事件触发
+                window.onscroll = function () {
+                    if (getScrollTop() + getClientHeight() === getScrollHeight()) {
+                        console.log('在这里加载数据咯！');
+                        var index = natDays.indexOf(curTradeDate);
+                        if(index < 0 ) Toast('交易日期不存在！', 3000);
+                        else {
+                            if(index<natDays.length) {
+                                var tdate = natDays[index+1];
+                                isQuery = false;
+                                crawlerConceptChange(tdate);
+                            }
+                            else  Toast('已没有更多数据啦！', 3000);
+                        }
+                    }
+                };
+        </script>

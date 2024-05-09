@@ -1,0 +1,479 @@
+<%- include('./partials/header') %>
+    <script type="text/javascript">tag = 'hotstock'</script>
+    <link rel="stylesheet" href="/static/animate.css">
+    <link rel="stylesheet" href="/static/loading.css">
+    <!--<div class="article-container" style="max-width: 1200px">-->
+        <!--<div class="columns is-mobile">
+            <div class="column is-12">
+                <p><strong style="color:#ff0000;font-size:500;">声明：</strong><br />本站发布此信息的目的在于将分散在各平台的信息集中展现，方便访问者对相似数据的比较，以提高复盘效率；本专题任何信息不构成对任何人的投资建议，投资者应当自主决策，风险自担！本页“人气股排行”数据均从相关平台采集，与本站立场无关，本站不对相关排行负责！
+                </p>
+            </div>
+        </div>-->
+        <div class="columns is-mobile">
+            <div class="column is-12">
+                <!--<div class="tabs">
+                    <ul>
+                        <li class="is-active"><a class="origin-tab" key="iwc">导入概念时间表</a></li>
+                        <li><a class="origin-tab" key="tgb">导入概念成份股</a></li>
+                        <li><a class="origin-tab" key="dfcf">补全概念</a></li>
+                        <li><a class="origin-tab" key="cfg">补全成份股</a></li>
+                        <li><a class="origin-tab" key="dailygn">每日新增概念</a></li>
+                    </ul>
+                </div>-->
+                <div class="buttons">
+                    <a class="button" key="iwc">导入概念时间表</a>
+                    <a class="button" key="tgb">导入概念成份股</a>
+                    <a class="button" key="dfcf">补全概念</a>
+                    <a class="button" key="cfg">补全成份股</a>
+                    <a class="button" key="dailygn">每日新增概念</a>
+                    <a class="button" key="conceptChange">每日概念动态</a>
+                    <a class="button" key="conceptChange4TDX">通达信导入成份股变动</a>
+                </div>
+            </div>
+        </div>
+        <div class="columns is-mobile min-heigh-300" id="dataShow">
+            <table class="table is-fullwidth is-hoverable is-striped showState hidden" id="runStateTab">
+                <thead id="thead"></thead>
+                <tbody id="tbody"></tbody>
+            </table>
+            <div class="columns is-mobile showState hidden" id="runStateParentDiv" style="width:100%;">
+                <div class="column is-12" id="runStateDiv">
+                    
+                </div>
+            </div>
+        </div>
+    <!--</div>-->
+
+    <%- include('./partials/footer') %>
+        <script src="/static/loading.js?v=1.0"></script>
+        <script src="/static/Hexin-V.js?t=1122"></script>
+        <script type="text/javascript">
+            var hotStockData = [];
+            var Hexin_V = getHexinV();
+            (function () {})();
+            function timestampToTime(timestamp) {
+                var len = (timestamp+'').length;
+                var date = new Date(len === 10 ? timestamp * 1000 : timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                var Y = date.getFullYear() + '-';
+                var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                var D = (date.getDate() < 10 ? '0' +date.getDate() : date.getDate()) + ' ';
+                var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+                var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+                var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+                return Y+M+D+h+m+s;
+            }
+            function loading() {
+                $('body').loading({
+                    loadingWidth: 300, title: '数据加载中...', name: 'dataLoading', discription: '', direction: 'row', type: 'origin',
+                    originBg: '#71EA71', originDivWidth: 80, originDivHeight: 50, originWidth: 4, originHeight: 4, smallLoading: false,
+                    titleColor: '#388E7A', loadingBg: '#312923', loadingMaskBg: 'rgba(22,22,22,0.2)'
+                });
+            }
+            var isLoadedScript = false;
+            $('.button').click(function () {
+                //$('.tabs li').removeClass('is-active');
+                //$(this).parent().addClass('is-active');
+                var origin = $(this).attr('key');
+                if (origin === 'tgb') getComponents();  //导入概念成份股
+                else if (origin === 'dfcf') {}//{ getDongFangCaiFuHotStock(); }  //补全概念
+                else if (origin === 'iwc') getGNTotalPages();// 导入概念时间表;
+                else if(origin === 'cfg') completeGNStocks();  //补全成份股
+                else if(origin === 'dailygn') getDailyStockNewGN();
+                else if(origin === 'conceptChange') conceptChange();//导入每日概念动态
+                else if(origin === 'conceptChange4TDX') conceptChange4TDX();//通达信导入成份股变动
+            })
+            function conceptChange4TDX(){
+                var apiUrl = '/api/export4TDX';
+                var xhr = new XMLHttpRequest();
+                xhr.open('get',apiUrl, true);
+                xhr.onload = function(res) {
+                    if(this.status == 200||this.status == 304){
+                        let res = 'response' in xhr ? xhr.response : xhr.responseText
+                        console.log(res);
+                    }
+                }
+                xhr.addEventListener('message',function(e){
+                    debugger;
+                    console.log('message event: ',e);
+                });
+                xhr.addEventListener('customEvent',function(e){
+                    debugger;
+                    console.log(e);
+                    console.log('customEvent event: ',e);
+                });
+                xhr.onreadystatechange = function(e){
+                    var html = '';
+                    switch(xhr.readyState){
+                        case 1://OPENED xhr已打开，未发送
+                            $('.showState').removeClass('hidden').addClass('hidden')
+                            $('#runStateParentDiv').removeClass('hidden');
+                            html = '<p>连接已打开......</p>'
+                            //console.log(`readyState = ${xhr.readyState}，连接已打开......`)
+                            break;
+                        case 2://HEADERS_RECEIVED 已获取相应头和响应状态
+                            html = '<p>已获取相应头和响应状态......</p>'
+                            //console.log(`readyState = ${xhr.readyState}，已获取相应头和响应状态......`)
+                            break;
+                        case 3://LOADING 正在下载响应体
+                            var data = xhr.responseText.replaceAll('event: message ').replace('event: customEvent','').replaceAll('event: dataChange ').replaceAll('\n', '').split('data: ');
+                            $.each(data,function(index,item) { html += `<p>${item.replace('undefined','')}</p>`;})
+                            if(xhr.responseText.indexOf('event: customEvent')>=0){
+                                xhr.abort();
+                            }
+                            console.info(xhr.responseText);
+                            break;
+                        case 4://DONE 整个数据传输过程结束
+                            html = '<p>数据传输过程结束......</p>'
+                            console.log(`readyState = ${xhr.readyState}，数据传输过程结束......`)
+                            break;
+                    }
+                    $('#runStateDiv').append(`${html}`);
+                    //scrollToBottom();
+                }
+                xhr.onerror = function(e){
+                    console.log(e);
+                };
+                xhr.send('');
+            }
+            function conceptChange(){
+                var apiUrl = '/api/components';
+                var xhr = new XMLHttpRequest();
+                xhr.open('get',apiUrl, true);
+                xhr.onload = function(res) {
+                    if(this.status == 200||this.status == 304){
+                        let res = 'response' in xhr ? xhr.response : xhr.responseText
+                        console.log(res);
+                    }
+                }
+                xhr.addEventListener('message',function(e){
+                    debugger;
+                    console.log('message event: ',e);
+                });
+                xhr.addEventListener('customEvent',function(e){
+                    debugger;
+                    console.log(e);
+                    console.log('customEvent event: ',e);
+                });
+                xhr.onreadystatechange = function(e){
+                    var html = '';
+                    switch(xhr.readyState){
+                        case 1://OPENED xhr已打开，未发送
+                            $('.showState').removeClass('hidden').addClass('hidden')
+                            $('#runStateParentDiv').removeClass('hidden');
+                            html = '<p>连接已打开......</p>'
+                            //console.log(`readyState = ${xhr.readyState}，连接已打开......`)
+                            break;
+                        case 2://HEADERS_RECEIVED 已获取相应头和响应状态
+                            html = '<p>已获取相应头和响应状态......</p>'
+                            //console.log(`readyState = ${xhr.readyState}，已获取相应头和响应状态......`)
+                            break;
+                        case 3://LOADING 正在下载响应体
+                            var data = xhr.responseText.replaceAll('event: message ').replace('event: customEvent','').replaceAll('event: dataChange ').replaceAll('\n', '').split('data: ');
+                            $.each(data,function(index,item) { html += `<p>${item.replace('undefined','')}</p>`;})
+                            if(xhr.responseText.indexOf('event: customEvent')>=0){
+                                debugger;
+                                xhr.abort();
+                            }
+                            console.info(xhr.responseText);
+                            break;
+                        case 4://DONE 整个数据传输过程结束
+                            html = '<p>数据传输过程结束......</p>'
+                            console.log(`readyState = ${xhr.readyState}，数据传输过程结束......`)
+                            break;
+                    }
+                    $('#runStateDiv').append(`${html}`);
+                    //scrollToBottom();
+                }
+                xhr.onerror = function(e){
+                    console.log(e);
+                };
+                xhr.send('');
+            }
+            function scrollToBottom(){
+                // 获取页面的总高度
+                const totalHeight = document.body.scrollHeight;
+                // 获取当前窗口的高度
+                const windowHeight = window.innerHeight;
+                // 计算需要滚动的距离
+                const scrollTop = totalHeight - windowHeight;
+                
+                // 滚动到页面底部
+                window.scrollTo({
+                    top: scrollTop,
+                    behavior: 'smooth' // 可选，平滑滚动效果
+                });
+            }
+            function getDailyStockNewGN(){
+                loading();
+                var apiUrl = '/api/dailygn';
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { hexinV: Hexin_V, pageIndex: 1 },
+                    async: true,
+                    success: function (res) {
+                        debugger;
+                    },
+                    error: function (err) {
+                        debugger;
+                        Toast(err.message, 3000);
+                        console.log(err);
+                    },
+                    complete:function(xhr, res){
+                        removeLoading('dataLoading');
+                    }
+                })
+            }
+            function completeGNStocks(){
+                loading();
+                var apiUrl = '/api/partial';
+                var html = '<p>获取所有新增的概念......</p>'
+                console.log(`获取所有新增的概念......`);
+                $('.showState').removeClass('hidden').addClass('hidden')
+                $('#runStateParentDiv').removeClass('hidden');
+                $('#runStateDiv').append(html);
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        console.log(`获取所有新增的概念成功，开始采集成份股......`);
+                        html = '<p>获取所有新增的概念成功，开始采集成份股......</p>'
+                        $('#runStateDiv').append(html);
+                        getGNComponents(res);
+                    },
+                    error: function (err) {
+                        Toast(err.message, 3000);
+                        html = `<p>${err.message}</p>`;
+                        $('#runStateDiv').append(html);
+                        console.log(err);
+                    },
+                    complete:function(xhr, res){
+                        removeLoading('dataLoading');
+                    }
+                })
+            }
+            
+            function getComponents(){
+                loading();
+                var apiUrl = '/api/gncomponents';
+                var html = '<p>获取所有新增的概念......</p>'
+                console.log(`获取所有新增的概念......`);
+                $('.showState').removeClass('hidden').addClass('hidden')
+                $('#runStateParentDiv').removeClass('hidden');
+                $('#runStateDiv').append(html);
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        console.log(`获取所有新增的概念成功，开始采集成份股......`);
+                        html = '<p>获取所有新增的概念成功，开始采集成份股......</p>'
+                        $('#runStateDiv').append(html);
+                        getGNComponents(res);
+                    },
+                    error: function (err) {
+                        Toast(err.message, 3000);
+                        html = `<p>${err.message}</p>`;
+                        $('#runStateDiv').append(html);
+                        console.log(err);
+                    },
+                    complete:function(xhr, res){
+                        removeLoading('dataLoading');
+                    }
+                })
+            }
+            function getGNTotalPages(){
+                var apiUrl = '/api/gnpages';
+                loading();
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    data: { hexinV: Hexin_V },
+                    dataType: 'json',
+                    //async: false,
+                    success: function (res) {
+                        if(res.code !== 1) {
+                            debugger;
+                             Hexin_V = getHexinV(); 
+                             getGNTotalPages(res, pageIndex); 
+                        }
+                        else {
+                            getGN(res.totalPage);
+                        }
+                        Toast('获取数据成功！', 3000);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        Toast(err.message, 3000);
+                    },
+                    complete:function(xhr, res){
+                        removeLoading('dataLoading');
+                    }
+                })
+            }
+            function getGNComponents(res){
+                res.data.sort((a,b)=> { return new Date(b.addtime)-new Date(a.addtime)})
+                $.each(res.data, function(index, item){
+                    setTimeout(crawlerComponent, 5000, item);
+                })
+            }
+
+            function crawlerComponent(gn, pageIndex = 1){
+                var apiUrl = '/api/crawlerComponent';
+                if(!pageIndex) pageIndex = 1;
+                loading();
+                var html = `<p>开始采集“${gn.GNName}”的第 ${pageIndex} 页成份股......</p>`;
+                $('#runStateDiv').append(html);
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: { hexinV: Hexin_V, pageIndex: pageIndex, gnCode: gn.GNCode, gnName: gn.GNName },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        console.log('pageIndex = ', pageIndex, '  GNName:', gn.GNName,'  addtime:', gn.addtime, '   res.data = ', res.data);
+                        if(res.code === 0 ){
+                            html = `<p>操作错误：${res.msg}</p>`
+                            $('#runStateDiv').append(html);
+                            Toast(res.msg, 3000);
+                        }
+                        else if(res.code === 1) {
+                            if(res.totalPage > 1){
+                                if(pageIndex < res.totalPage) {
+                                    html = `<p>开始采集“${gn.GNName}”的第 ${pageIndex} 页成份股（共 ${res.totalPage} 页）......</p>`
+                                    $('#runStateDiv').append(html);
+                                    setTimeout(function(){crawlerComponentByPages(gn, pageIndex, res.totalPage)},5000);
+                                    html = `<p>“${gn.GNName}”的第 ${pageIndex} 页成份股采集完成（共 ${res.totalPage} 页）......</p>`
+                                    $('#runStateDiv').append(html);
+                                }
+                            }
+                            
+                        }
+                        else{
+                            html = `<p>重新采集“${gn.GNName}”的第 ${pageIndex} 页成份股（共 ${res.totalPage} 页）......</p>`
+                            $('#runStateDiv').append(html);
+                            Hexin_V = getHexinV(); 
+                            setTimeout(function(){crawlerComponent(gn, pageIndex)},5000); 
+                            html = `<p>完成重新采集“${gn.GNName}”的第 ${pageIndex} 页成份股（共 ${res.totalPage} 页）......</p>`
+                            $('#runStateDiv').append(html);
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        Toast('获取爱问财人气股排行失败！', 3000);
+                    },
+                    complete:function(xhr, res){
+                        removeLoading('dataLoading');
+                    }
+                })
+            }
+            function crawlerComponentByPages(gn, pageIndex, totalPage){
+                //for(var index = pageIndex + 1; index <= totalPage; index++){
+                    crawlerComponent(gn, pageIndex+1);
+                //}
+            }
+            function getGN(totalPage){
+                for(var pageIndex = 1; pageIndex <= totalPage; pageIndex++ ){
+                    setTimeout(crawlerGN, 5000, pageIndex);
+                }
+            }
+            function crawlerGN(pageIndex){
+                var apiUrl = '/api/crawlerGN';
+                if(!pageIndex) pageIndex = 1;
+                loading();
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: { hexinV: Hexin_V, pageIndex: pageIndex },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        console.log('pageIndex = ', pageIndex, '   res.data = ', res.data);
+                        if(res.code !== 1) {
+                            //debugger;
+                             Hexin_V = getHexinV(); 
+                             crawlerGN(pageIndex); 
+                        }
+                        else{
+                            var html = ''
+                            if(pageIndex === 1){
+                                html += "            <tr>";
+                                html += "                <th style='width:10%' class='cur'><a href='javascript:void(0)' field='addtime' order='desc' class='desc'>日期<i></i></a></th>";
+                                html += "                <th style='width:15%'><a href='javascript:void(0)' field='name'>概念名称<i></i></a></th>";
+                                html += "                <th style='width:40%'>驱动事件</th>";
+                                html += "                <th style='width:20%'>龙头股</th>";
+                                html += "                <th style='width:10%'>成分股数量</th>";
+                                html += "            </tr>";
+                                $('#thead').html(html);
+                                $('.showState').removeClass('hidden').addClass('hidden')
+                                $('#runStateTab').removeClass('hidden');
+                            }
+                            html = '';
+                            $.each(res.data, function(index, item){
+                                html += "            <tr>";
+                                html += `                <td>${item.addtime}</td>`;
+                                html += `                <td><a href='${item.componentUrl}' target='_blank'>${item.gnName}</a></td>`;
+                                html += `                <td><a href='${item.eventUrl}' target='_blank'>${item.eventDesc}</a></td>`;
+                                html += `                <td>                ${item.leadingStock}                </td>`;
+                                html += `                <td>${item.stockCount}</td>`;
+                                html += "            </tr>";
+                            })
+                            $("#tbody").append(html);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        Toast('获取爱问财人气股排行失败！', 3000);
+                    },
+                    complete:function(xhr, res){
+                        removeLoading('dataLoading');
+                    }
+                })
+            }
+            function getWencaiHotStock(pageIndex = 1) {
+                loading();
+                var apiUrl = '/api/crawlerGN'
+                //var Hexin_V = getHexinV()
+                if(!pageIndex) pageIndex = 1;
+                //if(pageIndex % 5 === 0) Hexin_V = getHexinV();
+                console.log('getWencaiHotStock->Hexin_V = ',Hexin_V);
+                console.log(`开始采集新增概念第 ${pageIndex} 页......`);
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    data: { hexinV: Hexin_V, pageIndex: pageIndex },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        console.log(res.msg);
+                        console.log(res.data);
+                        if(res.code !== 1) {
+                            debugger;
+                             Hexin_V = getHexinV(); 
+                             getComponent(res, pageIndex); 
+                        }
+                        else getComponent(res, pageIndex+1);
+                        removeLoading('dataLoading');
+                        //alert('获取“问财网”人气股排行成功！');
+                        Toast('获取数据成功！', 3000);
+                    },
+                    error: function (err) {
+                        debugger;
+                        console.log(err);
+                        removeLoading('dataLoading');
+                        //alert('获取爱问财人气股排行失败！')
+                        Toast('获取爱问财人气股排行失败！', 3000);
+                    }
+                })
+            }
+            var date = (new Date()).format('yyyy_MM_dd_hh_mm');
+            var dfcf_page = 1;
+            function getDongFangCaiFuHotStock() {
+                
+            }
+        </script>

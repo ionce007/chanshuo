@@ -1,0 +1,56 @@
+/* 加载遮罩层 */
+
+.pageLoading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s;
+    opacity:0.5
+
+}
+
+.pageLoading .loading {
+    width: 200px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 50px;
+    overflow: hidden;
+}
+
+.pageLoading .loading .bar {
+    width: 0%;
+    height: 100%;
+    background-color: #FF6A6A;
+animation: loadProgress 5s linear infinite;
+}
+
+.pageLoading.complete {
+    opacity: 0;
+}
+
+.pageLoading.complete .monster {
+    transition: 0.5s;
+    transform: scale(0.1) rotateZ(360deg);
+}
+
+h2,
+h3 {
+    color: #fff;
+}
+
+@keyframes loadProgress {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
