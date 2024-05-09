@@ -29,7 +29,7 @@ async function conceptAlter(req, res, next){
         }
         var trade_date = req.body.date;
         var dates = trade_dates.data.date_list;
-        console.log('dates = ', dates);
+        //console.log('dates = ', dates);
         dates.sort((a,b)=>{ return new Date(b) - new Date(a)})
         if(!trade_date) trade_date = dates[0];
         else if(dates.indexOf(trade_date) < 0) {
@@ -78,7 +78,7 @@ async function componentChange(req, res, next){
                 //res.write('event: mymessage\n');
                 //console.log(`date = ${date}`);
                 var date1 = dateFormat((new Date()), 'yyyy-MM-dd HH:mm:ss.S');
-                console.log(`data: The server time is: ${date1}`);
+                //console.log(`data: The server time is: ${date1}`);
                 res.write('event: message! \n');
                 res.write('data: The server time is:' + date1 + '\n\n');
                 //res.write('\n\n');
@@ -156,14 +156,14 @@ async function getDailyStockNewGN(req, res, next) {
             "rsh": "619725316"
         }
         var bbb = JSON.stringify(paras);
-        console.log('bbb = ', bbb);
+        //console.log('bbb = ', bbb);
         var u = 'https://example.com';
         const aa = new URL('https://example.com');
-        console.log('222');
+        //console.log('222');
         for (const [key, value] of Object.entries(paras)) {
             aa.searchParams.append(key, value.toString());
         }
-        console.log('aa.href = ', aa.href);
+        //console.log('aa.href = ', aa.href);
         var bodyStr = aa.href.replace(`${u}/?`, '');
         var headers = {
             "accept": "application/json, text/plain, */*",
@@ -197,9 +197,9 @@ async function getDailyStockNewGN(req, res, next) {
         var body = ret.getBody("utf-8");
 
         var json = JSON.parse(body);
-        console.log('json = ', json);
-        console.log('zzzzffff')
-        console.log('data.answer[0].txt[0].content.components[1].data.datas = ', json.data.answer[0].txt[0].content.components[1].data.datas);
+        //console.log('json = ', json);
+        //console.log('zzzzffff')
+        //console.log('data.answer[0].txt[0].content.components[1].data.datas = ', json.data.answer[0].txt[0].content.components[1].data.datas);
         //var data = { code: 1, state: 'successed!', msg: tips, data: showData, totalPage: totalPage, currPage: pageIndex, nextPage: pageIndex + 1 };
         var data = { code: 1, state: 'successed!', data: json.data.answer[0].txt[0].content.components[1].data.datas }
         res.send(data);
@@ -234,7 +234,7 @@ async function crawlerAllConcept(req, res, next) {
         var body = ret.getBody();
         body = iconv.decode(body, 'gb2312').toString();
         if(body.indexOf('with status code 401')>=0){
-            console.log('body = ',body);
+            //console.log('body = ',body);
             var data = { code: 3, state: 'failed!', msg: '授权访问出错，请重新授权！', code: 'code', name: '', data: [], thsgn: [], tdxgn: [] };
             res.send('concept', data);
             return;
@@ -309,7 +309,7 @@ async function showStockGN(req, res, next) {
         thsgn = await getTHSStockGN(code);
         tdxgn = await getTDXStockGN(code);
         var data = { code: 1, state: 'successed!', msg: '数据获取成功！', code: code, name: name, data: ret, thsgn: thsgn, tdxgn: tdxgn };
-        console.log('data = ', data);
+        //console.log('data = ', data);
         res.render('stockGN', data);
     }
     catch (e) {
@@ -426,7 +426,7 @@ async function getPartial(req, res, next) {
 
 async function crawlerComponent(req, res, next) {
     try {
-        console.log('crawlerComponent -> req.body = ', req.body);
+        //console.log('crawlerComponent -> req.body = ', req.body);
         var pageIndex = req.body.pageIndex;
         if (!pageIndex) pageIndex = 1;
         var gnCode = req.body.gnCode;
@@ -481,7 +481,7 @@ async function crawlerComponent(req, res, next) {
         }
 
         if (componentList && componentList.length > 0) {
-            console.log('componentListSave = ', componentList);
+            //console.log('componentListSave = ', componentList);
             THSgnComponent.bulkCreate(componentList,
                 {
                     fields: ['id', 'stockCode', 'stockName', 'GNCode', 'createdAt', 'updatedAt'],
@@ -647,11 +647,11 @@ async function crawlerGN(req, res, next) {
             //var componentStock = getComponentStock(gnCode, hexinV);
         }
         var tips = `新增概念第 ${pageIndex} 页已采集，共 ${totalPage} 页 ......`
-        console.log(tips);
+        //console.log(tips);
         var data = { code: 1, state: 'successed!', msg: tips, data: showData, totalPage: totalPage, currPage: pageIndex, nextPage: pageIndex + 1 };
-        console.log('gnList = ', gnList);
+        //console.log('gnList = ', gnList);
         if (gnList.length > 0) {
-            console.log('gnListSave = ', gnList);
+            //console.log('gnListSave = ', gnList);
             THSNewGN.bulkCreate(gnList,
                 {
                     //fields:['addtime', 'GNCode', 'GNName', 'eventDesc', 'eventUrl', 'leadingStock', 'componentUrl', 'componentCount','createdAt', 'updatedAt'],
@@ -705,7 +705,7 @@ async function getComponentStock(gnCode, hexinV, pageIndex = 1) {
             var stockName = $(cols[2]).text();
             list.push({ stockCode: stockCode, stockName: stockName });
         }
-        console.log('list = ', list);
+        //console.log('list = ', list);
         return list;
     }
     catch (e) {
