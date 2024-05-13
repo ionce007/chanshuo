@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 • 股经</title>
-    <updated>2024-05-09T14:50:23.956Z</updated>
+    <updated>2024-05-13T02:04:21.743Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -12,6 +12,16 @@
     <link rel="self" href="https://example.com/atom.xml"/>
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[全美交易冠军马克·米勒维尼的核心交易模式VCP形态的指标公式及选股公式]]></title>
+        <id>vcp</id>
+        <link href="https://cms.foryet.com/page/vcp"/>
+        <updated>2024-05-10T05:32:41.866Z</updated>
+        <summary type="html"><![CDATA[VCP全称是Volatility Contraction Pattern，翻译过来的中文名称是“波动收缩规律”，是全美交易冠军Mark Minervini的核心交易模式之一，他的著作被翻译成中文版《股票魔法师》。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[“N型战法”， 大平台突破后缩量回踩浅调模型及指标公式源码]]></title>
         <id>danyangbupo</id>
@@ -36,7 +46,7 @@
         <title type="html"><![CDATA[如何用“集合竞价打板”轻松选出涨停股？选择这类股，将赚到怀疑人生（附指标公式源码）]]></title>
         <id>jihejingjia</id>
         <link href="https://cms.foryet.com/page/jihejingjia"/>
-        <updated>2024-04-14T08:17:57.077Z</updated>
+        <updated>2024-05-10T04:20:05.864Z</updated>
         <summary type="html"><![CDATA[在实战中，集合竞价具有重要的定性作用，它从总体上反映了多空双方或做多或做空的倾向，由此可以了解多空基本意愿。具体操作中，主要是与昨日集合竞价和收盘价相比，看开盘高低和量能变化。]]></summary>
         <author>
             <name/>
@@ -46,7 +56,7 @@
         <title type="html"><![CDATA[抖音上很火的“六脉神剑”指标，免费分享给大家]]></title>
         <id>liu_mai_shen_jian</id>
         <link href="https://cms.foryet.com/page/liu_mai_shen_jian"/>
-        <updated>2024-04-09T15:03:00.883Z</updated>
+        <updated>2024-05-10T04:19:15.691Z</updated>
         <summary type="html"><![CDATA[六脉神剑指标是由六个互相独立、但协同作用的指标组成，它们分别是：平滑异同平均线指标(MACD)、超买超卖随机指标（KDJ）、相对强弱（RSI）、威廉指标（LWR）、多空指标（BBI）、动量指标（MTM）。该指标综合利用了这六个指标进行市场分析。]]></summary>
         <author>
             <name/>
@@ -56,7 +66,7 @@
         <title type="html"><![CDATA[精品指标“十全十美”，十个模型（MACD、KDJ、RSI、LWR、BBI、MTM等）共同指向市场趋势，指标共振信号与市场趋势]]></title>
         <id>sqsm</id>
         <link href="https://cms.foryet.com/page/sqsm"/>
-        <updated>2024-04-07T02:16:16.428Z</updated>
+        <updated>2024-05-10T04:18:51.859Z</updated>
         <summary type="html"><![CDATA[最近网上流传的这个“十全十美”指标公式，成为各机构宣传的重点指标，讲得神乎其神，并收取高额指标费用。在这里，本网免费为大家提供该指标的源码。]]></summary>
         <author>
             <name/>
@@ -66,7 +76,7 @@
         <title type="html"><![CDATA[长期横盘突破战法，及指标公式]]></title>
         <id>tupohengpan</id>
         <link href="https://cms.foryet.com/page/tupohengpan"/>
-        <updated>2024-04-03T06:41:24.536Z</updated>
+        <updated>2024-05-10T04:18:33.815Z</updated>
         <summary type="html"><![CDATA[股市中有一句话叫“横有多长，竖有多高”，股价在底部经过长期的横盘蓄势后，一旦放量强势突破的话，势必将走出一波波澜壮阔的行情。]]></summary>
         <author>
             <name/>
@@ -76,7 +86,7 @@
         <title type="html"><![CDATA[“三角形”整理形态的秘密，体现多空力量博弈，及主图公式]]></title>
         <id>sanjiaoxing</id>
         <link href="https://cms.foryet.com/page/sanjiaoxing"/>
-        <updated>2024-04-01T08:06:20.780Z</updated>
+        <updated>2024-05-10T04:18:24.567Z</updated>
         <summary type="html"><![CDATA[三角形形态是一种重要的整理形态，由两条收敛的趋势线构成，根据收敛的趋势，可分为对称三角形、上升三角形、下降三角形三种形态。对称三角形整理形态是指上方趋势线向下倾斜，下方趋势线向上倾斜的形态;上升三角形整理形态是指上方趋势线呈水平状态，下方趋势线向上倾斜的形态;而下降三角形整理形态是指下方趋势线呈水平状态，上方趋势线向下倾斜的形态。]]></summary>
         <author>
             <name/>
@@ -86,7 +96,7 @@
         <title type="html"><![CDATA[“MACD+布林线”双剑合璧，洞察市场的动能和波动]]></title>
         <id>macd-boll</id>
         <link href="https://cms.foryet.com/page/macd-boll"/>
-        <updated>2024-03-26T03:09:03.202Z</updated>
+        <updated>2024-05-10T04:17:58.689Z</updated>
         <summary type="html"><![CDATA[MACD是一个有效的趋势跟踪和动量指标，BOLL布林线可以观察波动的周期性，两个指标结合使用可以帮助进行高概率交易，因为它们可以衡量现有趋势的方向、强度、波动性以及动能。我们可以使用MACD指标来评估趋势是在增强还是在减弱并为可能的突破做准备，而布林带指标则可以作为信号触发器，并在随后确认。]]></summary>
         <author>
             <name/>
@@ -96,18 +106,8 @@
         <title type="html"><![CDATA[经典的形态“美人肩”，主图公式及选股要点]]></title>
         <id>美人肩</id>
         <link href="https://cms.foryet.com/page/美人肩"/>
-        <updated>2024-03-21T13:09:15.021Z</updated>
+        <updated>2024-05-10T04:17:52.216Z</updated>
         <summary type="html"><![CDATA[美人肩形态是一种强势的建仓表现,该建仓模式最大的特征就是“洗盘时股价不跌,甚至还能涨”！说明庄家买入该股的迫切心情,只要后期股价突破肩膀的高点连线,则股价加速上涨可期！]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[经典形态头肩底原理、主图公式及选股公式]]></title>
-        <id>头肩底</id>
-        <link href="https://cms.foryet.com/page/头肩底"/>
-        <updated>2024-03-21T13:08:41.937Z</updated>
-        <summary type="html"><![CDATA[股价急速下跌，然后止跌反弹形成左肩；第一次反弹受阻再次回落跌破原来左肩的位置形成头部；头部确立再次反弹至颈线位置时又回落到左肩的位置，形成右肩。]]></summary>
         <author>
             <name/>
         </author>

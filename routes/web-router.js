@@ -20,6 +20,7 @@ router.get('/gn', GN.crawlerAllNewGN);
 router.get('/concept', GN.showAllNewConcept);
 router.get('/concept/:code', GN.showStockGN);
 router.get('/gnchange', GN.showConceptChange);
+router.get('/downconcept', GN.showDownConcept);
 
 router.get('/chanshuo', blog.showChanShuo);
 router.post('/chanshuo/list', blog.blogList);

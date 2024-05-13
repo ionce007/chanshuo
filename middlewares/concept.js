@@ -16,9 +16,11 @@ async function showAllNewConcept(req, res, next) {
 
     res.render('concept', data);
 }
-async function sendEvent(res, data, eventName = 'message') {
-    res.write(`event: ${eventName} \n`);
-    res.write(`data: ${data}\n\n`);
+async function sendEvent(res, msg, eventName = 'message') {
+    var time = dateFormat((new Date()), 'HH:mm:ss');
+    //res.write(`event: ${eventName} \n`);
+    var json = { time:time , msg: msg, event: eventName };
+    res.write(`data: ${JSON.stringify(json)}\n\n`);
 }
 async function export4TDX(req, res) {
     try {
@@ -30,38 +32,27 @@ async function export4TDX(req, res) {
             'Access-Control-Allow-Headers': 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With',
             'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS'
         });
-        var eventData = '开始检查已入库数据...'
-        sendEvent(res, eventData);
+        sendEvent(res, `开始检查已入库数据...`);
         var allData = await THSgnChange.findAll({attributes: ['created_at'],raw: true});
-        //console.log('allData = ', allData);
         var tmpDates = allData.map((item) => { return timestampToTime(item.created_at)});
         var existDates = uniqueJsonArray(tmpDates);
         existDates.sort((a, b) => { return new Date(b) - new Date(a) })
-        console.log('existDates[0] = ', existDates[0]);
-        //console.log('existDates = ', existDates);
-        eventData = '获取所有交易日...'
-        sendEvent(res, eventData);
+        //console.log('existDates[0] = ', existDates[0]);
+        sendEvent(res, '获取所有交易日...');
         var tradeDates = await getTradeDate();
-        //console.log('tradeDates: ', tradeDates);
-        eventData = '交易日获取成功...'
-        sendEvent(res, eventData);
         var notExistDate = tradeDates.data.date_list.filter(item => !existDates.includes(item));
         if(notExistDate.indexOf(existDates[0]) < 0 ) notExistDate.push(existDates[0]);
         notExistDate.sort((a, b) => { return new Date(b) - new Date(a) })
-        console.log('notExistDate = ', notExistDate);
-        //console.log('notExistDate.length = ', notExistDate.length, '   tradeDates.length = ', tradeDates.data.date_list.length, '   existDates = ', existDates.length);
-        eventData = '准备爬取成份股变动...'
-        sendEvent(res, eventData);
+        //console.log('notExistDate = ', notExistDate);
+        sendEvent(res, `交易日获取成功，准备补全数据...`);
         var totalRecord = 0;
         var jsq = [];
         await notExistDate.forEach(function (item, index) {  //补全数据
             var date = item;//trade_dates.data.date_list[index];
             var jsq_json = {};
             jsq_json.date = date;
-            console.log(`trade date = ${date} , 第 ${index + 1} 条数据`);
-            time = dateFormat((new Date()), 'HH:mm:ss');
-            eventData = `${time} 读取交易日 ${date} ,第 ${index + 1} 条记录的成份股动态......`;
-            sendEvent(res, eventData);
+            //console.log(`trade date = ${date} , 第 ${index + 1} 条数据`);
+            sendEvent(res, `读取交易日 ${date} ,第 ${index + 1} 条记录的成份股动态......`);
             var ts = Date.parse(new Date(date));
             var url = 'https://dq.10jqka.com.cn/fuyao/concept_express/concept_trends/v1/list';
 
@@ -75,8 +66,7 @@ async function export4TDX(req, res) {
 
             var json = JSON.parse(body);
             time = dateFormat((new Date()), 'HH:mm:ss');
-            eventData = `${time} 交易日 ${date} ,第 ${index + 1} 个交易日，开始整理数据......`;
-            sendEvent(res, eventData);
+            sendEvent(res, `交易日 ${date} ,第 ${index + 1} 个交易日，开始整理数据......`);
 
             var dataList = [];
             var saveDate = dateFormat((new Date()), 'yyyy-MM-dd HH:mm:ss.S');
@@ -91,35 +81,56 @@ async function export4TDX(req, res) {
                     gn_market: item.concept.market, gn_name: item.concept.name, stock_code: item.stock.code,
                     stock_market: item.stock.market, stock_name: item.stock.name, createdAt: saveDate, updatedAt: saveDate
                 }
-                /*content = `"${item.stock.code}_${item.concept.code}"	"${item.action}"	"${item.created_at}"	"${item.news_url}"	"${item.reason}"	"${item.concept.code}"	"${item.concept.is_attend}"	"${item.concept.market}"	"${item.concept.name}"	"${item.stock.code}"	"${item.stock.market}"	"${item.stock.name}"	"${saveDate}"	"${saveDate}"\n`;
-                fs.appendFile(filename, content, function(err){
-                    console.log('appendFile err = ',err);
-                    console.log(`第 ${index+1} 条 / 共 ${json.data.concept_trends.list.length} 条。。。。。。`)
-                    if(err) console.log(`追加交易日 ${date} 中 “${item.concept.name}”概念 “${item.stock.name}”出错`);
-                    else console.log(`“${item.concept.name}”概念 “${item.stock.name}”【${date}】成功， ${index+1} / ${json.data.concept_trends.list.length}`);
-                });*/
                 console.log(`【${date}】 -> 第 ${index + 1} 条 / 共 ${json.data.concept_trends.list.length} 条。。。。。。`)
-                //fs.appendFileSync(filename, content);
-                //sendEvent(res, JSON.stringify(stock), 'dataChange');
                 dataList.push(stock);
             });
-            eventData = `${time} 交易日 ${date} ,第 ${index + 1} 个交易日，数据整理完成，准备写入数据库......`;
-            sendEvent(res, eventData);
+            sendEvent(res, `交易日 ${date} (共 ${dataList.length} 条)数据整理完成，准备写入数据库......`);
             THSgnChange.bulkCreate(dataList,{
                 //fields: ['action', 'created_at', 'news_url', 'reason', 'gnCode', 'gn_is_attend','gn_market','gn_name','stock_code','stock_market','stock_name','updatedAt'],
                 updateOnDuplicate: ['stockCode', 'stockName', 'GNCode', 'updatedAt'],
                 //ignoreDuplicates: true
             })
-            console.log(`trade date = ${date} , 第 ${index + 1} 条数据已处理完成......`);
+            sendEvent(res, `交易日 ${date} ，共 ${dataList.length} 条数据已写入数据库......`);
+            console.log(`trade date = ${date} , 共 ${dataList.length} 条数据已写入数据库......`);
             if (index === notExistDate.length - 1) {
-                time = dateFormat((new Date()), 'HH:mm:ss');
-                eventData = `${time} 第 ${index + 1} 条记录成份股变动处理完成，共处理 ${totalRecord} 条记录......`;
-                console.log(' eventData Last Data');
-                sendEvent(res, `eventData ${time}`, 'customEvent');
+                //sendEvent(res, `${time}`, 'customEvent');
+                sendEvent(res, `共处理 ${totalRecord} 条记录......`);
             }
         });
-        //导出到文本文件
-        exportConceptChange();
+
+        //导出到文本文件  exportConceptChange();
+        var stockCodes = await THSgnChange.findAll({ attributes:['stock_code', [Sequelize.fn('COUNT', Sequelize.col('stock_code')), 'count']], group: ['stock_code'], raw: true});
+        var allStocks = await THSgnChange.findAll({ raw: true });
+        var fs = require("fs");
+        const path = require("path");
+        const currentDir = process.cwd();
+        const filepath = path.join(currentDir, 'data');
+        const filename = path.join(currentDir, 'public', 'conceptchange.txt');
+        if(fs.existsSync(filename)) { fs.unlinkSync(filename); }
+
+        stockCodes.forEach( function(item, index){
+            sendEvent(res, `“${item.stock_code}”处理中...`);
+            var gn_stocks = allStocks.filter((subitem) => { return subitem.stock_code === item.stock_code;});
+            var content = '';
+            if(gn_stocks && gn_stocks.length > 0){
+                gn_stocks.sort((a,b) => { return b-a});
+                var gn_str = ''
+                gn_stocks.forEach((item2, index) => {
+                    gn_str +=`${item2.gn_name}(${timestampToTime(item2.created_at)});`;
+                })
+                var prex = gn_stocks[0].stock_code.substr(0,1) === '0' || gn_stocks[0].stock_code.substr(0,1) === '3' ? '0' : '1';
+                gn_str = gn_str.substring(0,gn_str.length-1);
+                content += `${prex}|${gn_stocks[0].stock_code}|${gn_str===''?'无':gn_str}|0\n`;
+            }
+            sendEvent(res, `“${item.stock_code}”处理完成...`);
+            if(content.length > 0 ){
+                const encoding = 'ascii';
+                // 将数据转换为Buffer
+                //const buffer = iconv.encode(content, encoding);
+                fs.appendFileSync(filename, content)//, encoding);//,{ encoding: 'ascii' });
+            }
+        })
+        sendEvent(res, `数据已生成，准备下载中...`, 'close');
     }
     catch (e) {
         console.log('export4TDX error: ', e.message);
@@ -220,8 +231,7 @@ async function componentChange(req, res,) {
             jsq_json.date = date;
             //setTimeout(function () {
             console.log(`trade date = ${date} , 第 ${index + 1} 条数据`);
-            time = dateFormat((new Date()), 'HH:mm:ss');
-            eventData = `${time} 读取交易日 ${date} ,第 ${index + 1} 条记录的成份股动态......`;
+            eventData = `读取交易日 ${date} ,第 ${index + 1} 条记录的成份股动态......`;
             sendEvent(res, eventData);
             var ts = Date.parse(new Date(date));
             var url = 'https://dq.10jqka.com.cn/fuyao/concept_express/concept_trends/v1/list';
@@ -235,8 +245,7 @@ async function componentChange(req, res,) {
             var body = ret.getBody("utf-8");
 
             var json = JSON.parse(body);
-            time = dateFormat((new Date()), 'HH:mm:ss');
-            eventData = `${time} 交易日 ${date} ,第 ${index + 1} 个交易日，开始整理数据......`;
+            eventData = `交易日 ${date} ,第 ${index + 1} 个交易日，开始整理数据......`;
             sendEvent(res, eventData);
 
             var dataList = [];
@@ -264,7 +273,7 @@ async function componentChange(req, res,) {
                 sendEvent(res, JSON.stringify(stock), 'dataChange');
                 dataList.push(stock);
             });
-            eventData = `${time} 交易日 ${date} ,第 ${index + 1} 个交易日，数据整理完成，准备写入数据库......`;
+            eventData = `交易日 ${date} ,第 ${index + 1} 个交易日，数据整理完成，准备写入数据库......`;
             sendEvent(res, eventData);
             /*THSgnChange.bulkCreate(dataList,{
                 fields: ['id', 'action', 'created_at', 'news_url', 'reason', 'gnCode', 'gn_is_attend','gn_market','gn_name','stock_code','stock_market','stock_name','updatedAt'],
@@ -273,8 +282,7 @@ async function componentChange(req, res,) {
             })*/
             console.log(`trade date = ${date} , 第 ${index + 1} 条数据已处理完成......`);
             if (index === trade_dates.data.date_list.length - 1) {
-                time = dateFormat((new Date()), 'HH:mm:ss');
-                eventData = `${time} 第 ${index + 1} 条记录成份股变动处理完成，共处理 ${totalRecord} 条记录......`;
+                eventData = `第 ${index + 1} 条记录成份股变动处理完成，共处理 ${totalRecord} 条记录......`;
                 console.log(' eventData Last Data');
                 sendEvent(res, `eventData ${time}`, 'customEvent');
                 res.end();

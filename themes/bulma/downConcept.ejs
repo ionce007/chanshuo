@@ -1,0 +1,147 @@
+<%- include('./partials/header') %>
+    <script type="text/javascript">tag = 'hotstock'</script>
+    <link rel="stylesheet" href="/static/animate.css">
+    <link rel="stylesheet" href="/static/loading.css">
+    <!--<div class="article-container" style="max-width: 1200px">-->
+        <div class="columns is-mobile">
+            <div class="column is-12">
+                <p><strong style="color:#ff0000;font-size:500;">声明：</strong><br />本站发布此信息的目的在于将分散在各平台的信息集中展现，方便访问者对相似数据的比较，以提高复盘效率；本专题任何信息不构成对任何人的投资建议，投资者应当自主决策，风险自担！本页股票概念板块数据均从相关平台采集，与本站立场无关，本站不对相关数据负责！</p>
+            </div>
+        </div>
+        <div class="columns is-mobile">
+            <div class="column is-12">
+                <div class="buttons">
+                    <a class="button" key="conceptChange4TDX">下载成份股变动</a>
+                </div>
+            </div>
+        </div>
+        <div class="columns is-mobile min-heigh-300" id="dataShow">
+            <div class="columns is-mobile showState hidden" id="runStateParentDiv" style="width:100%;padding:1rem;">
+                <div class="column is-12" id="runStateDiv">
+                    
+                </div>
+            </div>
+        </div>
+    <!--</div>-->
+
+    <%- include('./partials/footer') %>
+        <!--<script src="/static/loading.js?v=1.0"></script>
+        <script src="/static/Hexin-V.js?t=1122"></script>-->
+        <script type="text/javascript">
+            var hotStockData = [];
+            //var Hexin_V = getHexinV();
+            (function () {})();
+            function timestampToTime(timestamp) {
+                var len = (timestamp+'').length;
+                var date = new Date(len === 10 ? timestamp * 1000 : timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                var Y = date.getFullYear() + '-';
+                var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                var D = (date.getDate() < 10 ? '0' +date.getDate() : date.getDate()) + ' ';
+                var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+                var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+                var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+                return Y+M+D+h+m+s;
+            }
+            function loading() {
+                $('body').loading({
+                    loadingWidth: 300, title: '数据加载中...', name: 'dataLoading', discription: '', direction: 'row', type: 'origin',
+                    originBg: '#71EA71', originDivWidth: 80, originDivHeight: 50, originWidth: 4, originHeight: 4, smallLoading: false,
+                    titleColor: '#388E7A', loadingBg: '#312923', loadingMaskBg: 'rgba(22,22,22,0.2)'
+                });
+            }
+            var isLoadedScript = false;
+            $('.button').click(function () {
+                var origin = $(this).attr('key');
+                if(origin === 'conceptChange4TDX') conceptChange4TDX();//通达信导入成份股变动
+            })
+            function downloadFile(){
+                var a = document.createElement('a');
+                a.href = '/downgn';
+                a.download = 'conceptchange.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+            function conceptChange4TDX(){
+                var apiUrl = '/api/export4TDX';
+                const eventSource = new EventSource(apiUrl);
+                eventSource.onopen = (event) => {
+                    var html = `<p>连接已建立...</p>`;
+                    $('#runStateDiv').append(html);
+                    // 连接建立时的操作
+                };
+                eventSource.onerror = (error) => {
+                    var html = `<p>错误:${error.message}...</p>`;
+                    $('#runStateDiv').append(html);
+                    // 错误处理
+                };
+                eventSource.onmessage = (event) => {
+                    // 处理接收到的消息 event.data
+                    var json = JSON.parse(event.data);
+                    var html = `<p>${json.time}  ${json.msg}</p>`;
+                    $('#runStateDiv').append(html);
+                    console.info(event.data);
+                    if(json.event === 'close'){
+                        setTimeout(function(){
+                            eventSource.close();
+                            downloadFile()
+                        },3000);
+                    }
+                };
+                
+                /*
+                var apiUrl = '/api/export4TDX';
+                var xhr = new XMLHttpRequest();
+                xhr.open('get',apiUrl, true);
+                xhr.onload = function(res) {
+                    if(this.status == 200||this.status == 304){
+                        let res = 'response' in xhr ? xhr.response : xhr.responseText
+                        console.log(res);
+                    }
+                }
+                xhr.addEventListener('message',function(e){
+                    debugger;
+                    console.log('message event: ',e);
+                });
+                xhr.addEventListener('customEvent',function(e){
+                    debugger;
+                    console.log(e);
+                    console.log('customEvent event: ',e);
+                });
+                xhr.onreadystatechange = function(e){
+                    var html = '';
+                    switch(xhr.readyState){
+                        case 1://OPENED xhr已打开，未发送
+                            $('.showState').removeClass('hidden').addClass('hidden')
+                            $('#runStateParentDiv').removeClass('hidden');
+                            html = '<p>连接已打开......</p>'
+                            //console.log(`readyState = ${xhr.readyState}，连接已打开......`)
+                            break;
+                        case 2://HEADERS_RECEIVED 已获取相应头和响应状态
+                            html = '<p>已获取相应头和响应状态......</p>'
+                            //console.log(`readyState = ${xhr.readyState}，已获取相应头和响应状态......`)
+                            break;
+                        case 3://LOADING 正在下载响应体
+                            var data = xhr.responseText.replaceAll('event: message ').replace('event: customEvent','').replaceAll('event: dataChange ').replaceAll('\n', '').split('data: ');
+                            $.each(data,function(index,item) { html += `<p>${item.replace('undefined','')}</p>`;})
+                            if(xhr.responseText.indexOf('event: customEvent')>=0){
+                                debugger;
+                                xhr.abort();
+                            }
+                            console.info(xhr.responseText);
+                            break;
+                        case 4://DONE 整个数据传输过程结束
+                            html = '<p>数据传输过程结束......</p>'
+                            console.log(`readyState = ${xhr.readyState}，数据传输过程结束......`)
+                            break;
+                    }
+                    $('#runStateDiv').append(`${html}`);
+                    //scrollToBottom();
+                }
+                xhr.onerror = function(e){
+                    console.log(e);
+                };
+                xhr.send('');*/
+            }
+            
+        </script>

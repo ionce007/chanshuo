@@ -318,6 +318,10 @@ async function showStockGN(req, res, next) {
         res.render('stockGN', data);
     }
 }
+async function showDownConcept(req, res, next){
+    var data = { code: 1, state: 'successed!', msg: 'ok' };
+    res.render('downConcept', data);
+}
 async function showConceptChange(req, res, next){
     var data = { code: 1, state: 'successed!', msg: 'ok', hexinV: 'hexinV' };
     res.render('conceptChange', data);
@@ -729,5 +733,6 @@ module.exports = {
     showAllNewConcept,
     componentChange,
     showConceptChange,
-    conceptAlter
+    conceptAlter,
+    showDownConcept
 }
