@@ -81,7 +81,7 @@ app.use(flash());
     console.log('downgn: ', 'downgn')
     var filename = path.join(__dirname, 'public', 'conceptchange.txt');
     const fs = require("fs");
-    if(!fs.existsSync(filename)) { res.send({ code: -1, msg: '文件不存在！'}); }
+    if (!fs.existsSync(filename)) { res.send({ code: -1, msg: '文件不存在！' }); }
     else res.download(filename);
   });
   app.use(
@@ -120,16 +120,16 @@ server.on("request", async (req, res) => {
     res.end();
     return;
   }
-  
+
   if (req.url === '/api/components') {
-    res.on('close',function(){
+    res.on('close', function () {
       console.log('res close!')
       res.end();
     })
     GN.componentChange(req, res);
   }
-  if( req.url === '/api/export4TDX'){
-    res.on('close',function(){
+  if (req.url === '/api/export4TDX') {
+    res.on('close', function () {
       res.download(path.join(__dirname, 'public', 'conceptchange.txt'));
       console.log('res close!')
       res.end();

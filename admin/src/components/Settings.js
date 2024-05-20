@@ -13,22 +13,32 @@ const tabs = [
     settings: [
       {
         key: 'domain',
+        title: '域名',
         description: '请输入你的域名，例如：www.domain.com',
       },
       {
         key: 'language',
+        title:'语言',
         description: '语言',
       },
       {
         key: 'copyright',
+        title:'版权信息',
         description: '请输入 HTML 代码，其将被放置在页面的末尾',
       },
       {
         key: 'allow_comments',
+        title:'允许评论',
+        description: 'true 或者 false',
+      },
+      {
+        key: 'allow_gratitude',
+        title:'显示赞赏付款二维码',
         description: 'true 或者 false',
       },
       {
         key: 'use_cache',
+        title:'使用缓存',
         description: 'true 或者 false',
       },
     ],
@@ -38,47 +48,58 @@ const tabs = [
     settings: [
       {
         key: 'theme',
+        title:'网站主题',
         description: "博客主题，可选值：bulma, bootstrap, bootstrap5, v2ex, next 以及 w3",
       },
       {
         key: 'code_theme',
+        title:'代码网格',
         description: '从这里选择一个代码主题：https://www.jsdelivr.com/package/npm/highlight.js?path=styles',
       },
       {
         key: 'site_name',
+        title:'网站名称',
         description: "网站名称",
       },
       {
         key: 'description',
+        title:'网站描述',
         description: '网站描述信息',
       },
       {
         key: 'site_key',
+        title:'网站关键字',
         description: '网站关键字，用于网站SEO优化',
       },
       {
         key: 'nav_links',
+        title:'网站菜单',
         description: '必须是合法的 JSON 格式的文本',
         isBlock: true,
       },
       {
         key: 'author',
+        title:'作者名称',
         description: '你的名字',
       },
       {
         key: 'motto',
+        title:'网站个性',
         description: '你的格言',
       },
       {
         key: 'favicon',
+        title:'网站图标',
         description: '请输入一个图片链接',
       },
       {
         key: 'brand_image',
+        title:'广告图片',
         description: '请输入一个图片链接',
       },
       {
         key: 'index_page_content',
+        title:'自定义首页',
         description: '自定义首页 HTML 代码，输入 404 则对外隐藏首页',
         isBlock: true,
       }
@@ -89,28 +110,34 @@ const tabs = [
     settings: [
       {
         key: 'ad',
+        title:'广告代码',
         description: '广告代码',
         isBlock: true,
       },
       {
         key: 'extra_header_code',
+        title:'统计代码',
         description: '此处代码会被插入到 header 标签内，可在此处放入统计代码',
         isBlock: true,
       },
       {
         key: 'extra_footer_code',
+        title:'页尾代码',
         description: '此处代码会被插入到 footer 标签内',
       },
       {
         key: 'disqus',
+        title:'评论标识',
         description: 'Disqus 标识符，未输入则无法启用评论',
       },
       {
         key: 'extra_footer_text',
+        title:'页脚信息',
         description: '自定义页脚信息，支持 HTML，可在此放入备案信息等',
       },
       {
         key: 'message_push_api',
+        title:'消息推送',
         description: '消息推送 API 链接，具体参见：https://github.com/ionce007/message-pusher',
       },
     ],
@@ -279,7 +306,8 @@ render() {
               <TabPane tab={tab.label} key={tab.label}>
                 <Form layout={'vertical'}>
                   {tab.settings.map((setting) => {
-                    setting.label = setting.key.replaceAll('_', ' ').toUpperCase();
+                    //setting.label = setting.key.replaceAll('_', ' ').toUpperCase();
+                    setting.label = setting.title;
                     return (
                       <Form.Item label={setting.label ? setting.label : setting.key}>
                         {setting.isBlock ? (

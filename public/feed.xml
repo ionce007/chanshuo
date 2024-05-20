@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>cms.foryet.com</id>
     <title>缠说 • 股经</title>
-    <updated>2024-05-13T02:04:21.743Z</updated>
+    <updated>2024-05-20T15:01:05.981Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>铜豌豆</name>
@@ -13,10 +13,20 @@
     <subtitle>股票交易技术交流,指标公式,选股公式编写,股票投资经验汇集,量化交易策略编写及技术分享,“缠中说禅”博文。</subtitle>
     <icon>/favicon.ico</icon>
     <entry>
+        <title type="html"><![CDATA[VCP形态第二阶段的入场策略及选股公式]]></title>
+        <id>vcp2</id>
+        <link href="https://cms.foryet.com/page/vcp2"/>
+        <updated>2024-05-20T01:30:22.263Z</updated>
+        <summary type="html"><![CDATA[在交易市场中的投资人往往会忽略甚至是误解交易目标的根本意义，其实投资人的目标并非追求最低或最便宜的价格，而是寻找「正确」的进场时机，而所谓的正确时机，即是在目标即将大幅上涨时进场的价格。为什么VCP型态的唯一要求是选择在第二阶段进场布局呢?]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[全美交易冠军马克·米勒维尼的核心交易模式VCP形态的指标公式及选股公式]]></title>
         <id>vcp</id>
         <link href="https://cms.foryet.com/page/vcp"/>
-        <updated>2024-05-10T05:32:41.866Z</updated>
+        <updated>2024-05-17T04:55:03.295Z</updated>
         <summary type="html"><![CDATA[VCP全称是Volatility Contraction Pattern，翻译过来的中文名称是“波动收缩规律”，是全美交易冠军Mark Minervini的核心交易模式之一，他的著作被翻译成中文版《股票魔法师》。]]></summary>
         <author>
             <name/>
@@ -38,6 +48,26 @@
         <link href="https://cms.foryet.com/page/如何捕捉极冰行情后的普涨机会？"/>
         <updated>2024-04-24T01:36:54.472Z</updated>
         <summary type="html"><![CDATA[市场在某交易日出现几百甚至千股涨停的局面，这就是我们所谓的普涨行情。而普涨行情大多出自二种情况：一是突然爆发级别相当高的利好消息或政策，它涉及的深度和影响面比较广，关联到的板块或个股比较多，次日往往就会出现齐涨和大面积涨停的情况，极致表现就是超出平时的涨停家数；二是大盘处于极度的恐慌暴跌，市场中连板出现几百家或更多的跌停，盘面一片绿油油，红盘个股数量屈指可数，这是大盘处于极冰状态的现象。当出现极冰后，许多人会特别沮丧和悲观，殊不知，一切皆周期，否极泰来，极冰之后往往会有疯狂的反弹与修复，次日或不久突然再现另一个极端的现象，几百家或更多的涨停，几千个股收红。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[“MACD+布林线”双剑合璧，洞察市场的动能和波动]]></title>
+        <id>macd-boll</id>
+        <link href="https://cms.foryet.com/page/macd-boll"/>
+        <updated>2024-05-20T13:23:48.647Z</updated>
+        <summary type="html"><![CDATA[MACD是一个有效的趋势跟踪和动量指标，BOLL布林线可以观察波动的周期性，两个指标结合使用可以帮助进行高概率交易，因为它们可以衡量现有趋势的方向、强度、波动性以及动能。我们可以使用MACD指标来评估趋势是在增强还是在减弱并为可能的突破做准备，而布林带指标则可以作为信号触发器，并在随后确认。]]></summary>
+        <author>
+            <name/>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[“中短线波段”指标，一个指标搞定抄底,逃顶]]></title>
+        <id>中短线波段</id>
+        <link href="https://cms.foryet.com/page/中短线波段"/>
+        <updated>2024-05-17T04:53:52.632Z</updated>
+        <summary type="html"><![CDATA[这个指标最大的优点就是点位和K线的运用方法，先看指标用法，该指标有明确的抄底,逃顶,洗盘结束信号及中线买入信号，如果向上出现洗盘结束加抄底为低吸的好机会，超短线用5分钟周期,短线用60分钟周期，大于35上升角度，直线趋势上升。]]></summary>
         <author>
             <name/>
         </author>
@@ -78,36 +108,6 @@
         <link href="https://cms.foryet.com/page/tupohengpan"/>
         <updated>2024-05-10T04:18:33.815Z</updated>
         <summary type="html"><![CDATA[股市中有一句话叫“横有多长，竖有多高”，股价在底部经过长期的横盘蓄势后，一旦放量强势突破的话，势必将走出一波波澜壮阔的行情。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[“三角形”整理形态的秘密，体现多空力量博弈，及主图公式]]></title>
-        <id>sanjiaoxing</id>
-        <link href="https://cms.foryet.com/page/sanjiaoxing"/>
-        <updated>2024-05-10T04:18:24.567Z</updated>
-        <summary type="html"><![CDATA[三角形形态是一种重要的整理形态，由两条收敛的趋势线构成，根据收敛的趋势，可分为对称三角形、上升三角形、下降三角形三种形态。对称三角形整理形态是指上方趋势线向下倾斜，下方趋势线向上倾斜的形态;上升三角形整理形态是指上方趋势线呈水平状态，下方趋势线向上倾斜的形态;而下降三角形整理形态是指下方趋势线呈水平状态，上方趋势线向下倾斜的形态。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[“MACD+布林线”双剑合璧，洞察市场的动能和波动]]></title>
-        <id>macd-boll</id>
-        <link href="https://cms.foryet.com/page/macd-boll"/>
-        <updated>2024-05-10T04:17:58.689Z</updated>
-        <summary type="html"><![CDATA[MACD是一个有效的趋势跟踪和动量指标，BOLL布林线可以观察波动的周期性，两个指标结合使用可以帮助进行高概率交易，因为它们可以衡量现有趋势的方向、强度、波动性以及动能。我们可以使用MACD指标来评估趋势是在增强还是在减弱并为可能的突破做准备，而布林带指标则可以作为信号触发器，并在随后确认。]]></summary>
-        <author>
-            <name/>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[经典的形态“美人肩”，主图公式及选股要点]]></title>
-        <id>美人肩</id>
-        <link href="https://cms.foryet.com/page/美人肩"/>
-        <updated>2024-05-10T04:17:52.216Z</updated>
-        <summary type="html"><![CDATA[美人肩形态是一种强势的建仓表现,该建仓模式最大的特征就是“洗盘时股价不跌,甚至还能涨”！说明庄家买入该股的迫切心情,只要后期股价突破肩膀的高点连线,则股价加速上涨可期！]]></summary>
         <author>
             <name/>
         </author>
