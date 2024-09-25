@@ -34,6 +34,7 @@ async function initializeOptions() {
   let plainOptions = [
     ['ad', ''],
     ['allow_comments', 'true'],
+    ['allow_gratitude', 'true'],
     ['author', '我的名字'],
     ['brand_image', ''],
     [

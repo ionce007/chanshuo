@@ -84,12 +84,16 @@ app.use(flash());
     if (!fs.existsSync(filename)) { res.send({ code: -1, msg: '文件不存在！' }); }
     else res.download(filename);
   });
+  app.get('/api/clientip', (req, res) => {
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log('ip =  ', ip)
+    res.send(ip);
+  });
   app.use(
     serveStatic(path.join(__dirname, 'data', 'index'), serveStaticOptions)
   );
 
   app.use('*', (req, res, next) => {
-    debugger;
     if (req.session.user !== undefined) {
       res.locals.loggedin = true;
       res.locals.isAdmin = req.session.user.isAdmin;
