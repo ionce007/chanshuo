@@ -91,7 +91,7 @@ app.use(flash());
     var ips = ipArr.filter(item => item && regex.test(item));
     var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();
     var deviceId = crypto.createHash('md5').update(ipValue.toString()).digest('hex');
-    res.json({deviceId: deviceId, ip: ip });
+    res.json({deviceId: deviceId });
   });
   app.use(
     serveStatic(path.join(__dirname, 'data', 'index'), serveStaticOptions)
