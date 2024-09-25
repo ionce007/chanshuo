@@ -18,6 +18,20 @@ async function getAll(req, res) {
   res.json({ status, message, options });
 }
 
+async function zhipuAuth(req, res) {
+  let options = [];
+  let message = 'ok';
+  let status = true;
+  let auth = '';
+  try {
+    options = await Option.findAll({where:{key: 'zhipu_auth'}, raw: true });
+    auth = options && options.length > 0 ? options[0].value : '';
+  } catch (e) {
+    status = false;
+    message = e.message;
+  }
+  res.json({ status, message, auth });
+}
 async function get(req, res) {
   const key = req.params.name;
   let option;
@@ -125,4 +139,5 @@ module.exports = {
   backupDatabase,
   uploadDatabase,
   resetCache,
+  zhipuAuth
 };

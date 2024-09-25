@@ -41,6 +41,11 @@ const tabs = [
         title:'使用缓存',
         description: 'true 或者 false',
       },
+      {
+        key: 'zhipu_auth',
+        title:'智谱授权码',
+        description: '智谱清言网站大模型AI访问的授权码',
+      },
     ],
   },
   {

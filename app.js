@@ -84,10 +84,13 @@ app.use(flash());
     if (!fs.existsSync(filename)) { res.send({ code: -1, msg: '文件不存在！' }); }
     else res.download(filename);
   });
-  app.get('/api/clientip', (req, res) => {
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    console.log('ip =  ', ip)
-    res.send(ip);
+  app.get('/api/deviceid', (req, res) => {
+    const ip = req.connection.remoteAddress || req.headers['x-forwarded-for'];
+    var ipArr = ip.split(':');
+    const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    var ips = ipArr.filter(item => item && regex.test(item));
+    var deviceId = crypto.createHash('md5').update(ips[0]).digest('hex');
+    res.json({deviceId:deviceId});
   });
   app.use(
     serveStatic(path.join(__dirname, 'data', 'index'), serveStaticOptions)

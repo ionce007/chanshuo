@@ -60,7 +60,8 @@ async function initializeOptions() {
     ['site_name', '站点名称'],
     ['theme', 'bulma'],
     ['index_page_content', ''],
-    ['use_cache', 'true']
+    ['use_cache', 'true'],
+    ['zhipu_auth', '']
   ];
   for (const option of plainOptions) {
     let [key, value] = option;

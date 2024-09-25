@@ -98,6 +98,7 @@ router.get('/option/shutdown', adminRequired, option.shutdown);
 router.get('/option/:name', adminRequired, option.get);
 router.put('/option', adminRequired, option.update);
 router.post('/option/resetCache', adminRequired, option.resetCache);
+router.get('/zhipuauth', option.zhipuAuth);
 
 router.get('/file', adminRequired, file.getAll);
 router.post('/file', adminRequired, upload.single('file'), file.upload);
