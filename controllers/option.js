@@ -4,6 +4,7 @@ const { loadAllPages } = require('../common/cache');
 const { updateBlogCache } = require('../common/blogcache');
 const { Option } = require('../models');
 const config = require('../config');
+const crypto = require('crypto');
 
 async function getAll(req, res) {
   let options = [];
@@ -24,23 +25,23 @@ async function zhipuAuth(req, res) {
   let status = true;
   let auth = '';
   let deviceId = '';
-  let ips = [];
+  let ip;
   try {
     options = await Option.findAll({where:{key: 'zhipu_auth'}, raw: true });
     auth = options && options.length > 0 ? options[0].value : '';
 
-    const ip = req.connection.remoteAddress || req.headers['x-forwarded-for'];
-    var ipArr = ip.split(':');
+    ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    //var ipArr = ip.split(':');
     //const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    ips = ipArr.filter(item => item);
-    var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();
-    deviceId = crypto.createHash('md5').update(ipValue).digest('hex');
+    //ips = ipArr.filter(item => item);
+    //var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();
+    deviceId = crypto.createHash('md5').update(ip).digest('hex');
     res.json({deviceId: deviceId });
   } catch (e) {
     status = false;
     message = e.message;
   }
-  res.json({ status, message, auth, ips });
+  res.json({ status, message, auth, ip, deviceId });
 }
 async function get(req, res) {
   const key = req.params.name;
