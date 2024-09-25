@@ -31,17 +31,17 @@ async function zhipuAuth(req, res) {
     auth = options && options.length > 0 ? options[0].value : '';
 
     ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress).toString();
-    //var ipArr = ip.split(':');
-    //const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    //ips = ipArr.filter(item => item);
-    //var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();
+    /*var ipArr = ip.split(',');
+    const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    ips = ipArr.filter(item => item);
+    var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();*/
     deviceId = crypto.createHash('md5').update(ip).digest('hex');
     //res.json({deviceId: deviceId });
   } catch (e) {
     status = false;
     message = e.message;
   }
-  res.json({ status, message, auth, ip, deviceId });
+  res.json({ status, message, auth, deviceId });
 }
 async function get(req, res) {
   const key = req.params.name;

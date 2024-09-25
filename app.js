@@ -86,11 +86,11 @@ app.use(flash());
   });
   app.get('/api/deviceid', (req, res) => {
     const ip = req.connection.remoteAddress || req.headers['x-forwarded-for'];
-    /*var ipArr = ip.split(':');
+    var ipArr = ip.split(',');
     const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     var ips = ipArr.filter(item => item && regex.test(item));
-    var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();*/
-    var deviceId = crypto.createHash('md5').update(ip.toString()).digest('hex');
+    var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();
+    var deviceId = crypto.createHash('md5').update(ipValue.toString()).digest('hex');
     res.json({deviceId: deviceId, ip: ip });
   });
   app.use(
