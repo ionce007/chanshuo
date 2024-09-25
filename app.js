@@ -89,8 +89,9 @@ app.use(flash());
     var ipArr = ip.split(':');
     const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     var ips = ipArr.filter(item => item && regex.test(item));
-    //var deviceId = crypto.createHash('md5').update(ips[0]).digest('hex');
-    res.json({deviceId:ips});
+    var ip = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();
+    var deviceId = crypto.createHash('md5').update(ip).digest('hex');
+    res.json({deviceId: deviceId });
   });
   app.use(
     serveStatic(path.join(__dirname, 'data', 'index'), serveStaticOptions)
