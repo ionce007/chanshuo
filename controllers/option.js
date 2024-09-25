@@ -23,14 +23,24 @@ async function zhipuAuth(req, res) {
   let message = 'ok';
   let status = true;
   let auth = '';
+  let deviceId = '';
+  let ips = [];
   try {
     options = await Option.findAll({where:{key: 'zhipu_auth'}, raw: true });
     auth = options && options.length > 0 ? options[0].value : '';
+
+    const ip = req.connection.remoteAddress || req.headers['x-forwarded-for'];
+    var ipArr = ip.split(':');
+    //const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    ips = ipArr.filter(item => item);
+    var ipValue = ips && ips.length > 0 ? ips[0] : (new Date()).getTime();
+    deviceId = crypto.createHash('md5').update(ipValue).digest('hex');
+    res.json({deviceId: deviceId });
   } catch (e) {
     status = false;
     message = e.message;
   }
-  res.json({ status, message, auth });
+  res.json({ status, message, auth, ips });
 }
 async function get(req, res) {
   const key = req.params.name;
