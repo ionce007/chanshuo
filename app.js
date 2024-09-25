@@ -85,17 +85,12 @@ app.use(flash());
     else res.download(filename);
   });
   app.get('/api/deviceid', (req, res) => {
-    try{
-      const ip = req.connection.remoteAddress || req.headers['x-forwarded-for'];
-      var ipArr = ip.split(':');
-      const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-      var ips = ipArr.filter(item => item && regex.test(item));
-      var deviceId = crypto.createHash('md5').update(ips[0]).digest('hex');
-      res.json({deviceId:deviceId});
-    }
-    catch(e){
-      res.json({deviceId:'',msg:e.message});
-    }
+    const ip = req.connection.remoteAddress || req.headers['x-forwarded-for'];
+    var ipArr = ip.split(':');
+    const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    var ips = ipArr.filter(item => item && regex.test(item));
+    //var deviceId = crypto.createHash('md5').update(ips[0]).digest('hex');
+    res.json({deviceId:ips});
   });
   app.use(
     serveStatic(path.join(__dirname, 'data', 'index'), serveStaticOptions)
