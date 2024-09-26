@@ -27,7 +27,7 @@ async function zhipuAuth(req, res) {
   let deviceId = '';
   let ip = "";
   try {
-    options = await Option.findAll({where:{key: 'zhipu_auth'}, raw: true });
+    options = await Option.findAll({ where: { key: 'zhipu_auth' }, raw: true });
     auth = options && options.length > 0 ? options[0].value : '';
 
     ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress).toString();
@@ -43,6 +43,21 @@ async function zhipuAuth(req, res) {
   }
   res.json({ status, message, auth, deviceId });
 }
+async function refreshZhipuToken(req, res) {
+  try{
+    const value = req.body.token;
+    const key = 'zhipu_auth';
+    let option = await Option.findOne({ where: { key } });
+    let newOption = { key, value };
+    if (option) { await option.update(newOption); }
+    else Option.create(newOption)
+    res.json({ status:true, message: 'ok' });
+  }
+  catch(e){
+    res.json({ status:false, message: e.message });
+  }
+}
+
 async function get(req, res) {
   const key = req.params.name;
   let option;
@@ -62,7 +77,7 @@ async function get(req, res) {
   res.json({ status, message, option });
 }
 async function resetCache(req, res, next) {
-  let json = { status: true, message: 'success'}
+  let json = { status: true, message: 'success' }
   try {
     await loadAllPages();
     await updateBlogCache();
@@ -79,7 +94,7 @@ async function update(req, res, next) {
       let newOption = { key, value };
       try {
         let option = await Option.findOne({ where: { key } });
-        if (option) { await option.update(newOption);}
+        if (option) { await option.update(newOption); }
       } catch (e) {
         console.error(e);
       }
@@ -150,5 +165,6 @@ module.exports = {
   backupDatabase,
   uploadDatabase,
   resetCache,
-  zhipuAuth
+  zhipuAuth,
+  refreshZhipuToken
 };
