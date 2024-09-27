@@ -23,13 +23,17 @@ async function zhipuAuth(req, res) {
   let options = [];
   let message = 'ok';
   let status = true;
-  let auth = '';
+  let access_token = '';
+  let refresh_token = '';
   let deviceId = '';
   let ip = "";
   try {
     options = await Option.findAll({ where: { key: 'zhipu_auth' }, raw: true });
-    auth = options && options.length > 0 ? options[0].value : '';
-
+    let auth = options && options.length > 0 ? options[0].value : '';
+    if(auth){
+      access_token = auth.split('｜')[0];
+      refresh_token = auth.split('｜')[1];
+    }
     ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress).toString();
     /*var ipArr = ip.split(',');
     const regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
@@ -41,7 +45,7 @@ async function zhipuAuth(req, res) {
     status = false;
     message = e.message;
   }
-  res.json({ status, message, auth, deviceId });
+  res.json({ status, message, access_token, refresh_token, deviceId });
 }
 async function refreshZhipuToken(req, res) {
   try{
