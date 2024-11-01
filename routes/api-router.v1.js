@@ -69,6 +69,8 @@ router.get('/blog/list', blogarticle.blogArcticleList);
 router.get('/blog/datelist', blogarticle.getMonthBlog);
 router.get('/pagetag', index.getTagData);
 router.get('/pagelist', index.getPageList);
+router.get('/stream', index.readEventStream);
+
 router.get('/blog/test', blogarticle.testCache);
 router.put('/blog', userRequired, blogarticle.Update);
 router.post('/blog/search', userRequired, blogarticle.search);

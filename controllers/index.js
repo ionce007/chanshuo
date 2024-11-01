@@ -1,7 +1,7 @@
 const { updateView, getLinks, convertContent, getPageListByTag, getPagesByRange } = require('../common/cache');
 //const { loadAllBlogs } = require('../common/blogcache');
 const { getAllBlogsTitle } = require('../common/blogcache');
-const { getDate, dateFormat,formatDateTime } = require('../common/util');
+const { getDate, dateFormat, formatDateTime } = require('../common/util');
 const { Page, Formula } = require('../models');
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createGzip } = require('zlib');
@@ -47,7 +47,7 @@ async function getArchive(req, res, next) {
     item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
     return item;
   });
-  res.render('archive', { pages: pages.reverse(),kind:'summary' });
+  res.render('archive', { pages: pages.reverse(), kind: 'summary' });
 }
 async function getPageList(req, res, next) {
   let pageIndex = req.query.pageNumber || 1;
@@ -57,15 +57,15 @@ async function getPageList(req, res, next) {
   let kind = req.query.kind;
   let tag = req.query.tag;
   let where = {};
-  console.log('kind: ',kind);
-  if(kind === 'tag') where = {pageStatus: { [Op.not]: PAGE_STATUS.RECALLED }, tag: { [Op.like]: `%${tag}%` }};
-  else if(kind === 'month') {
+  console.log('kind: ', kind);
+  if (kind === 'tag') where = { pageStatus: { [Op.not]: PAGE_STATUS.RECALLED }, tag: { [Op.like]: `%${tag}%` } };
+  else if (kind === 'month') {
     let year = tag.split('-')[0];
     let month = tag.split('-')[1];
     let startDate = new Date(year, parseInt(month) - 1, 1, 0, 0, 0, 0);
     let endDate = new Date(startDate);
     endDate.setMonth(startDate.getMonth() + 1);
-    where = {pageStatus: { [Op.not]: PAGE_STATUS.RECALLED }, createdAt: { [Op.between]: [startDate, endDate] }};
+    where = { pageStatus: { [Op.not]: PAGE_STATUS.RECALLED }, createdAt: { [Op.between]: [startDate, endDate] } };
   }
   try {
     let datus = await Page.findAndCountAll({
@@ -75,24 +75,24 @@ async function getPageList(req, res, next) {
       offset: pageSize * (pageIndex - 1),
       raw: true
     });
-    let pages = datus.rows.map( (item) =>  {
+    let pages = datus.rows.map((item) => {
       item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
       item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
       return item;
     });
-    res.json({ status: true, message: 'ok', pages,  total: datus.count, kind: kind});
+    res.json({ status: true, message: 'ok', pages, total: datus.count, kind: kind });
   } catch (e) {
-    res.json({ tatus: false,  message: e.message, pages: [], total: 0, kind: kind  });
+    res.json({ tatus: false, message: e.message, pages: [], total: 0, kind: kind });
   }
-/*
-  let pages = await getPagesByRange(0, -1);
-  pages = pages.map((item) => {
-    item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
-    item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
-    return item;
-  });
-  res.render('archive', { pages: pages.reverse() });
-  */
+  /*
+    let pages = await getPagesByRange(0, -1);
+    pages = pages.map((item) => {
+      item.createdAt = dateFormat(item.createdAt, 'yyyy-MM-dd HH:mm:ss');
+      item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
+      return item;
+    });
+    res.render('archive', { pages: pages.reverse() });
+    */
 }
 async function getDonate(req, res, next) {
   const link = 'donate';
@@ -266,7 +266,7 @@ async function getMonthArchive(req, res, next) {
       item.updatedAt = dateFormat(item.updatedAt, 'yyyy-MM-dd HH:mm:ss');
       return item;
     });*/
-    res.render('list', { pages:[], title: time ,kind: 'month'});
+    res.render('list', { pages: [], title: time, kind: 'month' });
     //res.render('archive', { pages, title: time ,kind: 'month'});
   } catch (e) {
     res.render('message', {
@@ -329,7 +329,7 @@ async function getTag(req, res, next) {
     });
   }
 }
-function format(date){
+function format(date) {
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
   month = month < 10 ? ('0' + month) : month;
@@ -439,6 +439,135 @@ async function getStaticFile(req, res, next) {
   res.sendStatus(404);
 }
 
+function parseMultiJson(jsonStr) {
+  const jsonArr = [];
+  let startIndex = 0;
+  let endIndex = 0;
+  
+  while (startIndex < jsonStr.length) {
+    // 找到一个 JSON 对象的开始位置
+    startIndex = jsonStr.indexOf('{', startIndex);
+    if (startIndex === -1) {
+      break;
+    }
+    
+    // 找到一个 JSON 对象的结束位置
+    let openBrackets = 1;
+    endIndex = startIndex + 1;
+    while (openBrackets > 0 && endIndex < jsonStr.length) {
+      if (jsonStr[endIndex] === '{') {
+        openBrackets++;
+      } else if (jsonStr[endIndex] === '}') {
+        openBrackets--;
+      }
+      endIndex++;
+    }
+    
+    // 将该 JSON 对象解析为一个对象，并添加到数组中
+    const json = jsonStr.substring(startIndex, endIndex);
+    jsonArr.push(JSON.parse(json));
+    
+    // 更新下一个 JSON 对象的开始位置
+    startIndex = endIndex;
+  }
+  
+  return jsonArr;
+}
+
+async function readEventStream(req, res, next) {
+  let payload = {
+    "assistant_id": "65fc148a7ad0f796ff91dca5",
+    "conversation_id": "",
+    "meta_data": {
+        "mention_conversation_id": "",
+        "is_test": false,
+        "input_question_type": "xxxx",
+        "channel": "",
+        "draft_id": "",
+        "quote_log_id": "",
+        "platform": "pc"
+    },
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "广州今天的天气怎么样？"
+                }
+            ]
+        }
+    ]
+  }
+  fetch(`https://chatglm.cn/chatglm/backend-api/assistant/stream`, {
+    method: 'POST',
+    hearders : {
+      'Accept': 'text/event-stream',
+      'Accept-Encoding': 'gzip, deflate, br, zstd',
+      'Accept-Language:': 'en-US,en-GB-oxendict;q=0.9,en;q=0.8,zh;q=0.7,zh-CN;q=0.6',
+      'App-name': 'chatglm',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ZTE2MTEzNzVkOWQ0N2M3OGE2MDk2YWI4MjZkMWJkNiIsImV4cCI6MTcyNzQ4NjI2OSwibmJmIjoxNzI3Mzk5ODY5LCJpYXQiOjE3MjczOTk4NjksImp0aSI6IjUwNDUxYTAzZDYwOTQ5ZjVhZDQ5N2FkOTUxY2E1ODIzIiwidWlkIjoiNjY3NjJhNDE0NjQ3MjAyMGNiMzQzYjkwIiwidHlwZSI6ImFjY2VzcyJ9.hn38oShtYwaNp5Ei4wjtc09UVVS1FEgKTGA26ZbN49U',
+      'Connection': 'keep-alive',
+      'Content-Type': 'application/json',
+      'Cookie': 'sensorsdata2015jssdkchannel=%7B%22prop%22%3A%7B%22_sa_channel_landing_url%22%3A%22%22%7D%7D; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%2266762a4146472020cb343b90%22%2C%22first_id%22%3A%221903d924e873ff-0f9161f9add3c1-26001c51-1049088-1903d924e8887a%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%2C%22_latest_wx_ad_click_id%22%3A%22%22%2C%22_latest_wx_ad_hash_key%22%3A%22%22%2C%22_latest_wx_ad_callbacks%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTkwM2Q5MjRlODczZmYtMGY5MTYxZjlhZGQzYzEtMjYwMDFjNTEtMTA0OTA4OC0xOTAzZDkyNGU4ODg3YSIsIiRpZGVudGl0eV9sb2dpbl9pZCI6IjY2NzYyYTQxNDY0NzIwMjBjYjM0M2I5MCJ9%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%2266762a4146472020cb343b90%22%7D%2C%22%24device_id%22%3A%221903d924e873ff-0f9161f9add3c1-26001c51-1049088-1903d924e8887a%22%7D; chatglm_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ZTE2MTEzNzVkOWQ0N2M3OGE2MDk2YWI4MjZkMWJkNiIsImV4cCI6MTcyNzQ4NjI2OSwibmJmIjoxNzI3Mzk5ODY5LCJpYXQiOjE3MjczOTk4NjksImp0aSI6IjUwNDUxYTAzZDYwOTQ5ZjVhZDQ5N2FkOTUxY2E1ODIzIiwidWlkIjoiNjY3NjJhNDE0NjQ3MjAyMGNiMzQzYjkwIiwidHlwZSI6ImFjY2VzcyJ9.hn38oShtYwaNp5Ei4wjtc09UVVS1FEgKTGA26ZbN49U; chatglm_token_expires=2024-09-27%2011:18:56; chatglm_refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ZTE2MTEzNzVkOWQ0N2M3OGE2MDk2YWI4MjZkMWJkNiIsImV4cCI6MTc0Mjk1MTg2OSwibmJmIjoxNzI3Mzk5ODY5LCJpYXQiOjE3MjczOTk4NjksImp0aSI6ImI4Zjg5OGNjYzAyNjQ1NWRhZmM2M2M1NzhmYzJmZTFiIiwidWlkIjoiNjY3NjJhNDE0NjQ3MjAyMGNiMzQzYjkwIiwidHlwZSI6InJlZnJlc2gifQ.1-b3lrD2uZA9Oo7XFRHZ_h-n5UE4a2i5bgys_CofkJs; chatglm_user_id=66762a4146472020cb343b90',
+      'Host': 'chatglm.cn',
+      'Origin': 'https://chatglm.cn',
+      ///'Sec-Ch-Ua': `"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"`,
+      //'Sec-Ch-Ua-Mobile': '?0',
+      //'Sec-Ch-Ua-Platform': '"Windows"',
+      //'Eec-Fetch-Dest:': 'empty',
+      //'Sec-Fetch-Mode': 'cors',
+      //'Sec-Fetch-Site': 'same-origin',
+      //'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+      'X-App-Platform': 'pc',
+      'X-App-Version': '0.0.1',
+      'X-Device-Id': '6327127c7530453083d4000140de0ed9',
+      'X-Lang': 'zh',
+      'X-Request-Id': '9b4501e346ee4213963de810fe802ddc'
+    },
+    //mode: 'cors',
+    credentials: 'include',
+    body: JSON.stringify(payload),
+  })
+    .then((response) => {
+      console.log('response = ',response);
+      const decoder = new TextDecoder('utf-8');
+      let buffer = []
+      // 获取可读流
+      const reader = response.body.getReader();
+      // 读取数据
+      function read() {
+        return reader.read().then(({ done, value }) => {
+          console.log('value = ', value);
+          if (done) {
+            // 这里就能拿到完成的 buffer
+            console.log('Stream 已经读取完毕', buffer);
+            // 如果需要使用到完整的数据，可在这里使用，useData是你要使用数据来干嘛的函数
+            //useData(buffer)
+            return buffer;
+          }
+          // 读取每段流的数据块
+          const chunk = decoder.decode(value, { stream: false });
+          // 由于数据块中可能包含多段数据，需要额外拆分成单段数据，具体因单段数据结构而异，这里不演示
+          // 例如正常是：'{a: 1}' 结构，我们使用 JSON.parse 就能转换成对象结构。
+          // 结果返回了 '{a: 1}{a: 2}' 两段拼接在一起的数据，这种需要自行处理为：[{a: 1}, {a: 2}]
+          const list = parseMultiJson(chunk); // 封装一个自定义函数parseMultiJson去处理.
+          // 如果需要每获取一段数据，就使用到一段数据，那就在这里使用，useData是你要使用这段数据来干嘛的函数
+          //useData(list)
+          // 把处理好后的数据合并到 buffer中
+          buffer = buffer.concat(chunk);
+          // 继续读取
+          return read();
+        });
+      }
+      // 开始读取
+      return read()
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    })
+}
+
 
 module.exports = {
   getIndex,
@@ -452,5 +581,6 @@ module.exports = {
   getDonate,
   getTagData,
   getPageList,
+  readEventStream
 };
 
