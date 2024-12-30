@@ -6,7 +6,7 @@ const config = require('../config');
   storage: config.database,
   logging: false
 });*/
-/*const sequelize = new Sequelize(config.MYSQL.bdname, config.MYSQL.user, config.MYSQL.pwd, {
+const sequelize = new Sequelize(config.MYSQL.bdname, config.MYSQL.user, config.MYSQL.pwd, {
   host: config.MYSQL.host,
   port: config.MYSQL.port,
   dialect: 'mysql',
@@ -18,8 +18,8 @@ const config = require('../config');
     idle: 10000
   }
 });
-*/
-const sequelize = new Sequelize(config.POSTGRESQL.bdname, config.POSTGRESQL.user, config.POSTGRESQL.pwd, {
+
+/*const sequelize = new Sequelize(config.POSTGRESQL.bdname, config.POSTGRESQL.user, config.POSTGRESQL.pwd, {
   host: config.POSTGRESQL.host,
   port: config.POSTGRESQL.port,
   dialect: 'postgres',
@@ -32,4 +32,5 @@ const sequelize = new Sequelize(config.POSTGRESQL.bdname, config.POSTGRESQL.user
     idle: 10000
   }
 });
+*/
 module.exports = sequelize;

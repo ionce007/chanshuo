@@ -46,6 +46,11 @@ const tabs = [
         title:'智谱授权码',
         description: '智谱清言网站大模型AI访问的授权码',
       },
+      {
+        key: 'xhs_ad_auth',
+        title:'小红书聚光平台授权码',
+        description: '小红书聚光平台数据访问分析授权码',
+      },
     ],
   },
   {

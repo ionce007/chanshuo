@@ -11,7 +11,7 @@ AccessToken.init(
             primaryKey: true
         },
         access_token: DataTypes.TEXT,
-        expires_in: DataTypes.INTEGER,
+        expires_in: DataTypes.DECIMAL,
         refresh_token: DataTypes.STRING,
         scope: DataTypes.STRING,
         remark: DataTypes.STRING,

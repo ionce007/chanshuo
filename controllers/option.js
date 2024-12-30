@@ -50,7 +50,6 @@ async function zhipuAuth(req, res) {
 async function refreshZhipuToken(req, res) {
   try{
     const value = req.body.token;
-    console.log('req.body.token = ', value);
     const key = 'zhipu_auth';
     let option = await Option.findOne({ where: { key } });
     let newOption = { key, value };

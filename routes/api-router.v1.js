@@ -9,6 +9,7 @@ const { uploadDB } = require('../middlewares/uploaddb');
 //const UploadBigFile  = require("../middlewares/uploadBigFile");
 
 const accessToken = require('../controllers/accesstoken');
+const xhsData = require('../controllers/xhs4ai');
 const formula = require('../controllers/formula');
 
 const blogarticle = require('../controllers/blogarticle');
@@ -70,6 +71,23 @@ router.get('/blog/datelist', blogarticle.getMonthBlog);
 router.get('/pagetag', index.getTagData);
 router.get('/pagelist', index.getPageList);
 router.get('/stream', index.readEventStream);
+
+router.get('/wxvideo/login', xhsData.getWXVideoCookies);
+router.get('/wxvideo/users', xhsData.getWXVideoUsers);
+router.get('/wxvideo/videolist', xhsData.getWxVideoList);
+
+router.get('/xhs/hotnote', xhsData.HotNote);
+router.post('/xhs/queryKeyword', xhsData.queryKeyword);
+router.post('/xhs/keywordtop3', xhsData.KeywordTop3);
+router.get('/xhs/taxonomy', xhsData.Taxonomy);
+router.get('/xhs/KeywordsInsight', xhsData.KeywordsInsight);
+router.get('/xhs/chart_whole', xhsData.KeywordChart_Whole);
+router.get('/xhs/chart', xhsData.KeywordChart);
+router.get('/xhs/adauth', xhsData.XHSAdAuth);
+router.get('/xhs/notequeryfilter', xhsData.ContentQueryFilter);
+router.post('/xhs/querynote', xhsData.getContentSquare);
+router.get('/xhs/firstcategory', xhsData.getFirstCategory);
+router.post('/xhs/secondcategory', xhsData.getSecondCategory);
 
 router.get('/blog/test', blogarticle.testCache);
 router.put('/blog', userRequired, blogarticle.Update);

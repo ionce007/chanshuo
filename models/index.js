@@ -61,7 +61,8 @@ async function initializeOptions() {
     ['theme', 'bulma'],
     ['index_page_content', ''],
     ['use_cache', 'true'],
-    ['zhipu_auth', '']
+    ['zhipu_auth', ''],
+    ['xhs_ad_auth', ''],
   ];
   for (const option of plainOptions) {
     let [key, value] = option;
