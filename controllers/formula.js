@@ -543,4 +543,5 @@ module.exports = {
   deleteFormula,
   panSynchronize,
   getFormulaData,
+  //uploadFile2Gist
 };

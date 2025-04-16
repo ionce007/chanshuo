@@ -83,7 +83,7 @@ async function componentChange(req, res, next){
                 res.write('data: The server time is:' + date1 + '\n\n');
                 //res.write('\n\n');
                 //res.json({aa:11,bb:22});
-            },5000);
+            },500);
         }
         var data ={aa:11,bb:22,cc:33};
         //res.send(data);

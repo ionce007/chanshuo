@@ -71,7 +71,7 @@ async function getPageList(req, res, next) {
     let datus = await Page.findAndCountAll({
       where: where,
       order: [['createdAt', 'DESC']],
-      limit: pageSize,
+      limit: parseInt(pageSize),
       offset: pageSize * (pageIndex - 1),
       raw: true
     });

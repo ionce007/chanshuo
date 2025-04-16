@@ -1,0 +1,13 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: chanshuo
+    src: ./
+    engine: nodejs18
+    primary: true
+ commands:
+     - npm run build
+   include:
+     - dist
+run: node ./app.js
+dev:node ./app.js

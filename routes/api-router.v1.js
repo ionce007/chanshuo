@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const index = require('../controllers/index');
 const page = require('../controllers/page');
+const sms = require('../controllers/sms');
 
 const { userRequired, adminRequired, tokenAuth } = require('../middlewares/api-auth');
 const { upload } = require('../middlewares/upload');
 const { uploadDB } = require('../middlewares/uploaddb');
-//const UploadBigFile  = require("../middlewares/uploadBigFile");
+const UploadBigFile = require("../middlewares/uploadBigFile");
 
 const accessToken = require('../controllers/accesstoken');
 const xhsData = require('../controllers/xhs4ai');
@@ -88,6 +89,9 @@ router.get('/xhs/notequeryfilter', xhsData.ContentQueryFilter);
 router.post('/xhs/querynote', xhsData.getContentSquare);
 router.get('/xhs/firstcategory', xhsData.getFirstCategory);
 router.post('/xhs/secondcategory', xhsData.getSecondCategory);
+router.post('/sms/in', sms.inputVerifyCode);
+router.get('/sms/out/:phone', sms.getSMS);
+router.post('/sms/send/:phone', sms.sendSMS);
 
 router.get('/blog/test', blogarticle.testCache);
 router.put('/blog', userRequired, blogarticle.Update);
@@ -134,7 +138,6 @@ router.get('/qywxcb', qywx.qywx_callback);
 router.post('/qywxcb', qywx.qywx_callback);
 router.get('/qywx_provider', qywxProvider.qywx_callback);
 router.post('/qywx_provider', qywxProvider.qywx_callback);
-
 
 /*
 const uploadBigFile = new UploadBigFile();

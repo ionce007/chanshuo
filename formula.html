@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+//页面加载*
+	window.onload = function(){
+		var secondEle = document.getElementById("second");
+		var time = 5;
+	var timer = setInterval(function(){
+		secondEle.innerHTML = time;
+		time--;
+		if(time==0){
+			clearInterval(timer);
+			location.href="https://cms.foryet.com"
+		}	
+	},1000)
+	}
+</script>
+</head>
+<body>
+	恭喜您，注册成功，<span style="color:red" id="second">5</span>秒后跳转，如不跳转点击<a href="https://cms.foryet.com">这里</a>!
+</body>
+</html>

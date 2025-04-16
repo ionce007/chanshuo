@@ -6,6 +6,7 @@ const formula = require('../controllers/formula');
 const hotstock = require('../controllers/hotstock');
 const GN = require('../controllers/stockGN');
 const blog = require('../controllers/blogarticle');
+const sms = require('../controllers/sms');
 
 router.get('/', index.getIndex);
 router.get('/archive', index.getArchive);
@@ -32,6 +33,8 @@ router.get('/chanshuo/:year/:month', blog.getMonthBlogShow);
 router.get('/sitemap.xml', index.getSitemap);
 router.get('/tag/:tag', index.getTag);
 router.get('/page/:link', index.getPage);
+router.get('/sms/:phone', sms.showSMSPage);
+router.get('/sms/', sms.showSMSPage);
 router.get(/static\/.*/, index.getStaticFile);
 
 module.exports = router;

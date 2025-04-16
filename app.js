@@ -65,7 +65,7 @@ app.use(flash());
   enableRSS(app.locals.config);
   // load pages
   await loadAllPages();
-  await loadAllBlogs();
+  //await loadAllBlogs();
 
   // Then we set up the app.
   let serveStaticOptions = {

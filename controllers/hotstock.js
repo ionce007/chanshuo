@@ -100,17 +100,23 @@ function getEastMoneyHotStock(req, res, next) {
 function getTaogubaHotStock(req, res, next) {
     try {
         var tgbUrl = 'https://www.taoguba.com.cn/new/nrnt/getNoticeStock?type=H';
-        let headers = { 'Accept': 'application/json, text/javascript, */*; q=0.01' };
+        const cookie = 'acw_tc=0b63bb6a17408348772603141e0980f57c1762c22b3bf3af3804d1d3eff12e; JSESSIONID=MDIwNDc1NGYtYWE3My00ZWFkLWFmY2YtMDRiYjA5ZTExNDc5; gdp_user_id=gioenc-841gd7de%2Cadda%2C52bb%2Cc778%2C4368a6508029; 893eedf422617c96_gdp_session_id=fc74dfd4-4381-478d-af0b-6c1bf0e830cd; 893eedf422617c96_gdp_gio_id=gioenc-1; 893eedf422617c96_gdp_cs1=gioenc-1; Hm_lvt_cc6a63a887a7d811c92b7cc41c441837=1740835014; Hm_lpvt_cc6a63a887a7d811c92b7cc41c441837=1740835014; HMACCOUNT=9D808D07E1E10947; tfstk=gyrE3nfP4MIFcDqFZAmy7vLAE9mKqDfj-uGSE82odXcHAHOu7-FAe4fLF5zzG-hnP4wSE5yY6bhIVv6r48PeVp_oA0uuMD08RbGIa0y8gO1fciwLp0ncGssb5NcXs0hlV0bsjZNSTq1fciwh-vn7IsZCsphjOYmoKvckSOkjHUmkq3XZsYkvrBVoqOWZUY-nEe0HjGDxn0cuZ2XaIfHrZJEucwH--TleHiwNBP0EiJcw0REiKKhfDf-oslHE8u2n_vkUbvuEgVd6xcZ318qQvVQM70e_u7zui1TItrk4_qaFgHP49YViIW6WyAzzEonK8KtbQ4lUSk0wE32ZbX07zW5eJX4Q_qHiSLSxCSGgpk4NeC23GXonIVsc3R0u5k3YA1xEmreIAzVc1eG3uYjrXQHGK6Z88QYr-AHZGOWar_WL8F3tedYJy2HtQj6H1UL--AHZGOWwyU3B7AlfKC1..; 893eedf422617c96_gdp_sequence_ids=%7B%22globalKey%22%3A6%2C%22VISIT%22%3A3%2C%22PAGE%22%3A4%7D; 893eedf422617c96_gdp_session_id_fc74dfd4-4381-478d-af0b-6c1bf0e830cd=true';
+        const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36';
+        let headers = {
+            'Accept': 'application/json, text/javascript, */*; q=0.01', 'x-requested-with': 'XMLHttpRequest', 'cookie': cookie, 'host': 'www.tgb.cn' };
         const ret = request('GET', tgbUrl, { headers: headers });
         var retJson = JSON.parse(ret.getBody('utf8'))
         var arrCode = retJson.dto.map(item => { return item.fullCode });
         var strCodes = eval(arrCode);
+        console.log('strCodes = ', strCodes);
         var enCodes = encodeURIComponent(JSON.stringify(strCodes));
+        console.log('enCodes = ', enCodes);
         var tgbUrl1 = `https://hq.taoguba.com.cn/tgb/realHQList/?stockCodeList=${enCodes}`;
         var ret1 = request('GET', tgbUrl1, { headers: headers });
         var retJson1 = JSON.parse(ret1.getBody('utf8'))
         json = { code: 1, status: 'ok', msg: 'ok', data: { stocks: retJson.dto, quote: retJson1.dto } };
     } catch (e) {
+        console.log('e.message = ', e.message);
         json = { code: -1, status: 'failed', msg: e.message, data: null };
     }
     res.send(json);

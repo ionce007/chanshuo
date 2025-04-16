@@ -10,6 +10,7 @@ const CSArticle = require('./csarticle');
 const THSNewGN = require('./THSNewGN');
 const THSgnComponent = require('./THSgnComponent');
 const THSgnChange = require('./THSgnChange');
+const SMS = require('./sms');
 const sequelize = require('../common/database');
 const { hashPasswordWithSalt,dateFormat } = require('../common/util');
 
@@ -83,3 +84,4 @@ exports.CSArticle = CSArticle;
 exports.THSNewGN = THSNewGN;
 exports.THSgnComponent = THSgnComponent;
 exports.THSgnChange = THSgnChange;
+exports.SMS = SMS;

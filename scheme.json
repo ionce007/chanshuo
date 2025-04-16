@@ -1,0 +1,273 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "小红书关键词和笔记智能分析",
+        "version": "1.0.0",
+        "description": "小红书关键词查询、分析，笔记智能分析与统计"
+    },
+    "servers": [
+        {
+            "url": "https://828s4651z4.vicp.fun/api"
+        }
+    ],
+    "paths": {
+        "/xhs/querynote": {
+            "post": {
+                "summary": "内容广场",
+                "operationId": "getContentSquare",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "searchWord": {"type": "string"},
+                                    "bizType": {"type": "string"},
+                                    "orderBy": {"type": "string"}
+                                },
+                                "required": ["bizType","orderBy"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "数据获取成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {"type": "integer"},
+                                        "success": {"type": "integer"},
+                                        "msg": {"type": "string"},
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "total": {"type": "integer"},
+                                                "noteList": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "noteInfo": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "cmtNum": {"type": "integer"},
+                                                                    "bindType": {"type": "integer"},
+                                                                    "isAdNote": {"type": "integer"},
+                                                                    "title": {"type": "string"},
+                                                                    "noteImages": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "imageHeight": {"type": "integer"},
+                                                                                "imageUrl": {"type": "string"},
+                                                                                "imageWidth": {"type": "integer"}
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "bizType": {"type": "integer"},
+                                                                    "notePublishTime": {"type": "string"},
+                                                                    "readNum": {"type": "integer"},
+                                                                    "noteType": {"type": "integer"},
+                                                                    "noteLink": {"type": "string"},
+                                                                    "noteId": {"type": "string"},
+                                                                    "likeNum": {"type": "integer"},
+                                                                    "videoDuration": {"type": "integer"}
+                                                                }
+                                                            },
+                                                            "userInfo": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "avatar": {"type": "string"},
+                                                                    "userId": {"type": "string"},
+                                                                    "fansNum": {"type": "integer"},
+                                                                    "currentLevel": {"type": "integer"},
+                                                                    "userType": {"type": "integer"},
+                                                                    "nickName": {"type": "string"}
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {"description": "非法的请求400"},
+                    "500": {"description": "内部错误500"}
+                }
+            }
+        },
+        "/xhs/querykeyword":{
+            "post":{
+                "summary": "关键词查询",
+                "operationId":"queryKeyword",
+                "requestBody":{
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "requestType": {"type": "string"},
+                                    "keywords": {"type": "string"},
+                                    "taxonomyId": {"type": "string"}
+                                },
+                                "required": ["requestType"]
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200": {
+                        "description": "数据获取成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties":{
+                                        "code": {"type": "integer"},
+                                        "success": {"type": "integer"},
+                                        "msg": {"type": "string"},
+                                        "data": {
+                                            "type":"object",
+                                            "properties":{
+                                                "wordBagName":{"type":"string"},
+                                                "bagMonthPv":{"type":"integer"},
+                                                "wordNum":{"type":"integer"},
+                                                "wordList":{
+                                                    "type":"array",
+                                                    "items":{
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "keyword":{"type":"string"},
+                                                            "bid":{"type":"integer"},
+                                                            "monthpv":{"type":"integer"},
+                                                            "source":{"type":"integer"},
+                                                            "rate":{"type":"integer"},
+                                                            "competitionScore":{"type":"number"},
+                                                            "competitionLevel":{"type":"string"},
+                                                            "recommendReason":{"type":"array", "items":{"type":"string"} },
+                                                            "soc":{"type":"integer"},
+                                                            "autoChoose":{"type":"integer"},
+                                                            "setBid":{"type":"boolean"},
+                                                            "setSoc":{"type":"boolean"},
+                                                            "setRate":{"type":"boolean"},
+                                                            "setMonthpv":{"type":"boolean"},
+                                                            "setRecommendLevel":{"type":"boolean"},
+                                                            "setCompetitionScore":{"type":"boolean"},
+                                                            "setCompetitionLevel":{"type":"boolean"},
+                                                            "setSessionSource":{"type":"boolean"},
+                                                            "recommendReasonSize":{"type":"integer"},
+                                                            "recommendReasonIterator":{"type":"array","items":{"type":"string"}},
+                                                            "setRecommendReason":{"type":"boolean"},
+                                                            "setAutoChoose":{"type":"boolean"},
+                                                            "setKeyword":{"type":"boolean"},
+                                                            "setSource":{"type":"boolean"}
+                                                        }
+                                                    }
+                                                },
+                                                "wordBagList":{
+                                                    "type":"array",
+                                                    "items":{
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "bagName": {"type":"string"},
+                                                            "bagQuality": {"type":"integer"},
+                                                            "bagKwdNum": {"type":"integer"},
+                                                            "bagMonthPv": {"type":"integer"},
+                                                            "wordList":{
+                                                                "type":"array",
+                                                                "items":{
+                                                                    "type":"object",
+                                                                    "properties":{
+                                                                        "keyword":{"type":"string"},
+                                                                        "bid":{"type":"integer"},
+                                                                        "monthpv":{"type":"integer"},
+                                                                        "source":{"type":"integer"},
+                                                                        "rate":{"type":"integer"},
+                                                                        "competitionScore":{"type":"number"},
+                                                                        "competitionLevel":{"type":"string"},
+                                                                        "recommendReason":{"type":"array", "items":{"type":"string"} },
+                                                                        "soc":{"type":"integer"},
+                                                                        "autoChoose":{"type":"integer"},
+                                                                        "setBid":{"type":"boolean"},
+                                                                        "setSoc":{"type":"boolean"},
+                                                                        "setRate":{"type":"boolean"},
+                                                                        "setMonthpv":{"type":"boolean"},
+                                                                        "setRecommendLevel":{"type":"boolean"},
+                                                                        "setCompetitionScore":{"type":"boolean"},
+                                                                        "setCompetitionLevel":{"type":"boolean"},
+                                                                        "setSessionSource":{"type":"boolean"},
+                                                                        "recommendReasonSize":{"type":"integer"},
+                                                                        "recommendReasonIterator":{"type":"array","items":{"type":"string"}},
+                                                                        "setRecommendReason":{"type":"boolean"},
+                                                                        "setAutoChoose":{"type":"boolean"},
+                                                                        "setKeyword":{"type":"boolean"},
+                                                                        "setSource":{"type":"boolean"}
+                                                                    }
+                                                                }
+                                                            },
+                                                            "wordListSize":{"type":"integer"},
+                                                            "wordListIterator":{
+                                                                "type":"array",
+                                                                "items":{
+                                                                    "type":"object",
+                                                                    "properties":{
+                                                                        "keyword": {"type":"string"},
+                                                                        "bid": {"type":"integer"},
+                                                                        "monthpv": {"type":"integer"},
+                                                                        "source": {"type":"integer"},
+                                                                        "rate": {"type":"integer"},
+                                                                        "competitionScore":{"type":"number"},
+                                                                        "competitionLevel": {"type":"string"},
+                                                                        "recommendReason": {"type":"array","items":{"type":"string"}},
+                                                                        "soc":{"type":"integer"},
+                                                                        "autoChoose": {"type":"integer"},
+                                                                        "setBid": {"type":"boolean"},
+                                                                        "setSoc": {"type":"boolean"},
+                                                                        "setRate": {"type":"boolean"},
+                                                                        "setMonthpv": {"type":"boolean"},
+                                                                        "setRecommendLevel": {"type":"boolean"},
+                                                                        "setCompetitionScore": {"type":"boolean"},
+                                                                        "setCompetitionLevel": {"type":"boolean"},
+                                                                        "setSessionSource": {"type":"boolean"},
+                                                                        "recommendReasonSize": {"type":"integer"},
+                                                                        "recommendReasonIterator": {"type":"array","items":{"type":"string"}},
+                                                                        "setRecommendReason": {"type":"boolean"},
+                                                                        "setAutoChoose": {"type":"boolean"},
+                                                                        "setKeyword": {"type":"boolean"},
+                                                                        "setSource": {"type":"boolean"}
+                                                                    }
+                                                                }
+                                                            },
+                                                            "setWordList": {"type":"boolean"},
+                                                            "setBagMonthPv":  {"type":"boolean"},
+                                                            "setBagName":  {"type":"boolean"},
+                                                            "setBagQuality":  {"type":"boolean"},
+                                                            "setBagKwdNum":  {"type":"boolean"}
+                                                        }
+                                                    }
+                                                },
+                                                "fakeUnitId":{"type":"string"}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {"description": "非法的请求400"},
+                    "500": {"description": "内部错误500"}
+                }
+            }
+        }
+    }
+}

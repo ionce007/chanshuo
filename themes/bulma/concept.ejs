@@ -190,7 +190,7 @@
                         if (res.code === 1) {
                             var html = '';
                             $.each(res.data, function (index, item) {
-                                html += "                        <div class='cell'>"
+                                html = "                        <div class='cell'>"
                                 html += "                            <div class='card'>";
                                 html += "                                <header class='addtime'>";
                                 html += `                                    <span class=''>${item.addtime}</span>`;
@@ -203,8 +203,9 @@
                                 html += "                                </div>";
                                 html += "                            </div>";
                                 html += "                        </div>"
+                                $('.grid').append(html);
                             });
-                            $('.grid').append(html);
+                            //$('.grid').append(html);
                             //removeLoading('dataLoading');
                         }
                         else if (res.code === 2) {
