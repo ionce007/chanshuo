@@ -6737,6 +6737,7 @@
     </style>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="shortcut icon" href="<%- config.favicon %>">
     <title>手机短信</title>
 
@@ -6856,7 +6857,7 @@
             if(!isVerifyCode) { alert('输入验证码不正确！'); return false;}
             const postData = { phone: phone, verifyCode: verifyCode };
 
-            fetch('http://192.168.1.2:8031/api/sms/in', {
+            fetch('/api/sms/in', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(postData)
