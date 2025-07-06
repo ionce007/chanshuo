@@ -17,6 +17,7 @@ router.get('/formula', formula.getFormula);
 router.get('/preview', formula.showPreviewPage);
 router.get('/hotstock', hotstock.showHotStock);
 
+router.get('/ks', GN.XiaoxueKouSuan);
 router.get('/gn', GN.crawlerAllNewGN);
 router.get('/concept', GN.showAllNewConcept);
 router.get('/concept/:code', GN.showStockGN);

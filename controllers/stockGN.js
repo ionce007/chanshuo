@@ -392,6 +392,11 @@ async function crawlerAllNewGN(req, res, next) {
 
     res.render('thsGN', data);
 }
+async function XiaoxueKouSuan(req, res, next) {
+    console.log('aaaaaaaaaaaa')
+    var data = { code: 1, state: 'successed!', msg: 'ok' };
+    res.render('ks', data);
+}
 async function getComponents(req, res, next) {
     try {
         let allGN = await THSNewGN.findAll({ attributes: ['addtime', 'GNCode', 'GNName'], raw: true });
@@ -734,5 +739,6 @@ module.exports = {
     componentChange,
     showConceptChange,
     conceptAlter,
-    showDownConcept
+    showDownConcept,
+    XiaoxueKouSuan
 }

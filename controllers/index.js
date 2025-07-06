@@ -581,6 +581,6 @@ module.exports = {
   getDonate,
   getTagData,
   getPageList,
-  readEventStream
+  readEventStream,
 };
 
