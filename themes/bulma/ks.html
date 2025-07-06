@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学数学口算练习</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .settings {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .setting-group {
+            margin-bottom: 15px;
+        }
+
+        .setting-group h3 {
+            margin-top: 0;
+            color: #3498db;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        label {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .timer {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .question {
+            font-size: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .answer-input {
+            font-size: 20px;
+            padding: 8px;
+            width: 100px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-size: 18px;
+            min-height: 27px;
+        }
+
+        .correct {
+            color: #27ae60;
+        }
+
+        .incorrect {
+            color: #e74c3c;
+        }
+
+        .results {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .progress {
+            margin-top: 10px;
+            height: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #2ecc71;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .answer-sheet {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .answer-sheet h3 {
+            color: #3498db;
+        }
+
+        .answer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .answer-table th,
+        .answer-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .answer-table th {
+            background-color: #f2f2f2;
+        }
+
+        .answer-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .correct-row {
+            background-color: #e6ffe6 !important;
+        }
+
+        .incorrect-row {
+            background-color: #ffebeb !important;
+        }
+
+        .show-answers-btn {
+            background-color: #9b59b6;
+            margin-top: 10px;
+        }
+
+        .show-answers-btn:hover {
+            background-color: #8e44ad;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>小学数学口算练习</h1>
+
+    <div class="settings">
+        <div class="setting-group">
+            <h3>结果范围</h3>
+            <label><input type="radio" name="range" value="10" checked> 10以内</label>
+            <label><input type="radio" name="range" value="20"> 20以内</label>
+            <label><input type="radio" name="range" value="100"> 100以内</label>
+        </div>
+
+        <div class="setting-group">
+            <h3>运算步骤</h3>
+            <label><input type="radio" name="steps" value="2" checked> 二步运算</label>
+            <label><input type="radio" name="steps" value="3"> 三步运算</label>
+            <label><input type="radio" name="steps" value="4"> 四步运算</label>
+        </div>
+
+        <div class="setting-group">
+            <h3>运算类型</h3>
+            <label><input type="radio" name="operation" value="add" checked> 仅加法</label>
+            <label><input type="radio" name="operation" value="sub"> 仅减法</label>
+            <label><input type="radio" name="operation" value="mix"> 加减混合</label>
+        </div>
+
+        <div class="setting-group">
+            <h3>其他选项</h3>
+            <label><input type="checkbox" name="carry" id="carry"> 包含进位/借位</label>
+            <label><input type="checkbox" name="negative" id="negative"> 允许负数结果</label>
+        </div>
+
+        <div class="setting-group">
+            <h3>题目数量</h3>
+            <label><input type="number" name="count" value="20" min="5" max="100" style="width: 60px;"> 题</label>
+        </div>
+
+        <button id="startBtn">开始练习</button>
+        <button id="showAnswersBtn" class="show-answers-btn" style="display: none;">显示答案</button>
+    </div>
+
+    <div class="quiz-container" id="quizContainer">
+        <div class="timer" id="timer">时间: 0秒</div>
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="question" id="question"></div>
+        <div>
+            <input type="number" class="answer-input" id="answerInput" autofocus>
+            <button id="submitBtn">提交</button>
+            <button id="nextBtn" style="display: none;">下一题</button>
+            <button id="showAnswerBtn" style="display: none; background-color: #f39c12;">显示答案</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <div class="results" id="results"></div>
+
+        <div class="answer-sheet" id="answerSheet" style="display: none;">
+            <h3>答题卡</h3>
+            <table class="answer-table" id="answerTable">
+                <thead>
+                    <tr>
+                        <th>题号</th>
+                        <th>题目</th>
+                        <th>你的答案</th>
+                        <th>正确答案</th>
+                        <th>结果</th>
+                    </tr>
+                </thead>
+                <tbody id="answerTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        let startTime;
+        let timerInterval;
+        let questions = [];
+        let userAnswers = [];
+
+        // DOM元素
+        const quizContainer = document.getElementById('quizContainer');
+        const questionElement = document.getElementById('question');
+        const answerInput = document.getElementById('answerInput');
+        const feedbackElement = document.getElementById('feedback');
+        const resultsElement = document.getElementById('results');
+        const timerElement = document.getElementById('timer');
+        const progressBar = document.getElementById('progressBar');
+        const submitBtn = document.getElementById('submitBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const showAnswerBtn = document.getElementById('showAnswerBtn');
+        const startBtn = document.getElementById('startBtn');
+        const showAnswersBtn = document.getElementById('showAnswersBtn');
+        const answerSheet = document.getElementById('answerSheet');
+        const answerTableBody = document.getElementById('answerTableBody');
+
+        // 事件监听
+        startBtn.addEventListener('click', startQuiz);
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', nextQuestion);
+        showAnswerBtn.addEventListener('click', showCurrentAnswer);
+        showAnswersBtn.addEventListener('click', showAllAnswers);
+
+        // 回车键提交
+        answerInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // 开始练习函数
+        function startQuiz() {
+            // 获取设置
+            const range = parseInt(document.querySelector('input[name="range"]:checked').value);
+            const steps = parseInt(document.querySelector('input[name="steps"]:checked').value);
+            const operation = document.querySelector('input[name="operation"]:checked').value;
+            const carry = document.getElementById('carry').checked;
+            const allowNegative = document.getElementById('negative').checked;
+            const questionCount = parseInt(document.querySelector('input[name="count"]').value);
+
+            // 生成题目
+            questions = generateQuestions(questionCount, range, steps, operation, carry, allowNegative);
+
+            // 重置状态
+            currentQuestion = 0;
+            correctAnswers = 0;
+            userAnswers = [];
+            startTime = new Date();
+
+            // 更新UI
+            quizContainer.style.display = 'block';
+            resultsElement.textContent = '';
+            feedbackElement.textContent = '';
+            feedbackElement.className = 'feedback';
+            answerSheet.style.display = 'none';
+            showAnswersBtn.style.display = 'inline-block';
+
+            // 开始计时
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+
+            // 显示第一题
+            showQuestion();
+
+            // 滚动到题目区域
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 生成题目
+        function generateQuestions(count, range, steps, operation, carry, allowNegative) {
+            const questions = [];
+
+            for (let i = 0; i < count; i++) {
+                let question, answer;
+                let isValid = false;
+                let attempts = 0;
+                const maxAttempts = 100; // 防止无限循环
+
+                // 尝试生成有效题目
+                while (!isValid && attempts < maxAttempts) {
+                    attempts++;
+                    // 生成数字
+                    const numbers = [];
+                    for (let j = 0; j < steps; j++) {
+                        // 根据范围动态调整数字生成范围
+                        let maxNum = range;
+                        if (operation === 'sub' || operation === 'mix') {
+                            // 对于减法和混合运算，适当扩大数字范围以确保结果在指定范围内
+                            maxNum = range * 1.5;
+                        }
+                        numbers.push(Math.floor(Math.random() * maxNum) + 1);
+                    }
+
+                    // 生成运算符
+                    const operators = [];
+                    for (let j = 0; j < steps - 1; j++) {
+                        let op;
+                        if (operation === 'add') {
+                            op = '+';
+                        } else if (operation === 'sub') {
+                            op = '-';
+                        } else {
+                            op = Math.random() < 0.5 ? '+' : '-';
+                        }
+                        operators.push(op);
+                    }
+
+                    // 计算答案
+                    answer = numbers[0];
+                    let expression = numbers[0].toString();
+
+                    for (let j = 0; j < operators.length; j++) {
+                        const op = operators[j];
+                        const num = numbers[j + 1];
+
+                        if (op === '+') {
+                            answer += num;
+                            expression += ` + ${num}`;
+                        } else {
+                            answer -= num;
+                            expression += ` - ${num}`;
+                        }
+                    }
+
+                    // 检查题目有效性
+                    isValid = true;
+
+                    // 检查结果范围
+                    if (answer < 0 && !allowNegative) {
+                        isValid = false;
+                        continue;
+                    }
+
+                    if (answer > range) {
+                        isValid = false;
+                        continue;
+                    }
+
+                    // 检查进位/借位
+                    if (!carry) {
+                        let temp = numbers[0];
+                        for (let j = 0; j < operators.length; j++) {
+                            const op = operators[j];
+                            const num = numbers[j + 1];
+
+                            if (op === '+') {
+                                if ((temp % 10) + (num % 10) >= 10) {
+                                    isValid = false;
+                                    break;
+                                }
+                                temp += num;
+                            } else {
+                                if ((temp % 10) - (num % 10) < 0) {
+                                    isValid = false;
+                                    break;
+                                }
+                                temp -= num;
+                            }
+                        }
+                    }
+
+                    // 如果有效，添加到题目列表
+                    if (isValid) {
+                        question = {
+                            expression: expression,
+                            answer: answer
+                        };
+                        questions.push(question);
+                    }
+                }
+
+                if (attempts >= maxAttempts) {
+                    console.warn(`无法生成符合要求的题目，尝试次数超过${maxAttempts}次`);
+                }
+            }
+
+            return questions;
+        }
+
+        // 显示题目
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            questionElement.textContent = `${question.expression} = ?`;
+            answerInput.value = '';
+            answerInput.focus();
+
+            // 更新进度条
+            const progress = ((currentQuestion) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // 重置按钮状态
+            submitBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'none';
+            showAnswerBtn.style.display = 'none';
+            feedbackElement.textContent = '';
+        }
+
+        // 检查答案
+        function checkAnswer() {
+            const userAnswer = parseInt(answerInput.value);
+            const correctAnswer = questions[currentQuestion].answer;
+
+            // 记录用户答案
+            userAnswers.push({
+                question: questions[currentQuestion].expression,
+                userAnswer: isNaN(userAnswer) ? '' : userAnswer,
+                correctAnswer: correctAnswer,
+                isCorrect: userAnswer === correctAnswer
+            });
+
+            // 检查是否正确
+            if (userAnswer === correctAnswer) {
+                feedbackElement.textContent = '正确！';
+                feedbackElement.className = 'feedback correct';
+                correctAnswers++;
+
+                // 延迟1秒后自动进入下一题
+                setTimeout(() => {
+                    nextQuestion();
+                }, 1000);
+            } else {
+                feedbackElement.textContent = `错误！正确答案是 ${correctAnswer}`;
+                feedbackElement.className = 'feedback incorrect';
+
+                // 显示"下一题"按钮
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+                showAnswerBtn.style.display = 'none';
+            }
+
+            // 如果是最后一题，显示结果
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = '查看结果';
+            }
+        }
+
+        // 显示当前题目答案
+        function showCurrentAnswer() {
+            const correctAnswer = questions[currentQuestion].answer;
+            feedbackElement.textContent = `正确答案: ${correctAnswer}`;
+            feedbackElement.className = 'feedback';
+            showAnswerBtn.style.display = 'none';
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        // 完成练习
+        function finishQuiz() {
+            clearInterval(timerInterval);
+
+            // 计算用时
+            const endTime = new Date();
+            const timeSpent = Math.floor((endTime - startTime) / 1000);
+
+            // 显示结果
+            let resultsHTML = `<h3>练习完成！</h3>
+                             <p>用时: ${timeSpent}秒</p>
+                             <p>正确率: ${correctAnswers}/${questions.length} (${Math.round((correctAnswers / questions.length) * 100)}%)</p>`;
+
+            // 显示错题
+            const wrongAnswers = userAnswers.filter(item => !item.isCorrect);
+            if (wrongAnswers.length > 0) {
+                resultsHTML += `<h4>错题回顾:</h4><ul>`;
+                wrongAnswers.forEach(item => {
+                    resultsHTML += `<li>${item.question} = ${item.userAnswer} (正确答案: ${item.correctAnswer})</li>`;
+                });
+                resultsHTML += `</ul>`;
+            }
+
+            resultsElement.innerHTML = resultsHTML;
+
+            // 重置按钮
+            nextBtn.textContent = '下一题';
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+            showAnswerBtn.style.display = 'none';
+
+            // 更新进度条
+            progressBar.style.width = '100%';
+
+            // 生成答题卡
+            generateAnswerSheet();
+        }
+
+        // 生成答题卡
+        function generateAnswerSheet() {
+            answerTableBody.innerHTML = '';
+
+            userAnswers.forEach((answer, index) => {
+                const row = document.createElement('tr');
+                if (answer.isCorrect) {
+                    row.className = 'correct-row';
+                } else {
+                    row.className = 'incorrect-row';
+                }
+
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${answer.question} = </td>
+                    <td>${answer.userAnswer}</td>
+                    <td>${answer.correctAnswer}</td>
+                    <td>${answer.isCorrect ? '✓' : '✗'}</td>
+                `;
+
+                answerTableBody.appendChild(row);
+            });
+        }
+
+        // 显示所有答案
+        function showAllAnswers() {
+            answerSheet.style.display = 'block';
+            answerSheet.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 更新计时器
+        function updateTimer() {
+            const currentTime = new Date();
+            const seconds = Math.floor((currentTime - startTime) / 1000);
+            timerElement.textContent = `时间: ${seconds}秒`;
+        }
+    </script>
+</body>
+
+</html>

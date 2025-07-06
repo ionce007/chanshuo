@@ -5,8 +5,12 @@ class SMS extends Model { }
 
 SMS.init(
     {
-        phone: { type: DataTypes.STRING, primaryKey: true },
+        id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
+        phone: { type: DataTypes.STRING },
         account: DataTypes.STRING,
+        password: DataTypes.STRING,
+        email: DataTypes.STRING,
+        token: DataTypes.STRING,
         verifyCode: DataTypes.STRING,
         sendTime: DataTypes.DATE, //发送短信时间
         state: DataTypes.STRING, //

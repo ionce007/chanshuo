@@ -85,6 +85,35 @@ async function inputVerifyCode(req, res, next){
     res.json({ status: state, message });
 }
 
+async function login(req, res, next){
+    const phone = req.body.phone;
+    const password = req.body.password;
+    console.log('password = ', password)
+    if (!phone.trim() || !password.trim()) {
+        return res.json({ status: false, message: '没有输入手机号 或 密码！' });
+    }
+    const isMobile = /^1[3-9]\d{9}$/.test(phone);
+    if (!isMobile) {
+        return res.json({ status: false, message: '输入的手机号不正确！' });
+    }
+    let sms = await SMS.findOne({ where: { [Op.and]: [{ phone }] }, raw: true });
+    const enPwd = password.trim();
+    let message = '验证码已输入!'
+    state = false;
+    try {
+        const date = (new Date()).getTime();
+        if (sms) {
+            if (sms.password === enPwd) { state = true; message = '登录成功！'; }
+            else { state = false; message = '密码错误！';  }
+        }
+        else { state = false; message = '用户不存在';  }
+    }
+    catch (e) {
+        console.log('err = ', e.message);
+        message = e.message
+    }
+    res.json({ success: state, msg: message, data: sms });
+}
 async function getSMS(req, res, next){
     const phone = req.query.phone || req.params.phone;
     let message = 'successed'
@@ -110,4 +139,5 @@ module.exports = {
     inputVerifyCode,
     getSMS,
     sendSMS,
+    login,
 };

@@ -90,6 +90,7 @@ router.post('/xhs/querynote', xhsData.getContentSquare);
 router.get('/xhs/firstcategory', xhsData.getFirstCategory);
 router.post('/xhs/secondcategory', xhsData.getSecondCategory);
 router.post('/sms/in', sms.inputVerifyCode);
+router.post('/sms/login', sms.login);
 router.get('/sms/out/:phone', sms.getSMS);
 router.post('/sms/send/:phone', sms.sendSMS);
 
