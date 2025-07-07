@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小学数学口算练习</title>
+    <title>小学数学练习</title>
     <style>
         body {
             font-family: 'Microsoft YaHei', sans-serif;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px 20px;
             background-color: #f5f5f5;
         }
 
@@ -19,35 +19,78 @@
             text-align: center;
         }
 
-        .settings {
+        /* 页签样式 */
+        .tab-container {
+            margin-bottom: 20px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background-color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+
+        .tab-button.active {
+            background-color: red;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
             background-color: #fff;
             padding: 20px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 共用样式 */
+        .settings {
+            background-color: #fff;
+            /*padding: 20px;*/
+            padding: 10px 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
 
         .setting-group {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
 
         .setting-group h3 {
             margin-top: 0;
             color: #3498db;
             border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
+            /*padding-bottom: 5px;*/
         }
 
         label {
             display: inline-block;
             margin-right: 15px;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             cursor: pointer;
         }
 
         button {
             background-color: #3498db;
-            color: white;
+            /*scolor: white;*/
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
@@ -171,83 +214,253 @@
         .show-answers-btn:hover {
             background-color: #8e44ad;
         }
+
+        /* 乘法口诀特定样式 */
+        .multiplication-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .multiplication-item {
+            padding: 15px;
+            text-align: center;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .multiplication-item:hover {
+            background-color: #e0e0e0;
+        }
+
+        .multiplication-item.selected {
+            background-color: #3498db;
+            color: white;
+        }
+
+        /* 乘法口诀表样式 */
+        .multiplication-table-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .multiplication-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .multiplication-table th,
+        .multiplication-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .multiplication-table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .multiplication-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .multiplication-table tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        .toggle-table-btn {
+            background-color: #2ecc71;
+            margin-top: 10px;
+        }
+
+        .toggle-table-btn:hover {
+            background-color: #27ae60;
+        }
     </style>
 </head>
 
 <body>
-    <h1>小学数学口算练习</h1>
+    <h1>小学一年级数学暑假练习</h1>
 
-    <div class="settings">
-        <div class="setting-group">
-            <h3>结果范围</h3>
-            <label><input type="radio" name="range" value="10" checked> 10以内</label>
-            <label><input type="radio" name="range" value="20"> 20以内</label>
-            <label><input type="radio" name="range" value="100"> 100以内</label>
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab('arithmetic')">口算练习</button>
+            <button class="tab-button" onclick="openTab('multiplication')">乘法口诀</button>
         </div>
 
-        <div class="setting-group">
-            <h3>运算笔数</h3>
-            <label><input type="radio" name="steps" value="2" checked> 二笔运算</label>
-            <label><input type="radio" name="steps" value="3"> 三笔运算</label>
-            <label><input type="radio" name="steps" value="4"> 四笔运算</label>
+        <!-- 口算练习页签 -->
+        <div id="arithmetic" class="tab-content active">
+            <div class="settings">
+                <div class="setting-group">
+                    <h3>结果范围</h3>
+                    <label><input type="radio" name="range" value="10" checked> 10以内</label>
+                    <label><input type="radio" name="range" value="20"> 20以内</label>
+                    <label><input type="radio" name="range" value="100"> 100以内</label>
+                </div>
+
+                <div class="setting-group">
+                    <h3>运算笔数</h3>
+                    <label><input type="radio" name="steps" value="2" checked> 二笔</label>
+                    <label><input type="radio" name="steps" value="3"> 三笔</label>
+                    <label><input type="radio" name="steps" value="4"> 四笔</label>
+                </div>
+
+                <div class="setting-group">
+                    <h3>运算类型</h3>
+                    <label><input type="radio" name="operation" value="add" checked> 仅加法</label>
+                    <label><input type="radio" name="operation" value="sub"> 仅减法</label>
+                    <label><input type="radio" name="operation" value="mix"> 加减混合</label>
+                </div>
+
+                <div class="setting-group">
+                    <h3>其他选项</h3>
+                    <label><input type="checkbox" name="carry" id="carry"> 包含进位/退位</label>
+                    <label><input type="checkbox" name="negative" id="negative"> 允许负数结果</label>
+                </div>
+
+                <div class="setting-group">
+                    <h3>题目数量</h3>
+                    <label><input type="number" name="count" value="20" min="5" max="100" style="width: 60px;">
+                        题</label>
+                </div>
+
+                <button id="startBtn">开始练习</button>
+                <button id="showAnswersBtn" class="show-answers-btn" style="display: none;">显示答案</button>
+            </div>
+
+            <div class="quiz-container" id="quizContainer">
+                <div class="timer" id="timer">时间: 0秒</div>
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="question" id="question"></div>
+                <div>
+                    <input type="number" class="answer-input" id="answerInput" autofocus>
+                    <button id="submitBtn">提交</button>
+                    <button id="nextBtn" style="display: none;">下一题</button>
+                    <button id="showAnswerBtn" style="display: none; background-color: #f39c12;">显示答案</button>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <div class="results" id="results"></div>
+
+                <div class="answer-sheet" id="answerSheet" style="display: none;">
+                    <h3>答题卡</h3>
+                    <table class="answer-table" id="answerTable">
+                        <thead>
+                            <tr>
+                                <th>题号</th>
+                                <th>题目</th>
+                                <th>你的答案</th>
+                                <th>正确答案</th>
+                                <th>结果</th>
+                            </tr>
+                        </thead>
+                        <tbody id="answerTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <div class="setting-group">
-            <h3>运算类型</h3>
-            <label><input type="radio" name="operation" value="add" checked> 仅加法</label>
-            <label><input type="radio" name="operation" value="sub"> 仅减法</label>
-            <label><input type="radio" name="operation" value="mix"> 加减混合</label>
-        </div>
+        <!-- 乘法口诀页签 -->
+        <div id="multiplication" class="tab-content">
+            <div class="settings">
+                <div class="setting-group">
+                    <h3>选择乘法表范围</h3>
+                    <label><input type="radio" name="multiRange" value="9" checked> 九九乘法表(1-9)</label>
+                    <label><input type="radio" name="multiRange" value="12"> 扩展乘法表(1-12)</label>
+                </div>
 
-        <div class="setting-group">
-            <h3>其他选项</h3>
-            <label><input type="checkbox" name="carry" id="carry"> 包含进位/借位</label>
-            <label><input type="checkbox" name="negative" id="negative"> 允许负数结果</label>
-        </div>
+                <div class="setting-group">
+                    <h3>练习模式</h3>
+                    <label><input type="radio" name="practiceMode" id="all" value="all" checked> 全部口诀</label>
+                    <label><input type="radio" name="practiceMode" value="selected"> 选择口诀</label>
+                </div>
 
-        <div class="setting-group">
-            <h3>题目数量</h3>
-            <label><input type="number" name="count" value="20" min="5" max="100" style="width: 60px;"> 题</label>
-        </div>
+                <div class="setting-group">
+                    <h3>题目数量</h3>
+                    <label><input type="number" name="multiCount" value="20" min="5" max="100" style="width: 60px;">
+                        题</label>
+                </div>
 
-        <button id="startBtn">开始练习</button>
-        <button id="showAnswersBtn" class="show-answers-btn" style="display: none;">显示答案</button>
-    </div>
+                <button id="startMultiBtn">开始练习</button>
+                <button id="showMultiAnswersBtn" class="show-answers-btn" style="display: none;">显示答案</button>
+                <button id="toggleTableBtn" class="toggle-table-btn">显示乘法口诀表</button>
+            </div>
 
-    <div class="quiz-container" id="quizContainer">
-        <div class="timer" id="timer">时间: 0秒</div>
-        <div class="progress">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-        <div class="question" id="question"></div>
-        <div>
-            <input type="number" class="answer-input" id="answerInput" autofocus>
-            <button id="submitBtn">提交</button>
-            <button id="nextBtn" style="display: none;">下一题</button>
-            <button id="showAnswerBtn" style="display: none; background-color: #f39c12;">显示答案</button>
-        </div>
-        <div class="feedback" id="feedback"></div>
-        <div class="results" id="results"></div>
+            <div class="multiplication-table-container" id="multiplicationTableContainer">
+                <h3>乘法口诀表</h3>
+                <table class="multiplication-table" id="multiplicationTable"></table>
+            </div>
 
-        <div class="answer-sheet" id="answerSheet" style="display: none;">
-            <h3>答题卡</h3>
-            <table class="answer-table" id="answerTable">
-                <thead>
-                    <tr>
-                        <th>题号</th>
-                        <th>题目</th>
-                        <th>你的答案</th>
-                        <th>正确答案</th>
-                        <th>结果</th>
-                    </tr>
-                </thead>
-                <tbody id="answerTableBody">
-                </tbody>
-            </table>
+            <div id="multiSelection" style="display: none; margin-top: 20px;">
+                <h3>请选择要练习的乘法口诀</h3>
+                <div class="multiplication-grid" id="multiplicationGrid"></div>
+            </div>
+
+            <div class="quiz-container" id="multiQuizContainer" style="display: none;">
+                <div class="timer" id="multiTimer">时间: 0秒</div>
+                <div class="progress">
+                    <div class="progress-bar" id="multiProgressBar"></div>
+                </div>
+                <div class="question" id="multiQuestion"></div>
+                <div>
+                    <input type="number" class="answer-input" id="multiAnswerInput" autofocus>
+                    <button id="multiSubmitBtn">提交</button>
+                    <button id="multiNextBtn" style="display: none;">下一题</button>
+                    <button id="showMultiAnswerBtn" style="display: none; background-color: #f39c12;">显示答案</button>
+                </div>
+                <div class="feedback" id="multiFeedback"></div>
+                <div class="results" id="multiResults"></div>
+
+                <div class="answer-sheet" id="multiAnswerSheet" style="display: none;">
+                    <h3>答题卡</h3>
+                    <table class="answer-table" id="multiAnswerTable">
+                        <thead>
+                            <tr>
+                                <th>题号</th>
+                                <th>题目</th>
+                                <th>你的答案</th>
+                                <th>正确答案</th>
+                                <th>结果</th>
+                            </tr>
+                        </thead>
+                        <tbody id="multiAnswerTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        // 页签切换功能
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            // 切换到乘法页签时生成乘法表
+            if (tabName === 'multiplication') {
+                generateMultiplicationTable();
+            }
+        }
+
+        // ================== 口算练习功能 ==================
         // 全局变量
         let currentQuestion = 0;
         let correctAnswers = 0;
@@ -476,7 +689,7 @@
                 // 延迟1秒后自动进入下一题
                 setTimeout(() => {
                     nextQuestion();
-                }, 1000);
+                }, 500);
             } else {
                 feedbackElement.textContent = `错误！正确答案是 ${correctAnswer}`;
                 feedbackElement.className = 'feedback incorrect';
@@ -586,6 +799,486 @@
             const seconds = Math.floor((currentTime - startTime) / 1000);
             timerElement.textContent = `时间: ${seconds}秒`;
         }
+
+        // ================== 乘法口诀功能 ==================
+        // 全局变量
+        let multiCurrentQuestion = 0;
+        let multiCorrectAnswers = 0;
+        let multiStartTime;
+        let multiTimerInterval;
+        let multiQuestions = [];
+        let multiUserAnswers = [];
+        let selectedMultiplications = [];
+
+        // DOM元素
+        const multiQuizContainer = document.getElementById('multiQuizContainer');
+        const multiQuestionElement = document.getElementById('multiQuestion');
+        const multiAnswerInput = document.getElementById('multiAnswerInput');
+        const multiFeedbackElement = document.getElementById('multiFeedback');
+        const multiResultsElement = document.getElementById('multiResults');
+        const multiTimerElement = document.getElementById('multiTimer');
+        const multiProgressBar = document.getElementById('multiProgressBar');
+        const multiSubmitBtn = document.getElementById('multiSubmitBtn');
+        const multiNextBtn = document.getElementById('multiNextBtn');
+        const showMultiAnswerBtn = document.getElementById('showMultiAnswerBtn');
+        const startMultiBtn = document.getElementById('startMultiBtn');
+        const showMultiAnswersBtn = document.getElementById('showMultiAnswersBtn');
+        const multiAnswerSheet = document.getElementById('multiAnswerSheet');
+        const multiAnswerTableBody = document.getElementById('multiAnswerTableBody');
+        const multiSelection = document.getElementById('multiSelection');
+        const multiplicationGrid = document.getElementById('multiplicationGrid');
+        const multiplicationTableContainer = document.getElementById('multiplicationTableContainer');
+        const multiplicationTable = document.getElementById('multiplicationTable');
+        const toggleTableBtn = document.getElementById('toggleTableBtn');
+        const practiceModeRadios = document.querySelectorAll('input[name="practiceMode"]');
+
+        // 事件监听
+        startMultiBtn.addEventListener('click', startMultiQuiz);
+        multiSubmitBtn.addEventListener('click', checkMultiAnswer);
+        multiNextBtn.addEventListener('click', nextMultiQuestion);
+        showMultiAnswerBtn.addEventListener('click', showCurrentMultiAnswer);
+        showMultiAnswersBtn.addEventListener('click', showAllMultiAnswers);
+        toggleTableBtn.addEventListener('click', toggleMultiplicationTable);
+
+        // 回车键提交
+        multiAnswerInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkMultiAnswer();
+            }
+        });
+
+        // 切换乘法口诀表显示/隐藏
+        function toggleMultiplicationTable() {
+            const isVisible = multiplicationTableContainer.style.display === 'block';
+            multiplicationTableContainer.style.display = isVisible ? 'none' : 'block';
+            toggleTableBtn.textContent = isVisible ? '显示乘法口诀表' : '隐藏乘法口诀表';
+
+            if (!isVisible) {
+                generateMultiplicationTable();
+            }
+        }
+
+        // 生成乘法口诀表
+        function generateMultiplicationTable() {
+            multiplicationTable.innerHTML = '';
+            const range = parseInt(document.querySelector('input[name="multiRange"]:checked').value);
+
+            // 创建表头
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>×</th>';
+            for (let i = 1; i <= range; i++) {
+                headerRow.innerHTML += `<th>${i}</th>`;
+            }
+            multiplicationTable.appendChild(headerRow);
+
+            // 创建表格内容
+            for (let i = 1; i <= range; i++) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<th>${i}</th>`;
+
+                for (let j = 1; j <= range; j++) {
+                    row.innerHTML += `<td>${i * j}</td>`;
+                }
+
+                multiplicationTable.appendChild(row);
+            }
+        }
+
+        // 开始乘法练习
+        function startMultiQuiz_0() {
+            if(multiplicationTableContainer.style.display !== 'none')  multiplicationTableContainer.style.display = 'none';
+            const range = parseInt(document.querySelector('input[name="multiRange"]:checked').value);
+            const mode = document.querySelector('input[name="practiceMode"]:checked').value;
+            const questionCount = parseInt(document.querySelector('input[name="multiCount"]').value);
+
+            // 如果是选择模式，显示选择网格
+            if (mode === 'selected') {
+                multiSelection.style.display = 'block';
+                generateMultiplicationGrid(range);
+                return;
+            }
+
+            // 全部模式直接开始
+            selectedMultiplications = generateAllMultiplications(range);
+            startMultiQuizWithQuestions(questionCount);
+        }
+
+        // 开始乘法练习
+        function startMultiQuiz() {
+            if(multiplicationTableContainer.style.display !== 'none')  multiplicationTableContainer.style.display = 'none';
+            const range = parseInt(document.querySelector('input[name="multiRange"]:checked').value);
+            const mode = document.querySelector('input[name="practiceMode"]:checked').value;
+            const questionCount = parseInt(document.querySelector('input[name="multiCount"]').value);
+
+            if (mode === 'selected') {
+                if (selectedMultiplications.length === 0) {
+                    alert('请先选择要练习的乘法口诀！');
+                    return;
+                }
+                startMultiQuizWithQuestions(questionCount);
+            } else {
+                selectedMultiplications = generateAllMultiplications(range);
+                startMultiQuizWithQuestions(questionCount);
+            }
+        }
+        // 生成乘法选择网格
+        function generateMultiplicationGrid_0(range) {
+            multiplicationGrid.innerHTML = '';
+            selectedMultiplications = [];
+
+            for (let i = 1; i <= range; i++) {
+                for (let j = 1; j <= range; j++) {
+                    const item = document.createElement('div');
+                    item.className = 'multiplication-item';
+                    item.textContent = `${i} × ${j}`;
+                    item.dataset.i = i;
+                    item.dataset.j = j;
+
+                    item.addEventListener('click', function () {
+                        this.classList.toggle('selected');
+                        const i = parseInt(this.dataset.i);
+                        const j = parseInt(this.dataset.j);
+
+                        if (this.classList.contains('selected')) {
+                            selectedMultiplications.push({ i, j });
+                        } else {
+                            selectedMultiplications = selectedMultiplications.filter(item => !(item.i === i && item.j === j));
+                        }
+
+                        // 更新开始按钮状态
+                        if (selectedMultiplications.length > 0) {
+                            startMultiBtn.textContent = `开始练习 (已选${selectedMultiplications.length}个)`;
+                        } else {
+                            startMultiBtn.textContent = '开始练习';
+                        }
+                    });
+
+                    multiplicationGrid.appendChild(item);
+                }
+            }
+        }
+        function generateMultiplicationGrid(range) {
+            multiplicationGrid.innerHTML = '';
+            selectedMultiplications = [];
+
+            for (let i = 1; i <= range; i++) {
+                for (let j = 1; j <= range; j++) {
+                    const item = document.createElement('div');
+                    item.className = 'multiplication-item';
+                    item.textContent = `${i} × ${j}`;
+                    item.dataset.i = i;
+                    item.dataset.j = j;
+
+                    item.addEventListener('click', function () {
+                        this.classList.toggle('selected');
+                        const i = parseInt(this.dataset.i);
+                        const j = parseInt(this.dataset.j);
+
+                        if (this.classList.contains('selected')) {
+                            selectedMultiplications.push({ i, j, text: `${i} × ${j}` });
+                        } else {
+                            selectedMultiplications = selectedMultiplications.filter(
+                                item => !(item.i === i && item.j === j)
+                            );
+                        }
+
+                        updateStartButton();
+                    });
+
+                    multiplicationGrid.appendChild(item);
+                }
+            }
+        }
+
+        // 更新开始按钮状态
+        function updateStartButton() {
+            if (selectedMultiplications.length > 0) {
+                startMultiBtn.textContent = `开始练习 (已选${selectedMultiplications.length}个)`;
+                startMultiBtn.disabled = false;
+            } else {
+                startMultiBtn.textContent = '开始练习';
+                startMultiBtn.disabled = true;
+            }
+        }
+
+
+
+        // 生成所有乘法组合
+        function generateAllMultiplications(range) {
+            const multiplications = [];
+            for (let i = 1; i <= range; i++) {
+                for (let j = 1; j <= range; j++) {
+                    multiplications.push({ i, j });
+                }
+            }
+            return multiplications;
+        }
+
+        // 使用选定的乘法开始练习
+        function startMultiQuizWithQuestions_0(questionCount) {
+            if (selectedMultiplications.length === 0) {
+                alert('请至少选择一个乘法口诀进行练习！');
+                return;
+            }
+
+            // 生成题目
+            multiQuestions = [];
+            for (let i = 0; i < questionCount; i++) {
+                const randomIndex = Math.floor(Math.random() * selectedMultiplications.length);
+                const { i, j } = selectedMultiplications[randomIndex];
+                multiQuestions.push({
+                    expression: `${i} × ${j}`,
+                    answer: i * j
+                });
+            }
+
+            // 重置状态
+            multiCurrentQuestion = 0;
+            multiCorrectAnswers = 0;
+            multiUserAnswers = [];
+            multiStartTime = new Date();
+
+            // 更新UI
+            multiSelection.style.display = 'none';
+            multiQuizContainer.style.display = 'block';
+            multiResultsElement.textContent = '';
+            multiFeedbackElement.textContent = '';
+            multiFeedbackElement.className = 'feedback';
+            multiAnswerSheet.style.display = 'none';
+            showMultiAnswersBtn.style.display = 'inline-block';
+
+            // 开始计时
+            clearInterval(multiTimerInterval);
+            multiTimerInterval = setInterval(updateMultiTimer, 500);
+            updateMultiTimer();
+
+            // 显示第一题
+            showMultiQuestion();
+
+            // 滚动到题目区域
+            multiQuizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 使用选定的乘法开始练习
+        function startMultiQuizWithQuestions(questionCount) {
+            if (selectedMultiplications.length === 0) {
+                alert('请至少选择一个乘法口诀进行练习！');
+                return;
+            }
+
+            // 生成题目 - 确保不超过所选口诀数量
+            const actualCount = Math.min(questionCount, selectedMultiplications.length * 3); // 允许一定重复
+            multiQuestions = [];
+
+            for (let i = 0; i < actualCount; i++) {
+                const randomIndex = Math.floor(Math.random() * selectedMultiplications.length);
+                const { i, j, text } = selectedMultiplications[randomIndex];
+                multiQuestions.push({
+                    expression: text,
+                    answer: i * j
+                });
+            }
+
+            // 重置状态
+            multiCurrentQuestion = 0;
+            multiCorrectAnswers = 0;
+            multiUserAnswers = [];
+            multiStartTime = new Date();
+
+            // 更新UI
+            multiSelection.style.display = 'none';
+            multiQuizContainer.style.display = 'block';
+
+            multiResultsElement.textContent = '';
+            multiFeedbackElement.textContent = '';
+            multiFeedbackElement.className = 'feedback';
+            multiAnswerSheet.style.display = 'none';
+            showMultiAnswersBtn.style.display = 'inline-block';
+
+            // 开始计时
+            clearInterval(multiTimerInterval);
+            multiTimerInterval = setInterval(updateMultiTimer, 500);
+            updateMultiTimer();
+
+            // 显示第一题
+            showMultiQuestion();
+
+            // 滚动到题目区域
+            multiQuizContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 显示乘法题目
+        function showMultiQuestion() {
+            const question = multiQuestions[multiCurrentQuestion];
+            multiQuestionElement.textContent = `${question.expression} = ?`;
+            multiAnswerInput.value = '';
+            multiAnswerInput.focus();
+
+            // 更新进度条
+            const progress = ((multiCurrentQuestion) / multiQuestions.length) * 100;
+            multiProgressBar.style.width = `${progress}%`;
+
+            // 重置按钮状态
+            multiSubmitBtn.style.display = 'inline-block';
+            multiNextBtn.style.display = 'none';
+            showMultiAnswerBtn.style.display = 'none';
+            multiFeedbackElement.textContent = '';
+        }
+
+        // 检查乘法答案
+        function checkMultiAnswer() {
+            if( multiplicationTableContainer.style.display !== 'block') multiplicationTableContainer.style.display = "none";
+            const userAnswer = parseInt(multiAnswerInput.value);
+            const correctAnswer = multiQuestions[multiCurrentQuestion].answer;
+
+            // 记录用户答案
+            multiUserAnswers.push({
+                question: multiQuestions[multiCurrentQuestion].expression,
+                userAnswer: isNaN(userAnswer) ? '' : userAnswer,
+                correctAnswer: correctAnswer,
+                isCorrect: userAnswer === correctAnswer
+            });
+
+            // 检查是否正确
+            if (userAnswer === correctAnswer) {
+                multiFeedbackElement.textContent = '正确！';
+                multiFeedbackElement.className = 'feedback correct';
+                multiCorrectAnswers++;
+
+                // 延迟1秒后自动进入下一题
+                setTimeout(() => {
+                    nextMultiQuestion();
+                }, 500);
+            } else {
+                multiFeedbackElement.textContent = `错误！正确答案是 ${correctAnswer}`;
+                multiFeedbackElement.className = 'feedback incorrect';
+
+                // 显示"下一题"按钮
+                multiNextBtn.style.display = 'inline-block';
+                multiSubmitBtn.style.display = 'none';
+                showMultiAnswerBtn.style.display = 'none';
+            }
+
+            // 如果是最后一题，显示结果
+            if (multiCurrentQuestion === multiQuestions.length - 1) {
+                multiNextBtn.textContent = '查看结果';
+            }
+        }
+
+        // 显示当前乘法题目答案
+        function showCurrentMultiAnswer() {
+            const correctAnswer = multiQuestions[multiCurrentQuestion].answer;
+            multiFeedbackElement.textContent = `正确答案: ${correctAnswer}`;
+            multiFeedbackElement.className = 'feedback';
+            showMultiAnswerBtn.style.display = 'none';
+        }
+
+        // 下一道乘法题
+        function nextMultiQuestion() {
+            multiCurrentQuestion++;
+
+            if (multiCurrentQuestion < multiQuestions.length) {
+                showMultiQuestion();
+            } else {
+                finishMultiQuiz();
+            }
+        }
+
+        // 完成乘法练习
+        function finishMultiQuiz() {
+            clearInterval(multiTimerInterval);
+
+            // 计算用时
+            const endTime = new Date();
+            const timeSpent = Math.floor((endTime - multiStartTime) / 1000);
+
+            // 显示结果
+            let resultsHTML = `<h3>练习完成！</h3>
+                             <p>用时: ${timeSpent}秒</p>
+                             <p>正确率: ${multiCorrectAnswers}/${multiQuestions.length} (${Math.round((multiCorrectAnswers / multiQuestions.length) * 100)}%)</p>`;
+
+            // 显示错题
+            const wrongAnswers = multiUserAnswers.filter(item => !item.isCorrect);
+            if (wrongAnswers.length > 0) {
+                resultsHTML += `<h4>错题回顾:</h4><ul>`;
+                wrongAnswers.forEach(item => {
+                    resultsHTML += `<li>${item.question} = ${item.userAnswer} (正确答案: ${item.correctAnswer})</li>`;
+                });
+                resultsHTML += `</ul>`;
+            }
+
+            multiResultsElement.innerHTML = resultsHTML;
+
+            // 重置按钮
+            multiNextBtn.textContent = '下一题';
+            multiNextBtn.style.display = 'none';
+            multiSubmitBtn.style.display = 'inline-block';
+            showMultiAnswerBtn.style.display = 'none';
+
+            // 更新进度条
+            multiProgressBar.style.width = '100%';
+
+            // 生成答题卡
+            generateMultiAnswerSheet();
+        }
+
+        // 生成乘法答题卡
+        function generateMultiAnswerSheet() {
+            multiAnswerTableBody.innerHTML = '';
+
+            multiUserAnswers.forEach((answer, index) => {
+                const row = document.createElement('tr');
+                if (answer.isCorrect) {
+                    row.className = 'correct-row';
+                } else {
+                    row.className = 'incorrect-row';
+                }
+
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${answer.question} = </td>
+                    <td>${answer.userAnswer}</td>
+                    <td>${answer.correctAnswer}</td>
+                    <td>${answer.isCorrect ? '✓' : '✗'}</td>
+                `;
+
+                multiAnswerTableBody.appendChild(row);
+            });
+        }
+
+        // 显示所有乘法答案
+        function showAllMultiAnswers() {
+            multiAnswerSheet.style.display = 'block';
+            multiAnswerSheet.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 更新乘法计时器
+        function updateMultiTimer() {
+            const currentTime = new Date();
+            const seconds = Math.floor((currentTime - multiStartTime) / 1000);
+            multiTimerElement.textContent = `时间: ${seconds}秒`;
+        }
+
+    // 为每个radio添加change事件监听
+        practiceModeRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.checked) {
+                    const selectedValue = this.value;
+                    console.log("当前选择的练习模式:", selectedValue);
+
+                    // 根据选择显示/隐藏口诀选择区域
+                    if (selectedValue === 'selected') {
+                        const range = parseInt(document.querySelector('input[name="multiRange"]:checked').value);
+                        //const mode = document.querySelector('input[name="practiceMode"]:checked').value;
+                        //sconst questionCount = parseInt(document.querySelector('input[name="multiCount"]').value);
+                        generateMultiplicationGrid(range)
+                        document.getElementById('multiSelection').style.display = 'block';
+                    } else {
+                        document.getElementById('multiSelection').style.display = 'none';
+                    }
+                }
+            });
+        });
     </script>
     <script>
         var _hmt = _hmt || [];
@@ -596,7 +1289,6 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-
 </body>
 
 </html>
