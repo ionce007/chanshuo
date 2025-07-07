@@ -51,7 +51,7 @@
         .tab-content {
             display: none;
             background-color: #fff;
-            padding: 20px;
+            padding: 10px;
             border-radius: 0 0 8px 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -64,7 +64,7 @@
         .settings {
             background-color: #fff;
             /*padding: 20px;*/
-            padding: 10px 20px;
+            padding: 10px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
@@ -96,7 +96,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-            margin-right: 10px;
+            margin-right: 2px;
             transition: background-color 0.3s;
         }
 
@@ -220,7 +220,7 @@
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .multiplication-item {
@@ -281,9 +281,10 @@
         .toggle-table-btn:hover {
             background-color: #27ae60;
         }
+
         @media (max-width: 768px) {
-            .multiplication-grid{
-                grid-template-columns: repeat(3, 1fr);
+            .multiplication-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
@@ -395,7 +396,7 @@
 
                 <button id="startMultiBtn">开始练习</button>
                 <button id="showMultiAnswersBtn" class="show-answers-btn" style="display: none;">显示答案</button>
-                <button id="toggleTableBtn" class="toggle-table-btn">显示乘法口诀表</button>
+                <button id="toggleTableBtn" class="toggle-table-btn">显示口诀表</button>
             </div>
 
             <div class="multiplication-table-container" id="multiplicationTableContainer">
@@ -856,7 +857,7 @@
         function toggleMultiplicationTable() {
             const isVisible = multiplicationTableContainer.style.display === 'block';
             multiplicationTableContainer.style.display = isVisible ? 'none' : 'block';
-            toggleTableBtn.textContent = isVisible ? '显示乘法口诀表' : '隐藏乘法口诀表';
+            toggleTableBtn.textContent = isVisible ? '显示口诀表' : '隐藏口诀表';
 
             if (!isVisible) {
                 generateMultiplicationTable();
@@ -891,7 +892,7 @@
 
         // 开始乘法练习
         function startMultiQuiz_0() {
-            if(multiplicationTableContainer.style.display !== 'none')  multiplicationTableContainer.style.display = 'none';
+            if (multiplicationTableContainer.style.display !== 'none') multiplicationTableContainer.style.display = 'none';
             const range = parseInt(document.querySelector('input[name="multiRange"]:checked').value);
             const mode = document.querySelector('input[name="practiceMode"]:checked').value;
             const questionCount = parseInt(document.querySelector('input[name="multiCount"]').value);
@@ -910,7 +911,7 @@
 
         // 开始乘法练习
         function startMultiQuiz() {
-            if(multiplicationTableContainer.style.display !== 'none')  multiplicationTableContainer.style.display = 'none';
+            if (multiplicationTableContainer.style.display !== 'none') multiplicationTableContainer.style.display = 'none';
             const range = parseInt(document.querySelector('input[name="multiRange"]:checked').value);
             const mode = document.querySelector('input[name="practiceMode"]:checked').value;
             const questionCount = parseInt(document.querySelector('input[name="multiCount"]').value);
@@ -1132,7 +1133,7 @@
 
         // 检查乘法答案
         function checkMultiAnswer() {
-            if( multiplicationTableContainer.style.display !== 'block') multiplicationTableContainer.style.display = "none";
+            if (multiplicationTableContainer.style.display !== 'block') multiplicationTableContainer.style.display = "none";
             const userAnswer = parseInt(multiAnswerInput.value);
             const correctAnswer = multiQuestions[multiCurrentQuestion].answer;
 
@@ -1264,7 +1265,7 @@
             multiTimerElement.textContent = `时间: ${seconds}秒`;
         }
 
-    // 为每个radio添加change事件监听
+        // 为每个radio添加change事件监听
         practiceModeRadios.forEach(radio => {
             radio.addEventListener('change', function () {
                 if (this.checked) {
