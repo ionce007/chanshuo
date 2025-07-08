@@ -660,7 +660,7 @@
             const question = questions[currentQuestion];
             questionElement.textContent = `${question.expression} = ?`;
             answerInput.value = '';
-            //answerInput.focus();
+            answerInput.focus();
 
             // 更新进度条
             const progress = ((currentQuestion) / questions.length) * 100;
@@ -1119,7 +1119,7 @@
             const question = multiQuestions[multiCurrentQuestion];
             multiQuestionElement.textContent = `${question.expression} = ?`;
             multiAnswerInput.value = '';
-            //multiAnswerInput.focus();
+            multiAnswerInput.focus();
 
             // 更新进度条
             const progress = ((multiCurrentQuestion) / multiQuestions.length) * 100;
