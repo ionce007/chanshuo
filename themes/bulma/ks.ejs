@@ -493,7 +493,25 @@
 
         // 事件监听
         startBtn.addEventListener('click', startQuiz);
-        submitBtn.addEventListener('click', checkAnswer);
+        //submitBtn.addEventListener('click', checkAnswer);
+        submitBtn.addEventListener('click', () => {
+            // 1. 创建 Enter 键的 keydown 事件
+            const enterKeyEvent = new KeyboardEvent('keydown', {
+                key: 'Enter',
+                code: 'Enter',
+                keyCode: 13,  // 传统属性（已废弃但部分场景需要）
+                which: 13,    // 传统属性（已废弃）
+                bubbles: true, // 允许事件冒泡
+                cancelable: true // 允许阻止默认行为
+            });
+
+            // 2. 分派事件到输入框
+            answerInput.dispatchEvent(enterKeyEvent);
+
+            // 3. 可选：同时触发 keyup 事件（模拟完整按键过程）
+            const enterKeyUpEvent = new KeyboardEvent('keyup', { key: 'Enter' });
+            answerInput.dispatchEvent(enterKeyUpEvent);
+        });
         nextBtn.addEventListener('click', nextQuestion);
         showAnswerBtn.addEventListener('click', showCurrentAnswer);
         showAnswersBtn.addEventListener('click', showAllAnswers);
@@ -541,7 +559,7 @@
             showQuestion();
 
             // 滚动到题目区域
-            //quizContainer.scrollIntoView({ behavior: 'smooth' });
+            quizContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
         // 生成题目
@@ -1063,7 +1081,7 @@
             showMultiQuestion();
 
             // 滚动到题目区域
-            //multiQuizContainer.scrollIntoView({ behavior: 'smooth' });
+            multiQuizContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
         // 使用选定的乘法开始练习
