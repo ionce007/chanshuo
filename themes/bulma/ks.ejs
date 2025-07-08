@@ -1014,7 +1014,8 @@
             const multiplications = [];
             for (let i = 1; i <= range; i++) {
                 for (let j = 1; j <= range; j++) {
-                    multiplications.push({ i, j });
+                    const text = `${i} × ${j}`;
+                    multiplications.push({ i, j, text });
                 }
             }
             return multiplications;
