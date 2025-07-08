@@ -494,9 +494,9 @@
 
         // 事件监听
         startBtn.addEventListener('click', startQuiz);
-        //submitBtn.addEventListener('click', checkAnswer);
+        submitBtn.addEventListener('click', checkAnswer);
         
-        submitBtn.addEventListener('click', () => {
+        /*submitBtn.addEventListener('click', () => {
             // 1. 创建 Enter 键的 keydown 事件
             const enterKeyEvent = new KeyboardEvent('keydown', {
                 key: 'Enter',
@@ -513,7 +513,7 @@
             // 3. 可选：同时触发 keyup 事件（模拟完整按键过程）
             const enterKeyUpEvent = new KeyboardEvent('keyup', { key: 'Enter' });
             answerInput.dispatchEvent(enterKeyUpEvent);
-        });
+        });*/
         nextBtn.addEventListener('click', nextQuestion);
         showAnswerBtn.addEventListener('click', showCurrentAnswer);
         showAnswersBtn.addEventListener('click', showAllAnswers);
