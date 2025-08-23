@@ -903,7 +903,8 @@
                 row.innerHTML = `<th>${i}</th>`;
 
                 for (let j = 1; j <= range; j++) {
-                    row.innerHTML += `<td>${i * j}</td>`;
+                    if(j > i ) row.innerHTML += `<td></td>`;
+                    else row.innerHTML += `<td>${i * j}</td>`;
                 }
 
                 multiplicationTable.appendChild(row);
