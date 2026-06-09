@@ -1,0 +1,65 @@
+{
+    "menu": {
+        "button": [
+            {
+                "type": "view",
+                "name": "查禁词",
+                "url": "http:\/\/foryet.net\/?qd=k3gzh",
+                "sub_button": []
+            },
+            {
+                "sub_button": []
+            },
+            {
+                "type": "view",
+                "name": "介绍",
+                "url": "https:\/\/docs.qq.com\/pdf\/DVGJkU3FDTnNoTVZn",
+                "sub_button": []
+            }
+        ]
+    }
+}
+
+{
+    "is_menu_open": 1,
+    "selfmenu_info": {
+        "button": [
+            {
+                "type": "view",
+                "name": "查禁词",
+                "url": "http:\/\/foryet.net\/?qd=k3gzh"
+            },
+            {
+                "type": "img",
+                "name": "商务",
+                "value": "UukNE2Bat0BMyMnPCcMB4t0PGlB3PCLOOZuFYPMaYIwqyXAxCxRr2CpKQQ2y-zyS"
+            },
+            {
+                "type": "view",
+                "name": "介绍",
+                "url": "https:\/\/docs.qq.com\/pdf\/DVGJkU3FDTnNoTVZn"
+            }
+        ]
+    }
+}
+
+{
+    "button": [
+        {
+            "type": "view",
+            "name": "查禁词",
+            "url": "http://foryet.net/?qd=k3gzh"
+        },
+        {
+            "type": "img",
+            "name": "商务",
+            "value": "UukNE2Bat0BMyMnPCcMB4t0PGlB3PCLOOZuFYPMaYIwqyXAxCxRr2CpKQQ2y-zyS"
+        }
+    ]
+}
+
+{
+  "type": "image",
+  "offset": 0,
+  "count": 20
+}
